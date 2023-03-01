@@ -215,7 +215,10 @@ const RouteWithLoader = (props: any) => {
                   cursor: "pointer",
                 }}
                 onClick={() => {
-                  window.open("https://github.com/thaddavis/kalygo", "_blank");
+                  window.open(
+                    "https://github.com/Kalygo-io/kalygo.io",
+                    "_blank"
+                  );
                 }}
               >
                 Frontend
@@ -232,7 +235,7 @@ const RouteWithLoader = (props: any) => {
                 }}
                 onClick={() => {
                   window.open(
-                    "https://github.com/thaddavis/kalygo-contracts-with-beaker",
+                    "https://github.com/Kalygo-io/kalygo_contracts_with_beaker",
                     "_blank"
                   );
                 }}
