@@ -16,6 +16,15 @@ import reportWebVitals from "./reportWebVitals";
 import Router from "./pages/Router";
 import { PersistGate } from "redux-persist/integration/react";
 
+import package_json from "../package.json";
+
+console.log("package_json.resetRedux", package_json.resetRedux);
+
+if (localStorage.getItem("clearReduxPersist") !== package_json.resetRedux) {
+  persistor.purge();
+  localStorage.setItem("clearReduxPersist", package_json.resetRedux);
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

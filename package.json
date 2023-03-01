@@ -1,7 +1,8 @@
 {
   "name": "kalygo",
-  "version": "0.1.0",
+  "version": "0.6.0",
   "private": true,
+  "resetRedux": "8",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",

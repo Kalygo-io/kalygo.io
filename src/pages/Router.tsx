@@ -289,7 +289,7 @@ const RouteWithSidebar = (props: any) => {
     //     break;
     // }
 
-    console.warn("Need to load up previously configured state");
+    // console.warn("Need to load up previously configured state");
   }, []);
 
   const localStorageIsSettingsVisible = () => {
