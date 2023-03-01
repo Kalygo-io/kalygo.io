@@ -21,6 +21,7 @@ import GitHubButton from "react-github-btn";
 import { useNavigate } from "react-router-dom";
 
 import { RoutesData } from "../routes";
+import { BgAnimation } from "./components/BgAnimation";
 
 import pages from "../data/pages";
 import features from "../data/features";
@@ -43,8 +44,8 @@ const Presentation = () => {
               <h1 className="fw-bolder text-secondary display-1 mb-0 ls-6">
                 KALYGO
               </h1>
-              <h3 className=" text-secondary text-muted">
-                Low Code meets Algorand
+              <h3 className="text-secondary text-white">
+                Bringing Algorand to the masses
               </h3>
               {/* <p className="text-muted fw-light mb-3 h5"></p> */}
               <div className="d-flex align-items-center justify-content-center py-2">
@@ -73,7 +74,7 @@ const Presentation = () => {
           </Row>
         </Container>
       </section>
-      <section className="section section-sm bg-soft" id="features">
+      <section className="section section-sm" id="features">
         <Container>
           <Row className="justify-content-between align-items-center">
             <Col lg={5} className="order-lg-2 mb-0 mb-lg-0">
@@ -100,7 +101,7 @@ const Presentation = () => {
           </Row>
         </Container>
       </section>
-      <section className="section section-sm bg-white" id="download">
+      <section className="section section-sm" id="download">
         <Container>
           <Row className="justify-content-end align-items-center">
             <Col lg={5} className="order-lg-2 mb-0 mb-lg-0 text-right">
@@ -114,7 +115,6 @@ const Presentation = () => {
           </Row>
         </Container>
       </section>
-
       {/* <section
         className="section section-sm bg-primary pb-0"
         id="getting-started"
@@ -138,6 +138,7 @@ const Presentation = () => {
           </Row>
         </Container>
       </section> */}
+      <BgAnimation />
     </>
   );
 };
