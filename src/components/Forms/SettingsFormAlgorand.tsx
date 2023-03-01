@@ -211,21 +211,39 @@ export const SettingsFormAlgorand = (props: P) => {
                     textOverflow: "ellipsis",
                   }}
                 >
-                  {settings.supportedAlgorandNetworks.map(
-                    (i: any, idx: number) => {
-                      return (
-                        <option
-                          key={i}
-                          style={{
-                            textOverflow: "ellipsis",
-                          }}
-                          value={i}
-                        >
-                          {i}
-                        </option>
-                      );
-                    }
-                  )}
+                  {settings.selectedAlgorandWallet === "AlgoSigner" &&
+                    settings.supportedAlgorandNetworksAlgoSigner.map(
+                      (i: any, idx: number) => {
+                        return (
+                          <option
+                            key={i}
+                            style={{
+                              textOverflow: "ellipsis",
+                            }}
+                            value={i}
+                          >
+                            {i}
+                          </option>
+                        );
+                      }
+                    )}
+
+                  {settings.selectedAlgorandWallet === "Pera" &&
+                    settings.supportedAlgorandNetworksPera.map(
+                      (i: any, idx: number) => {
+                        return (
+                          <option
+                            key={i}
+                            style={{
+                              textOverflow: "ellipsis",
+                            }}
+                            value={i}
+                          >
+                            {i}
+                          </option>
+                        );
+                      }
+                    )}
                 </Form.Select>
               </Form.Group>
             </Col>

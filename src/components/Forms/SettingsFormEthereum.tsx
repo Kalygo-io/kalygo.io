@@ -167,23 +167,6 @@ export const SettingsFormEthereum = (props: P) => {
                     textOverflow: "ellipsis",
                   }}
                 >
-                  {settings.selectedBlockchain === "Algorand" &&
-                    settings.supportedAlgorandNetworks.map(
-                      (i: any, idx: number) => {
-                        return (
-                          <option
-                            key={i}
-                            style={{
-                              textOverflow: "ellipsis",
-                            }}
-                            value={i}
-                          >
-                            {i}
-                          </option>
-                        );
-                      }
-                    )}
-
                   {settings.selectedBlockchain === "Ethereum" &&
                     settings.supportedEthereumNetworks.map(
                       (i: any, idx: number) => {

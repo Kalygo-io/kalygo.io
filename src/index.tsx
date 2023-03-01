@@ -7,13 +7,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { HashRouter } from "react-router-dom";
 
-import { store } from "./store/store";
+import { store, persistor } from "./store/store";
 import { Provider } from "react-redux";
 
 import ScrollToTop from "./components/ScrollToTop";
 
 import reportWebVitals from "./reportWebVitals";
 import Router from "./pages/Router";
+import { PersistGate } from "redux-persist/integration/react";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -21,10 +22,12 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <HashRouter>
-      <ScrollToTop />
-      <Router />
-    </HashRouter>
+    <PersistGate loading={null} persistor={persistor}>
+      <HashRouter>
+        <ScrollToTop />
+        <Router />
+      </HashRouter>
+    </PersistGate>
   </Provider>
   // </React.StrictMode>
 );

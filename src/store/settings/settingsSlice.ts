@@ -4,8 +4,8 @@ import { PeraWalletConnect } from "@perawallet/connect";
 import { AlgorandChainIDs } from "@perawallet/connect/dist/util/peraWalletTypes";
 
 type EmptyNetwork = "";
-type SupportedEthereumNetworks = "MainNet" | "TestNet" | "localhost";
-type SupportedAlgorandNetworks = "Mainnet" | "Sepolia" | "Goerli" | "localhost";
+type SupportedAlgorandNetworks = "MainNet" | "TestNet" | "localhost";
+type SupportedEthereumNetworks = "Mainnet" | "Sepolia" | "Goerli" | "localhost";
 type SupportedNetworks =
   | EmptyNetwork
   | SupportedEthereumNetworks
@@ -21,7 +21,8 @@ interface SupportedBlockchain {
 interface SettingsState {
   selectedEthereumNetwork: string;
   selectedAlgorandNetwork: string;
-  supportedAlgorandNetworks: string[];
+  supportedAlgorandNetworksAlgoSigner: string[];
+  supportedAlgorandNetworksPera: string[];
   supportedAlgorandWallets: { name: string; enabled: boolean }[];
   supportedEthereumNetworks: string[];
   supportedBlockchains: SupportedBlockchain[];
@@ -52,7 +53,8 @@ const initialState: SettingsState = {
   selectedEthereumNetwork: "Goerli",
   selectedAlgorandNetwork: "TestNet",
   // selectedAlgorandNetwork: "localhost",
-  supportedAlgorandNetworks: ["MainNet", "TestNet", "localhost"],
+  supportedAlgorandNetworksAlgoSigner: ["MainNet", "TestNet", "localhost"],
+  supportedAlgorandNetworksPera: ["MainNet", "TestNet"],
   supportedAlgorandWallets: [
     {
       name: "AlgoSigner",
@@ -60,7 +62,7 @@ const initialState: SettingsState = {
     },
     {
       name: "Pera",
-      enabled: false,
+      enabled: true,
     },
   ],
   supportedEthereumNetworks: ["Mainnet", "Sepolia", "Goerli", "localhost"],
