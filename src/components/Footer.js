@@ -1,14 +1,17 @@
-
 import React from "react";
 import moment from "moment-timezone";
-import { Row, Col, Card, Tooltip, Image, Button } from 'react-bootstrap';
+import { Row, Col, Card, Tooltip, Image, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCogs, faDownload, faRocket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCogs,
+  faDownload,
+  faRocket,
+} from "@fortawesome/free-solid-svg-icons";
 import BS5Logo from "../assets/img/technologies/bootstrap-5-logo.svg";
 import ReactLogo from "../assets/img/technologies/react-logo.svg";
 import LaravelLogo from "../assets/img/technologies/laravel-logo.svg";
-import GitHubButton from 'react-github-btn';
-import { Link } from 'react-router-dom';
+import GitHubButton from "react-github-btn";
+import { Link } from "react-router-dom";
 import { Routes } from "../routes";
 
 const Footer = (props) => {
@@ -17,7 +20,7 @@ const Footer = (props) => {
 
   const toggleSettings = (toggle) => {
     props.toggleSettings(toggle);
-  }
+  };
 
   return (
     <div>
@@ -53,7 +56,7 @@ const Footer = (props) => {
           </Card.Body>
         </Card>
       )} */}
-      <footer className="footer section py-5">
+      <footer className="footer section py-4">
         <Row>
           <Col xs={12} lg={6} className="mb-4 mb-lg-0">
             <p className="mb-0 text-center text-xl-left">
@@ -72,4 +75,4 @@ const Footer = (props) => {
   );
 };
 
-export default Footer
+export default Footer;

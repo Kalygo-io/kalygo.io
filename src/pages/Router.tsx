@@ -126,7 +126,7 @@ const RouteWithLoader = (props: any) => {
       </Navbar>
       <Preloader show={loaded ? false : true} />
       <Outlet />
-      <footer className="footer py-6 bg-dark text-white">
+      <footer className="footer py-4 bg-dark text-white">
         <Container>
           <Row className="align-items-center justify-content-center text-center">
             <Col xs={12} sm={12}>

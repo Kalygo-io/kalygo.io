@@ -31,7 +31,7 @@ const Presentation = () => {
   return (
     <>
       <section
-        className="section-header overflow-hidden pt-5 pt-lg-6 pb-4 pb-lg-6 bg-primary text-white"
+        className="section-header overflow-hidden pt-5 pt-lg-6 pb-5 pb-lg-6 bg-primary text-white"
         id="home"
       >
         <Container>
@@ -43,7 +43,9 @@ const Presentation = () => {
               <h1 className="fw-bolder text-secondary display-1 mb-0 ls-6">
                 KALYGO
               </h1>
-              <h3 className=" text-secondary">Low Code meets Algorand</h3>
+              <h3 className=" text-secondary text-muted">
+                Low Code meets Algorand
+              </h3>
               {/* <p className="text-muted fw-light mb-3 h5"></p> */}
               <div className="d-flex align-items-center justify-content-center py-2">
                 <Button
@@ -112,6 +114,30 @@ const Presentation = () => {
           </Row>
         </Container>
       </section>
+
+      {/* <section
+        className="section section-sm bg-primary pb-0"
+        id="getting-started"
+      >
+        <Container>
+          <Row className="justify-content-center text-center text-white">
+            <Col xs={12}>
+              <iframe
+                src="https://kalygo.substack.com/embed"
+                width="100%"
+                height="320"
+                style={{
+                  border: "1px solid #EEE",
+                  borderRadius: "10px",
+                  background: "white",
+                }}
+                frameBorder="0"
+                scrolling="no"
+              ></iframe>
+            </Col>
+          </Row>
+        </Container>
+      </section> */}
     </>
   );
 };
