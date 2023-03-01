@@ -96,7 +96,7 @@ const Presentation = () => {
               <p className="mb-2">
                 <span className="fw-bold">Less stress, more time for you</span>
               </p>
-              <p>Block times average about ~3.6 seconds and are final</p>
+              <p>Block times average ~3.6 seconds and are final</p>
             </Col>
           </Row>
         </Container>
