@@ -22,6 +22,7 @@ import {
   faInstagram,
   faYoutube,
   faLinkedin,
+  faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 
 import { HashLink } from "react-router-hash-link";
@@ -129,22 +130,8 @@ const RouteWithLoader = (props: any) => {
       <footer className="footer py-4 bg-dark text-white">
         <Container>
           <Row className="align-items-center justify-content-center text-center">
-            <Col xs={12} sm={12}>
-              <ul className="d-flex flex-row justify-content-evenly py-4">
-                <li
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    navigate(`/governance`);
-                  }}
-                >
-                  Governance
-                </li>
-              </ul>
-            </Col>
             <Col xs={12} sm={4}>
-              <ul className="d-flex flex-row justify-content-evenly py-4">
+              <ul className="d-flex flex-row justify-content-evenly py-2">
                 <li>
                   <a href="https://www.instagram.com/kalygo.io">
                     <FontAwesomeIcon
@@ -177,6 +164,14 @@ const RouteWithLoader = (props: any) => {
                     />
                   </a>
                 </li>
+                <li>
+                  <a href="https://github.com/Kalygo-io">
+                    <FontAwesomeIcon
+                      style={{ height: 24, width: 24 }}
+                      icon={faGithub}
+                    />
+                  </a>
+                </li>
               </ul>
             </Col>
           </Row>
@@ -190,11 +185,7 @@ const RouteWithLoader = (props: any) => {
           </Row> */}
           <Row>
             <Col>
-              <br />
-              <div
-                className="d-flex flex-column text-center justify-content-center align-items-center"
-                role="contentinfo"
-              >
+              <div className="d-flex flex-column text-center justify-content-center align-items-center py-2">
                 <span className="">
                   © Kalygo{" "}
                   <span className="current-year">
@@ -206,46 +197,18 @@ const RouteWithLoader = (props: any) => {
             </Col>
           </Row>
           <Row>
-            {/* <Col className="mb-md-2"> */}
-            <Col className="">
-              <br />
-              <div
-                className="d-flex text-center justify-content-center align-items-center"
-                style={{
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  window.open(
-                    "https://github.com/Kalygo-io/kalygo.io",
-                    "_blank"
-                  );
-                }}
-              >
-                Frontend
-                {/* -&nbsp; */}
-                {/* <FontAwesomeIcon
-                  style={{ height: 32, width: 32 }}
-                  icon={faGithub}
-                /> */}
-              </div>
-              <div
-                className="d-flex text-center justify-content-center align-items-center"
-                style={{
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  window.open(
-                    "https://github.com/Kalygo-io/kalygo_contracts_with_beaker",
-                    "_blank"
-                  );
-                }}
-              >
-                Contracts
-                {/* -&nbsp; */}
-                {/* <FontAwesomeIcon
-                  style={{ height: 32, width: 32 }}
-                  icon={faGithub}
-                /> */}
+            <Col xs={12} sm={12}>
+              <div className="d-flex flex-row justify-content-evenly py-2">
+                <span
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    navigate(`/governance`);
+                  }}
+                >
+                  Governance
+                </span>
               </div>
             </Col>
           </Row>
