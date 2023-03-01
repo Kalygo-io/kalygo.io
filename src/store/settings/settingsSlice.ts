@@ -62,7 +62,7 @@ const initialState: SettingsState = {
     },
     {
       name: "Pera",
-      enabled: true,
+      enabled: false,
     },
   ],
   supportedEthereumNetworks: ["Mainnet", "Sepolia", "Goerli", "localhost"],
