@@ -225,9 +225,9 @@ function Overview_CashBuy__v1_0_0() {
     }
   }
 
-  console.log("app --->>>", app);
-  console.log("account --->>>", account);
-  console.log("asset --->>>", asset);
+  // console.log("app --->>>", app);
+  // console.log("account --->>>", account);
+  // console.log("asset --->>>", asset);
 
   return app.error ? (
     <h1>ERROR</h1>

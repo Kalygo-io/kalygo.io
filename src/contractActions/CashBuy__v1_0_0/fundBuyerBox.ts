@@ -8,7 +8,7 @@ import algosdk, {
   Transaction,
   ABIArgument,
 } from "algosdk";
-import { signer as AlgoSigner } from "../helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
 import ABI from "../../contractExports/contracts/cashBuy/application.json";
 
 export async function fundBuyerBox(
@@ -41,7 +41,7 @@ export async function fundBuyerBox(
     });
     const tws = {
       txn: ptxn,
-      signer: AlgoSigner,
+      signer: signerForAlgoSigner,
     };
     atc.addTransaction(tws);
 

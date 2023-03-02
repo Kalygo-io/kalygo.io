@@ -11,7 +11,7 @@ import { showSuccessToast } from "../../utility/successToast";
 import { supportedContracts } from "../../data/supportedContracts";
 
 import ABI from "../../contractExports/contracts/cashBuy/application.json";
-import { signer as AlgoSigner } from "../helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
 
 export async function stablecoinClawback(
   sender: string,
@@ -19,7 +19,8 @@ export async function stablecoinClawback(
   recv: string, // buyer or seller
   network: string,
   fungibleTokenId: number,
-  fungibleTokenBalance: number
+  fungibleTokenBalance: number,
+  signer: any
 ) {
   try {
     console.log("stablecoinClawback from contract", contractAddress);
@@ -39,7 +40,7 @@ export async function stablecoinClawback(
     });
     const tws = {
       txn: txn,
-      signer: AlgoSigner,
+      signer,
     };
     atc.addTransaction(tws);
 

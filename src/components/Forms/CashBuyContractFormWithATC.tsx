@@ -29,7 +29,8 @@ import { formatCurrency } from "./helpers/formatCurrency";
 import { supportedStablecoins } from "./helpers/supportedStablecoins";
 
 import ABI from "../../contractExports/contracts/cashBuy/application.json";
-import { signer } from "../../contractActions/helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../../contractActions/helpers/signers/AlgoSigner";
+import { signerForPera } from "../../contractActions/helpers/signers/PeraSigner";
 
 interface P {
   accounts: string[];
@@ -68,9 +69,9 @@ export const CashBuyContractForm = (props: P) => {
   } = useForm({
     mode: "onBlur",
     defaultValues: {
-      escrowAmount1: "$10,000.00",
-      escrowAmount2: "$90,000.00",
-      escrowTotal: "$100,000.00",
+      escrowAmount1: "$0.10",
+      escrowAmount2: "$0.10",
+      escrowTotal: "$0.20",
       // asaId: 95939489,
       asaId: defaultASAid,
       customAsaId: "",
@@ -86,8 +87,8 @@ export const CashBuyContractForm = (props: P) => {
       // movingDate: moment().add("120", "s").toString(),
       // closingDate: moment().add("150", "s").toString(),
       // freeFundsDate: moment().add("180", "s").toString(),
-      buyer: "YRRGGYPFQYUIKHTYCWL3V7FGMDNNVZ46QJKE6GQQDURQL3NIVUIUFQSXAY",
-      seller: "YRRGGYPFQYUIKHTYCWL3V7FGMDNNVZ46QJKE6GQQDURQL3NIVUIUFQSXAY",
+      buyer: settings.selectedAlgorandAccount,
+      seller: settings.selectedAlgorandAccount,
       // titleCompany:
       //   "A3326WI7EK3RVOQ4JRZSLY3HO26JCVGT7HGU2RBBFAX3KOVG4XFA4XCTOQ",
       propertyAddress: "3717 Royal Palm Ave.",
@@ -99,8 +100,8 @@ export const CashBuyContractForm = (props: P) => {
   const asaId = watch("asaId");
   const customAsaId = watch("customAsaId");
 
-  console.log("asaId", asaId);
-  console.log("--->>>", asaId === "-1");
+  // console.log("asaId", asaId);
+  // console.log("--->>>", asaId === "-1");
 
   useEffect(() => {
     async function fetch() {
@@ -220,6 +221,19 @@ export const CashBuyContractForm = (props: P) => {
         Buffer.from(ABI.source.clear, "base64").toString()
       );
 
+      let atcSigner;
+
+      console.log("!!! -> !!!", settings.selectedAlgorandWallet);
+
+      switch (settings.selectedAlgorandWallet) {
+        case "AlgoSigner":
+          atcSigner = signerForAlgoSigner;
+          break;
+        case "Pera":
+          atcSigner = signerForPera;
+          break;
+      }
+
       atc.addMethodCall({
         appID: 0,
         method: contract.getMethodByName("create"),
@@ -246,7 +260,9 @@ export const CashBuyContractForm = (props: P) => {
         sender: settings.selectedAlgorandAccount,
         suggestedParams: params,
         note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
-        signer: signer,
+        // signer: signerForAlgoSigner,
+        // @ts-ignore
+        signer: atcSigner,
         onComplete: onComplete,
         extraPages: 1,
       });
@@ -277,8 +293,9 @@ export const CashBuyContractForm = (props: P) => {
   // console.log("errors", errors);
   // console.log("isValid", isValid);
 
-  console.log("asaId", asaId);
-  console.log("asaId ===", asaId === "-1");
+  // console.log("asaId", asaId);
+  // console.log("asaId ===", asaId === "-1");
+  console.log("->", settings.selectedAlgorandWallet);
 
   let stablecoinOptions =
     supportedStablecoins.Algorand[settings.selectedAlgorandNetwork] || [];

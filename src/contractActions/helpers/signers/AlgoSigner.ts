@@ -1,7 +1,7 @@
 import algosdk from "algosdk";
 import { Buffer } from "buffer";
 
-export async function signer(
+export async function signerForAlgoSigner(
   unsignedTxns: Array<algosdk.Transaction>
 ): Promise<Uint8Array[]> {
   // console.log("unsignedTxns", unsignedTxns);

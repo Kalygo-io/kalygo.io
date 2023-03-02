@@ -9,14 +9,15 @@ import { Buffer } from "buffer";
 import { showErrorToast } from "../../utility/errorToast";
 import { showSuccessToast } from "../../utility/successToast";
 import { supportedContracts } from "../../data/supportedContracts";
-import { signer as AlgoSigner } from "../helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
 
 export async function firstEscrowAmount(
   sender: string,
   contractAddress: string,
   fungibleTokenId: number,
   network: string,
-  escrow1Amount: number
+  escrow1Amount: number,
+  signer: any
 ) {
   try {
     console.log("1st Escrow Amount");
@@ -32,7 +33,7 @@ export async function firstEscrowAmount(
     });
     const tws = {
       txn: txn,
-      signer: AlgoSigner,
+      signer: signer,
     };
     let atc = new AtomicTransactionComposer();
     atc.addTransaction(tws);

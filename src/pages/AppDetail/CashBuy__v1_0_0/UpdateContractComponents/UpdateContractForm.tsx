@@ -7,7 +7,7 @@ import get from "lodash/get";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { RootState } from "../../../../store/store";
 import ABI from "../../../../contractExports/contracts/cashBuy/application.json";
-import { signer } from "../../../../contractActions/helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../../../../contractActions/helpers/signers/AlgoSigner";
 
 import { showErrorToast } from "../../../../utility/errorToast";
 import { showSuccessToast } from "../../../../utility/successToast";
@@ -163,7 +163,7 @@ export function UpdateContractForm(props: P) {
         sender: settings.selectedAlgorandAccount,
         suggestedParams: params,
         note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
-        signer: signer,
+        signer: signerForAlgoSigner,
       });
 
       const tx_id = await atc.submit(

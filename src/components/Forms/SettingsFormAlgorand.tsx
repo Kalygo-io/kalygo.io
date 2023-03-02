@@ -140,7 +140,7 @@ export const SettingsFormAlgorand = (props: P) => {
                 <Form.Label>
                   Wallet{" "}
                   {errors.selectedAlgorandWallet && (
-                    <span style={{ color: "red" }}>*required</span>
+                    <span style={{ color: "red" }}>*required&nbsp;</span>
                   )}
                 </Form.Label>
                 <Form.Select
@@ -252,7 +252,7 @@ export const SettingsFormAlgorand = (props: P) => {
                 <Form.Label>
                   Account{" "}
                   {errors.selectedAlgorandAccount && (
-                    <span style={{ color: "red" }}>*required</span>
+                    <span style={{ color: "red" }}>*required&nbsp;</span>
                   )}
                   <FontAwesomeIcon
                     color="black"

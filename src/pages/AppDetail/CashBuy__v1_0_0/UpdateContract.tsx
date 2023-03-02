@@ -13,7 +13,7 @@ import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
 import { Algod } from "../../../services/algod";
 
 import ABI from "../../../contractExports/contracts/cashBuy/application.json";
-import { signer } from "../../../contractActions/helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../../../contractActions/helpers/signers/AlgoSigner";
 
 import { showErrorToast } from "../../../utility/errorToast";
 import { showSuccessToast } from "../../../utility/successToast";

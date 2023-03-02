@@ -12,9 +12,12 @@ import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { RootState } from "../../store/store";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Algod } from "../../services/algod";
-import algosdk from "algosdk";
+import algosdk, { AtomicTransactionComposer, Transaction } from "algosdk";
 import { showErrorToast } from "../../utility/errorToast";
 import { showSuccessToast } from "../../utility/successToast";
+
+import { signerForAlgoSigner } from "../../contractActions/helpers/signers/AlgoSigner";
+import { signerForPera } from "../../contractActions/helpers/signers/PeraSigner";
 
 interface P {
   accounts: string[];
@@ -44,6 +47,21 @@ export const FungibleTokenContractForm = (props: P) => {
 
   watch("totalSupply");
 
+  let atcSigner:
+    | ((unsignedTxns: Transaction[]) => Promise<Uint8Array[]>)
+    | ((unsignedTxns: Transaction[], addr: string) => Promise<Uint8Array[]>);
+
+  console.log("!!! -> !!!", settings.selectedAlgorandWallet);
+
+  switch (settings.selectedAlgorandWallet) {
+    case "AlgoSigner":
+      atcSigner = signerForAlgoSigner;
+      break;
+    case "Pera":
+      atcSigner = signerForPera;
+      break;
+  }
+
   const onSubmit = async (data: any) => {
     try {
       console.log("-> data <-", data);
@@ -67,6 +85,62 @@ export const FungibleTokenContractForm = (props: P) => {
 
       const defaultFrozen = false; // whether accounts should be frozen by default
 
+      // const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
+      //   from: account.addr,
+      //   total,
+      //   decimals,
+      //   assetName,
+      //   unitName,
+      //   assetURL: url,
+      //   assetMetadataHash: "",
+      //   defaultFrozen,
+
+      //   freeze: account.addr,
+      //   manager: account.addr,
+      //   clawback: account.addr,
+      //   reserve: account.addr,
+
+      //   suggestedParams: params,
+      // });
+
+      // console.log(txn);
+
+      // let binaryTx = txn.toByte();
+
+      // let base64Tx = (window as any).AlgoSigner.encoding.msgpackToBase64(
+      //   binaryTx
+      // );
+
+      // console.log("base64Tx", base64Tx);
+
+      // let signedTxn = await (window as any).AlgoSigner.signTxn([
+      //   {
+      //     txn: base64Tx,
+      //   },
+      // ]);
+
+      // console.log("signedTxn", signedTxn);
+
+      // let tmp = signedTxn.map((tx: any) => {
+      //   if (tx)
+      //     return {
+      //       txID: tx.txID,
+      //       blob: (window as any).AlgoSigner.encoding.base64ToMsgpack(tx.blob),
+      //     };
+      //   return {};
+      // });
+
+      // const res = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+      //   .sendRawTransaction(tmp[0].blob)
+      //   .do();
+
+      // console.log("res", res);
+
+      console.log("1st Escrow Amount");
+      let sp = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+        .getTransactionParams()
+        .do();
+      // Create a transaction
       const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
         from: account.addr,
         total,
@@ -84,53 +158,36 @@ export const FungibleTokenContractForm = (props: P) => {
 
         suggestedParams: params,
       });
-
-      console.log(txn);
-
-      let binaryTx = txn.toByte();
-
-      let base64Tx = (window as any).AlgoSigner.encoding.msgpackToBase64(
-        binaryTx
+      const tws = {
+        txn: txn,
+        signer: atcSigner,
+      };
+      let atc = new AtomicTransactionComposer();
+      // @ts-ignore
+      atc.addTransaction(tws);
+      const tx_id = await atc.submit(
+        Algod.getAlgod(settings.selectedAlgorandNetwork)
       );
 
-      console.log("base64Tx", base64Tx);
-
-      let signedTxn = await (window as any).AlgoSigner.signTxn([
-        {
-          txn: base64Tx,
-        },
-      ]);
-
-      console.log("signedTxn", signedTxn);
-
-      let tmp = signedTxn.map((tx: any) => {
-        if (tx)
-          return {
-            txID: tx.txID,
-            blob: (window as any).AlgoSigner.encoding.base64ToMsgpack(tx.blob),
-          };
-        return {};
-      });
-
-      const res = await Algod.getAlgod(settings.selectedAlgorandNetwork)
-        .sendRawTransaction(tmp[0].blob)
-        .do();
-
-      console.log("res", res);
-
-      showSuccessToast("Contract creation request sent to network!");
+      showSuccessToast("ASA creation request sent to network!");
 
       showSuccessToast("Awaiting block confirmation...");
 
-      const waiting = await algosdk.waitForConfirmation(
+      // const waiting = await algosdk.waitForConfirmation(
+      //   Algod.getAlgod(settings.selectedAlgorandNetwork),
+      //   res.txId,
+      //   32
+      // );
+
+      // console.log(waiting);
+
+      await algosdk.waitForConfirmation(
         Algod.getAlgod(settings.selectedAlgorandNetwork),
-        res.txId,
+        tx_id[0],
         32
       );
 
-      console.log(waiting);
-
-      showSuccessToast("Create ASA...");
+      showSuccessToast("Created ASA successfully");
 
       navigate(`/dashboard/transactions`);
     } catch (e) {

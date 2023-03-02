@@ -1,4 +1,5 @@
 import React from "react";
+import { Transaction } from "algosdk";
 import { Card, Button } from "react-bootstrap";
 
 import { RootState } from "../../../store/store";
@@ -16,6 +17,9 @@ import { fundMinimumBalance } from "../../../contractActions/CashBuy__v1_0_0/fun
 import { fundBuyerBox } from "../../../contractActions/CashBuy__v1_0_0/fundBuyerBox";
 import { optoutContractFromASA } from "../../../contractActions/CashBuy__v1_0_0/optoutContractFromASA";
 import { stablecoinClawback } from "../../../contractActions/CashBuy__v1_0_0/stablecoinClawback";
+
+import { signerForAlgoSigner } from "../../../contractActions/helpers/signers/AlgoSigner";
+import { signerForPera } from "../../../contractActions/helpers/signers/PeraSigner";
 
 import { useNavigate } from "react-router-dom";
 
@@ -73,17 +77,30 @@ export const ActionsWidget = (props: P) => {
   const settings = useAppSelector((state: RootState) => state.settings);
   const navigate = useNavigate();
 
-  console.log("ACTIONS WIDGET TEST");
-  console.log("balance", balance);
-  console.log("freeFundsDate", freeFundsDate);
-  console.log("now", now);
-  console.log(
-    "--__--",
-    fungibleTokenBalance > 0 &&
-      balance > 0 &&
-      sellerArbitrationFlag > 0 &&
-      buyerArbitrationFlag > 0
-  );
+  // console.log("ACTIONS WIDGET TEST");
+  // console.log("balance", balance);
+  // console.log("freeFundsDate", freeFundsDate);
+  // console.log("now", now);
+  // console.log(
+  //   "--__--",
+  //   fungibleTokenBalance > 0 &&
+  //     balance > 0 &&
+  //     sellerArbitrationFlag > 0 &&
+  //     buyerArbitrationFlag > 0
+  // );
+
+  let atcSigner:
+    | ((unsignedTxns: Transaction[]) => Promise<Uint8Array[]>)
+    | ((unsignedTxns: Transaction[], addr: string) => Promise<Uint8Array[]>);
+  console.log("!!! -> !!!", settings.selectedAlgorandWallet);
+  switch (settings.selectedAlgorandWallet) {
+    case "AlgoSigner":
+      atcSigner = signerForAlgoSigner;
+      break;
+    case "Pera":
+      atcSigner = signerForPera;
+      break;
+  }
 
   return (
     <Card border="light" className="text-center p-0 mb-4">
@@ -92,50 +109,6 @@ export const ActionsWidget = (props: P) => {
         {operator === buyer && <div className="pt-2">Buyer</div>}
         {operator === buyer && (
           <>
-            {/* {
-              balance === 0 && now < inspectPeriodEnd ? 
-              <Button
-                variant="secondary"
-                size="sm"
-                className="m-1"
-                onClick={() => {
-                  let mbr = 200000
-                  console.log('mbr', mbr)
-                  fundMinimumBalance(
-                    settings.selectedAlgorandAccount,
-                    contractAddress,
-                    appId,
-                    settings.selectedAlgorandNetwork,
-                    mbr // 100,000 mAlgos for optin to ASA + 100,000 mAlgos for being able to issue calls from the contract
-                  );
-                }}>Fund Minimum Balance</Button> : <Button size="sm" className="m-1" disabled>Fund Minimum Balance{" "} </Button>
-            } */}
-
-            {/* {
-              balance === 0 && now < inspectPeriodEnd ? 
-              <Button
-                variant="secondary"
-                size="sm"
-                className="m-1"
-                onClick={() => {
-                  let buyerByteCount = 1029
-                  let sellerByteCount = 1030
-                  let mbrForBuyerNotes = 2500 + 400 * buyerByteCount || -1; // for Buyer Notes
-                  let mbrForSellerNotes = 2500 + 400 * sellerByteCount || -1; // for Seller Notes
-                  let mbr = mbrForBuyerNotes + mbrForSellerNotes
-                  
-                  console.log('mbr', mbr)
-                  
-                  fundBuyerBox(
-                    settings.selectedAlgorandAccount,
-                    contractAddress,
-                    appId,
-                    settings.selectedAlgorandNetwork,
-                    mbr // 100,000 mAlgos for optin to ASA + 100,000 mAlgos for being able to issue calls from the contract
-                  );
-                }}>Fund Buyer Box</Button> : <Button size="sm" className="m-1" disabled>Fund Buyer Box</Button>
-            } */}
-
             {
               /* prettier-ignore */
               buyerPulloutFlag < 1 && now <= inspectPeriodEnd && fungibleTokenBalance >= 0 && fungibleTokenBalance < escrowAmount1 ?
@@ -146,7 +119,8 @@ export const ActionsWidget = (props: P) => {
                     contractAddress,
                     fungibleTokenId,
                     settings.selectedAlgorandNetwork,
-                    escrowAmount1
+                    escrowAmount1,
+                    atcSigner
                   );
                 }}>Send 1st Escrow</Button> : <Button size="sm" className="m-1" disabled>Send 1st Escrow</Button>
             }
@@ -162,7 +136,8 @@ export const ActionsWidget = (props: P) => {
                     contractAddress,
                     fungibleTokenId,
                     settings.selectedAlgorandNetwork,
-                    escrowAmount2
+                    escrowAmount2,
+                    atcSigner
                   );
                 }}>Send 2nd Escrow</Button> : <Button size="sm" className="m-1" disabled>Send 2nd Escrow</Button>
             }
@@ -179,7 +154,8 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandAccount,
                     contractAddress,
                     appId,
-                    settings.selectedAlgorandNetwork
+                    settings.selectedAlgorandNetwork,
+                    atcSigner
                   );
                 }}>Buyer Arbitration</Button> : <Button size="sm" className="m-1" disabled>Buyer Arbitration</Button>
             }
@@ -192,7 +168,8 @@ export const ActionsWidget = (props: P) => {
                   buyerPullOut(
                     settings.selectedAlgorandAccount,
                     appId,
-                    settings.selectedAlgorandNetwork
+                    settings.selectedAlgorandNetwork,
+                    atcSigner
                   );
                 }}>Buyer Pullout</Button> : <Button size="sm" className="m-1" disabled>Buyer Pullout</Button>
             }
@@ -211,7 +188,8 @@ export const ActionsWidget = (props: P) => {
                       settings.selectedAlgorandAccount,
                       appId,
                       fungibleTokenId,
-                      settings.selectedAlgorandNetwork
+                      settings.selectedAlgorandNetwork,
+                      atcSigner
                     );
                   }}>Buyer Withdraw ASA</Button> : <Button size="sm" className="m-1" disabled>Buyer Withdraw ASA</Button>
             }
@@ -225,7 +203,8 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandAccount,
                     contractAddress,
                     appId,
-                    settings.selectedAlgorandNetwork
+                    settings.selectedAlgorandNetwork,
+                    atcSigner
                   );
                 }}>Buyer Withdraw Balance</Button> : <Button size="sm" className="m-1" disabled>Buyer Withdraw Balance</Button>
             }
@@ -242,7 +221,7 @@ export const ActionsWidget = (props: P) => {
                       appId,
                       settings.selectedAlgorandNetwork,
                       fungibleTokenId,
-                      200000 // 100,000 mAlgos for optin to ASA + 100,000 mAlgos for being able to issue calls from the contract
+                      atcSigner
                     );
                   }}>Optin to ASA</Button> : <Button size="sm" className="m-1" disabled>Optin to ASA</Button>
             }
@@ -260,7 +239,8 @@ export const ActionsWidget = (props: P) => {
                     contractAddress,
                     appId,
                     settings.selectedAlgorandNetwork,
-                    fungibleTokenId
+                    fungibleTokenId,
+                    atcSigner
                   );
                 }}>Buyer Optout from ASA</Button> : <Button size="sm" className="m-1" disabled>Buyer Optout from ASA </Button>
             }
@@ -275,16 +255,9 @@ export const ActionsWidget = (props: P) => {
                     contractAddress,
                     appId,
                     settings.selectedAlgorandNetwork,
+                    atcSigner
                   );
                 }}>Buyer Delete App</Button> : <Button size="sm" className="m-1" disabled>Buyer Delete App</Button>
-            }
-
-            {
-              // (true) ?
-              // <Button variant="light" size="sm" className="m-1"
-              //   onClick={() => {
-              //     showNoteModal()
-              //   }}>Buyer Note</Button> : <Button size="sm" className="m-1" disabled>Buyer Note</Button>
             }
           </>
         )}
@@ -304,7 +277,8 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandAccount,
                     contractAddress,
                     appId,
-                    settings.selectedAlgorandNetwork
+                    settings.selectedAlgorandNetwork,
+                    atcSigner
                   );
                 }}>Seller Arbitration</Button> : <Button size="sm" className="m-1" disabled>Seller Arbitration</Button>
             }
@@ -322,7 +296,8 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandAccount,
                     appId,
                     fungibleTokenId,
-                    settings.selectedAlgorandNetwork
+                    settings.selectedAlgorandNetwork,
+                    atcSigner
                   );
                 }}
               >
@@ -343,7 +318,8 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandAccount,
                     contractAddress,
                     appId,
-                    settings.selectedAlgorandNetwork
+                    settings.selectedAlgorandNetwork,
+                    atcSigner
                   );
                 }}>Seller Withdraw Balance</Button> : <Button size="sm" className="m-1" disabled>Seller Withdraw Balance</Button>
             }
@@ -362,7 +338,8 @@ export const ActionsWidget = (props: P) => {
                     contractAddress,
                     appId,
                     settings.selectedAlgorandNetwork,
-                    fungibleTokenId
+                    fungibleTokenId,
+                    atcSigner
                   );
                 }}
               >
@@ -379,7 +356,8 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandAccount,
                     contractAddress,
                     appId,
-                    settings.selectedAlgorandNetwork
+                    settings.selectedAlgorandNetwork,
+                    atcSigner
                   );
 
                   // navigate("/dashboard/transactions")
@@ -408,7 +386,8 @@ export const ActionsWidget = (props: P) => {
                     buyer,
                     settings.selectedAlgorandNetwork,
                     fungibleTokenId,
-                    fungibleTokenBalance
+                    fungibleTokenBalance,
+                    atcSigner
                   );
                 }}>Clawback to Buyer</Button> : <Button size="sm" className="m-1" disabled>Clawback to Buyer</Button>
             }
@@ -428,7 +407,8 @@ export const ActionsWidget = (props: P) => {
                     seller,
                     settings.selectedAlgorandNetwork,
                     fungibleTokenId,
-                    fungibleTokenBalance
+                    fungibleTokenBalance,
+                    atcSigner
                   );
                 }}>Clawback to Seller</Button> : <Button size="sm" className="m-1" disabled>Clawback to Seller</Button>
             }
@@ -459,7 +439,8 @@ export const ActionsWidget = (props: P) => {
                     contractAddress,
                     appId,
                     settings.selectedAlgorandNetwork,
-                    mbr // 100,000 mAlgos for optin to ASA + 100,000 mAlgos for being able to issue calls from the contract
+                    mbr,
+                    atcSigner
                   );
                 }}>Fund MBR</Button> : <Button size="sm" className="m-1" disabled>Fund MBR</Button>
             }
@@ -473,7 +454,8 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandAccount,
                     contractAddress,
                     appId,
-                    settings.selectedAlgorandNetwork
+                    settings.selectedAlgorandNetwork,
+                    atcSigner
                   );
 
                   // navigate("/dashboard/transactions")
@@ -493,7 +475,8 @@ export const ActionsWidget = (props: P) => {
                     contractAddress,
                     appId,
                     settings.selectedAlgorandNetwork,
-                    fungibleTokenId
+                    fungibleTokenId,
+                    atcSigner
                   );
                 }}
               >
@@ -513,7 +496,8 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandAccount,
                     contractAddress,
                     appId,
-                    settings.selectedAlgorandNetwork
+                    settings.selectedAlgorandNetwork,
+                    atcSigner
                   );
                 }}>Withdraw Balance</Button> : <Button size="sm" className="m-1" disabled>Withdraw Balance</Button>
             }

@@ -7,7 +7,6 @@ import { showSuccessToast } from "../../utility/successToast";
 import { supportedContracts } from "../../data/supportedContracts";
 
 import ABI from "../../contractExports/contracts/cashBuy/application.json";
-import { signer as AlgoSigner } from "../helpers/signers/AlgoSigner";
 
 export async function optinContractToASA(
   sender: string,
@@ -15,7 +14,7 @@ export async function optinContractToASA(
   appId: number,
   network: string,
   fungibleTokenId: number,
-  optinAmount: number = 200000
+  signer: any
 ) {
   try {
     console.log("optinContractToASA");
@@ -31,7 +30,7 @@ export async function optinContractToASA(
       sender: sender,
       suggestedParams: params,
       note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
-      signer: AlgoSigner,
+      signer: signer,
       appForeignAssets: [fungibleTokenId],
     });
     const tx_id = await atc.submit(Algod.getAlgod(network));

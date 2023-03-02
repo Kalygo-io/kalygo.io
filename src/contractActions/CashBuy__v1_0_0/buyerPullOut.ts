@@ -6,12 +6,13 @@ import { showErrorToast } from "../../utility/errorToast";
 import { supportedContracts } from "../../data/supportedContracts";
 
 import ABI from "../../contractExports/contracts/cashBuy/application.json";
-import { signer as AlgoSigner } from "../helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
 
 export async function buyerPullOut(
   sender: string,
   appId: number,
-  network: string
+  network: string,
+  signer: any
 ) {
   try {
     console.log("buyerPullOut");
@@ -27,7 +28,7 @@ export async function buyerPullOut(
       sender: sender,
       suggestedParams: params,
       note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
-      signer: AlgoSigner,
+      signer,
     });
     const tx_id = await atc.submit(Algod.getAlgod(network));
     console.log("submit_response", tx_id);

@@ -62,7 +62,7 @@ const initialState: SettingsState = {
     },
     {
       name: "Pera",
-      enabled: false,
+      enabled: true,
     },
   ],
   supportedEthereumNetworks: ["Mainnet", "Sepolia", "Goerli", "localhost"],
@@ -80,9 +80,12 @@ const initialState: SettingsState = {
   // selectedAccount: "RHKHUONCBB7JOIQ2RDCSV3NUX5JFKLLOG2RKN4LRIJ6DQMAIBTFLLO72DM",
   // selectedAlgorandAccount:
   //   "YRRGGYPFQYUIKHTYCWL3V7FGMDNNVZ46QJKE6GQQDURQL3NIVUIUFQSXAY", // localhost
-  selectedAlgorandWallet: "AlgoSigner",
+  // selectedAlgorandWallet: "AlgoSigner",
+  selectedAlgorandWallet: "Pera",
+  // selectedAlgorandAccount:
+  //   "STRA24PIDCBJIWPSH7QEBM4WWUQU36WVGCEPAKOLZ6YK7IVLWPGL6AN6RU",
   selectedAlgorandAccount:
-    "STRA24PIDCBJIWPSH7QEBM4WWUQU36WVGCEPAKOLZ6YK7IVLWPGL6AN6RU",
+    "MTUSAPRF4IN37AYD5OO2UUXFTDBU53IFYICMTTXA4BCH66MU7MWP5IBDFI",
   // selectedAlgorandAccount:
   //   "MTUSAPRF4IN37AYD5OO2UUXFTDBU53IFYICMTTXA4BCH66MU7MWP5IBDFI",
   selectedEthereumAccount: "",

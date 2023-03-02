@@ -7,14 +7,15 @@ import { showSuccessToast } from "../../utility/successToast";
 import { supportedContracts } from "../../data/supportedContracts";
 
 import ABI from "../../contractExports/contracts/cashBuy/application.json";
-import { signer as AlgoSigner } from "../helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
 
 export async function optoutContractFromASA(
   sender: string,
   contractAddress: string,
   appId: number,
   network: string,
-  fungibleTokenId: number
+  fungibleTokenId: number,
+  signer: any
 ) {
   try {
     console.log("optoutContractFromASA");
@@ -30,7 +31,7 @@ export async function optoutContractFromASA(
       sender: sender,
       suggestedParams: params,
       note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
-      signer: AlgoSigner,
+      signer,
       appForeignAssets: [fungibleTokenId],
     });
     const tx_id = await atc.submit(Algod.getAlgod(network));

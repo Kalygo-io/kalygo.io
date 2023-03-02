@@ -4,14 +4,14 @@ import { showErrorToast } from "../../utility/errorToast";
 import { supportedContracts } from "../../data/supportedContracts";
 import { Buffer } from "buffer";
 import algosdk, { AtomicTransactionComposer, Transaction } from "algosdk";
-import { signer as AlgoSigner } from "../helpers/signers/AlgoSigner";
 
 export async function fundMinimumBalance(
   sender: string,
   contractAddress: string,
   appId: number,
   network: string,
-  amount: number
+  amount: number,
+  signer: any
 ) {
   try {
     console.log("fundMinimumBalance", {
@@ -32,7 +32,7 @@ export async function fundMinimumBalance(
     });
     const tws = {
       txn: ptxn,
-      signer: AlgoSigner,
+      signer: signer,
     };
     let atc = new AtomicTransactionComposer();
     atc.addTransaction(tws);

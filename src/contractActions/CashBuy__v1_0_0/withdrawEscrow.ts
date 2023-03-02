@@ -6,13 +6,14 @@ import { showErrorToast } from "../../utility/errorToast";
 import { supportedContracts } from "../../data/supportedContracts";
 
 import ABI from "../../contractExports/contracts/cashBuy/application.json";
-import { signer as AlgoSigner } from "../helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
 
 export async function withdrawEscrow(
   sender: string,
   appId: number,
   fungibleTokenId: number,
-  network: string
+  network: string,
+  signer: any
 ) {
   try {
     console.log("withdrawEscrow", sender, appId, fungibleTokenId, network);
@@ -28,7 +29,7 @@ export async function withdrawEscrow(
       sender: sender,
       suggestedParams: params,
       note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
-      signer: AlgoSigner,
+      signer,
       appForeignAssets: [fungibleTokenId],
     });
     const tx_id = await atc.submit(Algod.getAlgod(network));

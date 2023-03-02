@@ -13,7 +13,7 @@ import algosdk, { AtomicTransactionComposer, ABIArgument } from "algosdk";
 import get from "lodash/get";
 import { Buffer } from "buffer";
 import { supportedContracts } from "../../../data/supportedContracts";
-import { signer } from "../../../contractActions/helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../../../contractActions/helpers/signers/AlgoSigner";
 
 import { buildTsxForAppl } from "./helpers/TsxForTxnTypes/appl";
 import { buildTsxForPay } from "./helpers/TsxForTxnTypes/pay";
@@ -171,7 +171,7 @@ export function Box() {
         sender: settings.selectedAlgorandAccount,
         suggestedParams: params,
         note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
-        signer: signer,
+        signer: signerForAlgoSigner,
         boxes: [
           {
             appIndex: Number.parseInt(app_id!),
@@ -235,7 +235,7 @@ export function Box() {
         sender: settings.selectedAlgorandAccount,
         suggestedParams: params,
         note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
-        signer: signer,
+        signer: signerForAlgoSigner,
         boxes: [
           {
             appIndex: Number.parseInt(app_id!),

@@ -7,7 +7,7 @@ import { Algod } from "../../services/algod";
 import { Buffer } from "buffer";
 import { showSuccessToast } from "../../utility/successToast";
 import { showErrorToast } from "../../utility/errorToast";
-import { signer as AlgoSigner } from "../helpers/signers/AlgoSigner";
+import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
 import ABI from "../../contractExports/contracts/cashBuy/application.json";
 import { supportedContracts } from "../../data/supportedContracts";
 
@@ -15,7 +15,8 @@ export async function deleteApp(
   sender: string,
   contractAddress: string,
   appId: number,
-  network: string
+  network: string,
+  signer: any
 ) {
   try {
     console.log("deleteApp");
@@ -35,7 +36,7 @@ export async function deleteApp(
     });
     const tws = {
       txn: txn,
-      signer: AlgoSigner,
+      signer: signer,
     };
 
     atc.addTransaction(tws);
