@@ -188,6 +188,44 @@ export const fetchPeraNetworkAccounts = createAsyncThunk(
   }
 );
 
+export const disconnectPera = createAsyncThunk(
+  "pera/disconnectPera",
+  async (network: string, thunkAPI) => {
+    console.log("->->->", network, thunkAPI);
+
+    let chainId: AlgorandChainIDs = 4160;
+    switch (network) {
+      case "MainNet":
+        chainId = 416001;
+        break;
+      case "TestNet":
+        chainId = 416002;
+        break;
+      case "BetaNet":
+        chainId = 416003;
+        break;
+    }
+
+    console.log("chainId", chainId);
+
+    try {
+      const peraWallet = new PeraWalletConnect({
+        chainId: chainId,
+      });
+
+      peraWallet.disconnect();
+
+      return {
+        accounts: [],
+      };
+    } catch (e) {
+      return {
+        accounts: [],
+      };
+    }
+  }
+);
+
 export const fetchMetamaskNetworkAccounts = createAsyncThunk(
   "metamask/fetchNetworkAccounts",
   async (network: string, thunkAPI) => {
@@ -272,14 +310,11 @@ export const settingsSlice = createSlice({
     );
 
     builder.addCase(fetchPeraNetworkAccounts.fulfilled, (state, action) => {
-      // Add user to the state array
-      // state.entities.push(action.payload);
       state.accountsAlgorand = action.payload.accounts;
-      // state.selectedAccount =
-      //   action.payload.accounts.length > 0
-      //     ? action.payload.accounts[0].address
-      //     : "";
-      // state.selectedNetwork = action.payload.network as SupportedNetworks;
+    });
+
+    builder.addCase(disconnectPera.fulfilled, (state, action) => {
+      state.accountsAlgorand = action.payload.accounts;
     });
 
     builder.addCase(fetchMetamaskNetworkAccounts.fulfilled, (state, action) => {

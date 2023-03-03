@@ -7,6 +7,7 @@ import { SettingsFormAlgorand } from "../components/Forms/SettingsFormAlgorand";
 import { RootState } from "../store/store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { OperatorConfig } from "../components/Widgets/Generic/OperatorConfig";
+import { UtilitySettingsMethods } from "../components/Widgets/Generic/UtilitySettingsMethods";
 
 const Settings = () => {
   const settings = useAppSelector((state: RootState) => state.settings);
@@ -41,6 +42,9 @@ const Settings = () => {
           <Row>
             <Col xs={12}>
               <OperatorConfig />
+            </Col>
+            <Col xs={12}>
+              <UtilitySettingsMethods />
             </Col>
           </Row>
         </Col>
