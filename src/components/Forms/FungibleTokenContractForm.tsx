@@ -85,61 +85,6 @@ export const FungibleTokenContractForm = (props: P) => {
 
       const defaultFrozen = false; // whether accounts should be frozen by default
 
-      // const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
-      //   from: account.addr,
-      //   total,
-      //   decimals,
-      //   assetName,
-      //   unitName,
-      //   assetURL: url,
-      //   assetMetadataHash: "",
-      //   defaultFrozen,
-
-      //   freeze: account.addr,
-      //   manager: account.addr,
-      //   clawback: account.addr,
-      //   reserve: account.addr,
-
-      //   suggestedParams: params,
-      // });
-
-      // console.log(txn);
-
-      // let binaryTx = txn.toByte();
-
-      // let base64Tx = (window as any).AlgoSigner.encoding.msgpackToBase64(
-      //   binaryTx
-      // );
-
-      // console.log("base64Tx", base64Tx);
-
-      // let signedTxn = await (window as any).AlgoSigner.signTxn([
-      //   {
-      //     txn: base64Tx,
-      //   },
-      // ]);
-
-      // console.log("signedTxn", signedTxn);
-
-      // let tmp = signedTxn.map((tx: any) => {
-      //   if (tx)
-      //     return {
-      //       txID: tx.txID,
-      //       blob: (window as any).AlgoSigner.encoding.base64ToMsgpack(tx.blob),
-      //     };
-      //   return {};
-      // });
-
-      // const res = await Algod.getAlgod(settings.selectedAlgorandNetwork)
-      //   .sendRawTransaction(tmp[0].blob)
-      //   .do();
-
-      // console.log("res", res);
-
-      console.log("1st Escrow Amount");
-      let sp = await Algod.getAlgod(settings.selectedAlgorandNetwork)
-        .getTransactionParams()
-        .do();
       // Create a transaction
       const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
         from: account.addr,
