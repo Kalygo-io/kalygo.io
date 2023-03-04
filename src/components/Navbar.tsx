@@ -1,11 +1,14 @@
 import React from "react";
 import { Nav, Navbar, Container, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { RootState } from "../store/store";
 import { useAppSelector } from "../store/hooks";
-import { showErrorToast } from "../utility/errorToast";
+
 import settingsSlice from "../store/settings/settingsSlice";
+
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface P {
   handleConnectWalletClick: () => void;
@@ -16,47 +19,53 @@ export const NavbarComponent = (props: P) => {
   const { handleConnectWalletClick, handleDisconnectWalletClick } = props;
   const settings = useAppSelector((state: RootState) => state.settings);
 
+  const location = useLocation();
+  const { pathname } = location;
+
   return (
     <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
       <Container fluid className="px-0">
-        <div className="d-flex justify-content-end w-100">
-          {/* <div className="d-flex align-items-center">
-            <Form className="navbar-search">
-              <Form.Group id="topbarSearch">
-                <InputGroup className="input-group-merge search-bar">
-                  <InputGroup.Text>
-                    <FontAwesomeIcon icon={faSearch} />
-                  </InputGroup.Text>
-                  <Form.Control type="text" placeholder="Search" />
-                </InputGroup>
-              </Form.Group>
-            </Form>
-          </div> */}
-          <Nav className="align-items-center">
-            {settings.selectedBlockchain === "Algorand" &&
-              settings.selectedAlgorandWallet === "Pera" && (
-                <Button
-                  variant="info"
-                  onClick={
-                    settings.isPeraSessionConnected
-                      ? handleDisconnectWalletClick
-                      : handleConnectWalletClick
-                  }
-                >
-                  {settings.isPeraSessionConnected
-                    ? "Disconnect"
-                    : "Connect to Pera Wallet"}
-                </Button>
-              )}
+        <div className="d-flex justify-content-start w-100">
+          {
+            <Nav className="align-items-center">
+              {settings.selectedBlockchain === "Algorand" &&
+                settings.selectedAlgorandWallet === "Pera" &&
+                pathname === "/dashboard/settings" && (
+                  <Button
+                    variant="info"
+                    onClick={
+                      settings.isPeraSessionConnected
+                        ? handleDisconnectWalletClick
+                        : handleConnectWalletClick
+                    }
+                  >
+                    {settings.isPeraSessionConnected
+                      ? "Disconnect Pera"
+                      : "Connect Pera"}
+                  </Button>
+                )}
 
-            {/* <Dropdown as={Nav.Item}> */}
-            {/* <Dropdown.Toggle
-                as={Button}
-                variant="secondary"
-                className="text-dark me-2"
-              > */}
-            {/* <Nav.Item>asdf</Nav.Item> */}
-          </Nav>
+              {settings.selectedBlockchain === "Algorand" &&
+                settings.selectedAlgorandWallet === "Pera" &&
+                pathname !== "/dashboard/settings" &&
+                settings.isPeraSessionConnected && (
+                  <>
+                    <FontAwesomeIcon color="#00a677" icon={faCircle} />
+                    &nbsp;Pera Connected
+                  </>
+                )}
+
+              {settings.selectedBlockchain === "Algorand" &&
+                settings.selectedAlgorandWallet === "Pera" &&
+                pathname !== "/dashboard/settings" &&
+                !settings.isPeraSessionConnected && (
+                  <>
+                    <FontAwesomeIcon icon={faCircle} />
+                    &nbsp;Pera Disconnected
+                  </>
+                )}
+            </Nav>
+          }
         </div>
       </Container>
     </Navbar>

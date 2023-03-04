@@ -61,7 +61,7 @@ const initialState: SettingsState = {
   supportedAlgorandWallets: [
     {
       name: "AlgoSigner",
-      enabled: true,
+      enabled: false,
     },
     {
       name: "Pera",

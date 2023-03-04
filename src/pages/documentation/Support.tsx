@@ -24,18 +24,25 @@ export function Support() {
                 <ul className="docs-list">
                   <li>
                     Algorand{" "}
-                    <Card.Link
-                      href="https://www.purestake.com/technology/algosigner/"
-                      target="_blank"
-                    >
-                      AlgoSigner
-                    </Card.Link>
-                    {/* <Card.Link
-                      href="https://web.perawallet.app/"
-                      target="_blank"
-                    >
-                      Pera Web
-                    </Card.Link> */}
+                    <ul>
+                      <li>
+                        <Card.Link
+                          href="https://perawallet.app/"
+                          target="_blank"
+                        >
+                          Pera
+                        </Card.Link>
+                      </li>
+                      <li>
+                        <Card.Link
+                          href="https://www.purestake.com/technology/algosigner/"
+                          target="_blank"
+                        >
+                          AlgoSigner
+                        </Card.Link>
+                        &nbsp;(disabled)
+                      </li>
+                    </ul>
                   </li>
                   <li>
                     Ethereum{" "}

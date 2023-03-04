@@ -97,11 +97,10 @@ export const SettingsFormAlgorand = (props: P) => {
                     // setValue("selectedAlgorandAccount", "");
                     // setValue("selectedAlgorandNetwork", "");
                     // setValue("selectedBlockchain", target.value);
-
-                    console.log(
-                      "___ ___ ___",
-                      settings.selectedAlgorandNetwork
-                    );
+                    // console.log(
+                    //   "___ ___ ___",
+                    //   settings.selectedAlgorandNetwork
+                    // );
 
                     dispatch(
                       updateState({
@@ -128,6 +127,74 @@ export const SettingsFormAlgorand = (props: P) => {
                       </option>
                     );
                   })}
+                </Form.Select>
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Row className="align-items-center">
+            <Col md={6} className="mb-3">
+              <Form.Group id="network">
+                <Form.Label>
+                  Network{" "}
+                  {errors.selectedAlgorandNetwork && (
+                    <span style={{ color: "red" }}>*required</span>
+                  )}
+                </Form.Label>
+                <Form.Select
+                  {...register("selectedAlgorandNetwork", { required: true })}
+                  onChange={(e: React.FormEvent<EventTarget>) => {
+                    let target = e.target as HTMLSelectElement;
+
+                    console.log("!@#!@#", target.value);
+
+                    setValue("selectedAlgorandAccount", "");
+                    setValue("selectedAlgorandNetwork", target.value);
+
+                    dispatch(
+                      updateState({
+                        selectedAlgorandNetwork: target.value,
+                      })
+                    );
+                  }}
+                  style={{
+                    paddingRight: "32px",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {settings.selectedAlgorandWallet === "AlgoSigner" &&
+                    settings.supportedAlgorandNetworksAlgoSigner.map(
+                      (i: any, idx: number) => {
+                        return (
+                          <option
+                            key={i}
+                            style={{
+                              textOverflow: "ellipsis",
+                            }}
+                            value={i}
+                          >
+                            {i}
+                          </option>
+                        );
+                      }
+                    )}
+
+                  {settings.selectedAlgorandWallet === "Pera" &&
+                    settings.supportedAlgorandNetworksPera.map(
+                      (i: any, idx: number) => {
+                        return (
+                          <option
+                            key={i}
+                            style={{
+                              textOverflow: "ellipsis",
+                            }}
+                            value={i}
+                          >
+                            {i}
+                          </option>
+                        );
+                      }
+                    )}
                 </Form.Select>
               </Form.Group>
             </Col>
@@ -192,70 +259,6 @@ export const SettingsFormAlgorand = (props: P) => {
                 </Form.Select>
               </Form.Group>
             </Col>
-          </Row>
-
-          <Row className="align-items-center">
-            <Col md={6} className="mb-3">
-              <Form.Group id="network">
-                <Form.Label>
-                  Network{" "}
-                  {errors.selectedAlgorandNetwork && (
-                    <span style={{ color: "red" }}>*required</span>
-                  )}
-                </Form.Label>
-                <Form.Select
-                  {...register("selectedAlgorandNetwork", { required: true })}
-                  onChange={(e: React.FormEvent<EventTarget>) => {
-                    let target = e.target as HTMLSelectElement;
-
-                    console.log("!@#!@#", target.value);
-
-                    setValue("selectedAlgorandAccount", "");
-                    setValue("selectedAlgorandNetwork", target.value);
-
-                    // dispatch(fetchAlgoSignerNetworkAccounts(target.value));
-                  }}
-                  style={{
-                    paddingRight: "32px",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {settings.selectedAlgorandWallet === "AlgoSigner" &&
-                    settings.supportedAlgorandNetworksAlgoSigner.map(
-                      (i: any, idx: number) => {
-                        return (
-                          <option
-                            key={i}
-                            style={{
-                              textOverflow: "ellipsis",
-                            }}
-                            value={i}
-                          >
-                            {i}
-                          </option>
-                        );
-                      }
-                    )}
-
-                  {settings.selectedAlgorandWallet === "Pera" &&
-                    settings.supportedAlgorandNetworksPera.map(
-                      (i: any, idx: number) => {
-                        return (
-                          <option
-                            key={i}
-                            style={{
-                              textOverflow: "ellipsis",
-                            }}
-                            value={i}
-                          >
-                            {i}
-                          </option>
-                        );
-                      }
-                    )}
-                </Form.Select>
-              </Form.Group>
-            </Col>
             <Col md={6} className="mb-3">
               <Form.Group id="gender">
                 <Form.Label>
@@ -283,11 +286,28 @@ export const SettingsFormAlgorand = (props: P) => {
                            * Handled in RouteWithLoader Layout Component
                            */
 
-                          // dispatch(
-                          //   fetchPeraNetworkAccounts(
-                          //     getValues("selectedAlgorandNetwork")
-                          //   )
-                          // );
+                          peraWallet
+                            .connect()
+                            .then((accounts: string[]) => {
+                              // Setup the disconnect event listener
+                              if (accounts.length) {
+                                dispatch(
+                                  updateState({
+                                    accountsAlgorand: accounts,
+                                    isPeraSessionConnected: true,
+                                  })
+                                );
+                              }
+                            })
+                            .catch((error: { data: { type: string } }) => {
+                              // You MUST handle the reject because once the user closes the modal, peraWallet.connect() promise will be rejected.
+                              // For the async/await syntax you MUST use try/catch
+                              if (
+                                error?.data?.type !== "CONNECT_MODAL_CLOSED"
+                              ) {
+                                // log the necessary errors
+                              }
+                            });
                           break;
                       }
 
