@@ -29,6 +29,7 @@ const supportedNetworks: any = {
 
 export class PeraSession {
   static peraWalletInstance: any;
+  static peraWalletNetwork: any;
 
   static instantiate(network: string) {
     try {

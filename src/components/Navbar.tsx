@@ -47,9 +47,9 @@ export const NavbarComponent = (props: P) => {
 
               {settings.selectedBlockchain === "Algorand" &&
                 settings.selectedAlgorandWallet === "Pera" &&
-                pathname !== "/dashboard/settings" &&
                 settings.isPeraSessionConnected && (
                   <>
+                    &nbsp;
                     <FontAwesomeIcon color="#00a677" icon={faCircle} />
                     &nbsp;Pera Connected
                   </>
@@ -57,9 +57,9 @@ export const NavbarComponent = (props: P) => {
 
               {settings.selectedBlockchain === "Algorand" &&
                 settings.selectedAlgorandWallet === "Pera" &&
-                pathname !== "/dashboard/settings" &&
                 !settings.isPeraSessionConnected && (
                   <>
+                    &nbsp;
                     <FontAwesomeIcon icon={faCircle} />
                     &nbsp;Pera Disconnected
                   </>

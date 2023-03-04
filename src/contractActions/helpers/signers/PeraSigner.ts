@@ -30,7 +30,7 @@ export async function signerForPera(
 
   console.log("ATC transactions", transactions);
 
-  let peraWallet = PeraSession.getPeraInstance(network);
-
-  return await peraWallet.signTransaction([transactions]);
+  return await PeraSession.getPeraInstance(network)?.signTransaction([
+    transactions,
+  ]);
 }

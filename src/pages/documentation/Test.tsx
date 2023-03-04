@@ -66,15 +66,15 @@ export function Test() {
 
   async function handleConnectWalletClick() {
     try {
-      let peraWallet = PeraSession.getPeraInstance(
+      let accounts = await PeraSession.getPeraInstance(
         settings.selectedAlgorandNetwork
-      );
-
-      let accounts = await peraWallet.connect();
+      )?.connect();
 
       setAccountAddress(accounts[0]);
 
-      peraWallet.connector?.on("disconnect", handleDisconnectWalletClick);
+      PeraSession.getPeraInstance(
+        settings.selectedAlgorandNetwork
+      )?.connector?.on("disconnect", handleDisconnectWalletClick);
     } catch (e) {}
 
     // peraWallet
@@ -95,11 +95,7 @@ export function Test() {
   }
 
   function handleDisconnectWalletClick() {
-    let peraWallet = PeraSession.getPeraInstance(
-      settings.selectedAlgorandNetwork
-    );
-
-    peraWallet.disconnect();
+    PeraSession.getPeraInstance(settings.selectedAlgorandNetwork)?.disconnect();
     setAccountAddress(null);
   }
 
@@ -208,13 +204,9 @@ export function Test() {
 
           console.log("w/o ATC transactions", transactions);
 
-          let peraWallet = PeraSession.getPeraInstance(
+          const signedTransactions = await PeraSession.getPeraInstance(
             settings.selectedAlgorandNetwork
-          );
-
-          const signedTransactions = await peraWallet.signTransaction([
-            transactions,
-          ]);
+          )?.signTransaction([transactions]);
 
           const { txId } = await Algod.getAlgod(
             settings.selectedAlgorandNetwork

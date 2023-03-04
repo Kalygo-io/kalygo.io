@@ -10,6 +10,9 @@ import Preloader from "../../components/Preloader";
 import { PeraSession } from "../../services/peraSession";
 
 import { updateState } from "../../store/settings/settingsSlice";
+import { showErrorToast } from "../../utility/errorToast";
+
+// let peraWallet: any;
 
 export const RouteWithSidebar = (props: any) => {
   const [loaded, setLoaded] = useState(false);
@@ -21,37 +24,43 @@ export const RouteWithSidebar = (props: any) => {
     return () => clearTimeout(timer);
   }, []);
 
-  let peraWallet = PeraSession.getPeraInstance(
-    settings.selectedAlgorandNetwork
-  );
+  //   peraWallet = PeraSession.getPeraInstance(settings.selectedAlgorandNetwork);
 
   useEffect(() => {
     // Reconnect to the session when the component is mounted
 
     if (settings.selectedAlgorandWallet === "Pera") {
-      peraWallet.reconnectSession().then((accounts: string[]) => {
-        // debugger;
-        // Setup the disconnect event listener
-        peraWallet.connector?.on("disconnect", handleDisconnectWalletClick);
+      PeraSession.getPeraInstance(settings.selectedAlgorandNetwork)
+        ?.reconnectSession()
+        .then((accounts: string[]) => {
+          // debugger;
+          // Setup the disconnect event listener
+          PeraSession.getPeraInstance(
+            settings.selectedAlgorandNetwork
+          )?.connector?.on("disconnect", handleDisconnectWalletClick);
 
-        if (accounts.length) {
-          dispatch(
-            updateState({
-              accountsAlgorand: accounts,
-              isPeraSessionConnected: true,
-            })
-          );
-        }
-      });
+          if (accounts.length) {
+            dispatch(
+              updateState({
+                accountsAlgorand: accounts,
+                isPeraSessionConnected: true,
+              })
+            );
+          }
+        });
     }
-  }, []);
+  }, [settings.selectedAlgorandNetwork]);
 
   function handleConnectWalletClick() {
-    peraWallet
-      .connect()
+    // peraWallet = PeraSession.setPeraInstance(settings.selectedAlgorandNetwork);
+
+    PeraSession.getPeraInstance(settings.selectedAlgorandNetwork)
+      ?.connect()
       .then((accounts: string[]) => {
         // Setup the disconnect event listener
-        peraWallet.connector?.on("disconnect", handleDisconnectWalletClick);
+        PeraSession.getPeraInstance(
+          settings.selectedAlgorandNetwork
+        )?.connector?.on("disconnect", handleDisconnectWalletClick);
 
         if (accounts.length) {
           dispatch(
@@ -68,11 +77,13 @@ export const RouteWithSidebar = (props: any) => {
         if (error?.data?.type !== "CONNECT_MODAL_CLOSED") {
           // log the necessary errors
         }
+
+        showErrorToast("Error occurred when connecting to Pera");
       });
   }
 
   function handleDisconnectWalletClick() {
-    peraWallet.disconnect();
+    PeraSession.getPeraInstance(settings.selectedAlgorandNetwork)?.disconnect();
 
     dispatch(
       updateState({

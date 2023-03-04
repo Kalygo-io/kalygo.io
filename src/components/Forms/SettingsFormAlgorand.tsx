@@ -15,16 +15,13 @@ import {
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Algod } from "../../services/algod";
 import { PeraSession } from "../../services/peraSession";
+import { showErrorToast } from "../../utility/errorToast";
 
 interface P {}
 
 export const SettingsFormAlgorand = (props: P) => {
   const settings = useAppSelector((state: RootState) => state.settings);
   const dispatch = useAppDispatch();
-
-  let peraWallet = PeraSession.getPeraInstance(
-    settings.selectedAlgorandNetwork
-  );
 
   const {
     register,
@@ -151,11 +148,22 @@ export const SettingsFormAlgorand = (props: P) => {
                     setValue("selectedAlgorandAccount", "");
                     setValue("selectedAlgorandNetwork", target.value);
 
-                    dispatch(
-                      updateState({
-                        selectedAlgorandNetwork: target.value,
-                      })
-                    );
+                    try {
+                      PeraSession.getPeraInstance(
+                        settings.selectedAlgorandNetwork
+                      )?.disconnect();
+
+                      PeraSession.peraWalletInstance = null;
+
+                      // PeraSession.setPeraInstance(target.value);
+                      dispatch(
+                        updateState({
+                          selectedAlgorandNetwork: target.value,
+                        })
+                      );
+                    } catch (e) {
+                      showErrorToast("Error occurred when switching networks");
+                    }
                   }}
                   style={{
                     paddingRight: "32px",
@@ -219,7 +227,9 @@ export const SettingsFormAlgorand = (props: P) => {
                     setValue("selectedAlgorandAccount", "");
 
                     if (target.value !== "Pera") {
-                      peraWallet.disconnect();
+                      PeraSession.getPeraInstance(
+                        settings.selectedAlgorandNetwork
+                      )?.disconnect();
                       dispatch(
                         updateState({
                           accountsAlgorand: [],
@@ -274,7 +284,11 @@ export const SettingsFormAlgorand = (props: P) => {
 
                       switch (settings.selectedAlgorandWallet) {
                         case "AlgoSigner":
-                          peraWallet.disconnect();
+                          PeraSession.getPeraInstance(
+                            settings.selectedAlgorandNetwork
+                          )?.disconnect();
+                          PeraSession.peraWalletInstance = null;
+
                           dispatch(
                             fetchAlgoSignerNetworkAccounts(
                               getValues("selectedAlgorandNetwork")
@@ -286,8 +300,10 @@ export const SettingsFormAlgorand = (props: P) => {
                            * Handled in RouteWithLoader Layout Component
                            */
 
-                          peraWallet
-                            .connect()
+                          PeraSession.getPeraInstance(
+                            settings.selectedAlgorandNetwork
+                          )
+                            ?.connect()
                             .then((accounts: string[]) => {
                               // Setup the disconnect event listener
                               if (accounts.length) {
