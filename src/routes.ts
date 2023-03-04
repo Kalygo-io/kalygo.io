@@ -15,6 +15,7 @@ export const RoutesData = {
   },
   Settings: { path: "/dashboard/settings" },
   Support: { path: "/dashboard/support" },
+  Test: { path: "/dashboard/test" },
   Upgrade: { path: "/upgrade" },
   BootstrapTables: { path: "/tables/bootstrap-tables" },
   Billing: { path: "/examples/billing" },
@@ -24,7 +25,7 @@ export const RoutesData = {
   ForgotPassword: { path: "/examples/forgot-password" },
   ResetPassword: { path: "/examples/reset-password" },
   Lock: { path: "/examples/lock" },
-  NotFound: { path: "/*" },
+  NotFound: { path: "*" },
   ServerError: { path: "/examples/500" },
 
   // docs

@@ -118,14 +118,6 @@ export const FungibleTokenContractForm = (props: P) => {
 
       showSuccessToast("Awaiting block confirmation...");
 
-      // const waiting = await algosdk.waitForConfirmation(
-      //   Algod.getAlgod(settings.selectedAlgorandNetwork),
-      //   res.txId,
-      //   32
-      // );
-
-      // console.log(waiting);
-
       await algosdk.waitForConfirmation(
         Algod.getAlgod(settings.selectedAlgorandNetwork),
         tx_id[0],

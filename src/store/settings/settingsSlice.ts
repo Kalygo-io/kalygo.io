@@ -28,6 +28,7 @@ interface SettingsState {
   supportedBlockchains: SupportedBlockchain[];
   accountsEthereum: any[];
   accountsAlgorand: any[];
+  isPeraSessionConnected: boolean;
   selectedEthereumAccount: string;
   selectedAlgorandAccount: string;
   selectedBlockchain: string;
@@ -46,6 +47,8 @@ interface SettingsStateForSpread {
   selectedAlgorandWallet?: string;
   accountsAlgorand?: any[];
   accountsEthereum?: any[];
+
+  isPeraSessionConnected?: boolean;
 }
 
 // Define the initial state using that type
@@ -93,6 +96,7 @@ const initialState: SettingsState = {
   selectedBlockchain: "Algorand",
   // selectedAccount: "QHGMAMCTEHZ2RQV2DRXSPAKIIT3REVK46CHNDJSW6WNXJLSJ7BB76NHDGY",
   // selectedAccount: "",
+  isPeraSessionConnected: false,
 };
 
 export const fetchAlgoSignerNetworkAccounts = createAsyncThunk(
@@ -161,6 +165,8 @@ export const fetchPeraNetworkAccounts = createAsyncThunk(
 
       console.log("accounts", accounts);
 
+      console.log("PLATFORM...", peraWallet.platform);
+
       return {
         accounts,
       };
@@ -181,6 +187,8 @@ export const fetchPeraNetworkAccounts = createAsyncThunk(
       //   }
       // });
     } catch (e) {
+      console.error(e);
+
       return {
         accounts: [],
       };

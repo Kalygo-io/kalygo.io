@@ -205,6 +205,8 @@ const Sidebar = (props = {}) => {
                 link={RoutesData.Support.path}
               />
 
+              <NavItem title="Test" icon={faInfo} link={RoutesData.Test.path} />
+
               <Dropdown.Divider className="my-3 border-indigo" />
             </Nav>
           </div>

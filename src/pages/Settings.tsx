@@ -43,9 +43,9 @@ const Settings = () => {
             <Col xs={12}>
               <OperatorConfig />
             </Col>
-            <Col xs={12}>
+            {/* <Col xs={12}>
               <UtilitySettingsMethods />
-            </Col>
+            </Col> */}
           </Row>
         </Col>
       </Row>

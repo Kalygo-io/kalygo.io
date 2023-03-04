@@ -9,6 +9,8 @@ import { RoutesData } from "../../routes";
 import NotFoundImage from "../../assets/img/illustrations/404.svg";
 
 export default () => {
+  console.log("HERE!!!");
+
   return (
     <main>
       <section className="vh-100 d-flex align-items-center justify-content-center">

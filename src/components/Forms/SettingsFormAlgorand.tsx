@@ -10,17 +10,21 @@ import { RootState } from "../../store/store";
 import {
   fetchAlgoSignerNetworkAccounts,
   fetchPeraNetworkAccounts,
-  fetchMetamaskNetworkAccounts,
   updateState,
 } from "../../store/settings/settingsSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Algod } from "../../services/algod";
+import { PeraSession } from "../../services/peraSession";
 
 interface P {}
 
 export const SettingsFormAlgorand = (props: P) => {
   const settings = useAppSelector((state: RootState) => state.settings);
   const dispatch = useAppDispatch();
+
+  let peraWallet = PeraSession.getPeraInstance(
+    settings.selectedAlgorandNetwork
+  );
 
   const {
     register,
@@ -52,6 +56,8 @@ export const SettingsFormAlgorand = (props: P) => {
     setValue("selectedAlgorandAccount", selectedAccount.address);
   }, [settings.accountsAlgorand]);
 
+  useEffect(() => {}, [settings.selectedAlgorandWallet]);
+
   const onSubmit = (data: any) => {
     dispatch(updateState(data));
 
@@ -60,6 +66,7 @@ export const SettingsFormAlgorand = (props: P) => {
   };
 
   console.log("__ __", settings.selectedAlgorandNetwork);
+  console.log("__ selectedAlgorandWallet __", settings.selectedAlgorandWallet);
 
   console.log("___ ___", settings);
 
@@ -101,14 +108,6 @@ export const SettingsFormAlgorand = (props: P) => {
                         selectedBlockchain: target.value,
                       })
                     );
-
-                    // switch (target.value) {
-                    //   case "Ethereum":
-                    //     break;
-                    //   case "Algorand":
-                    //     // dispatch(fetchAlgoSignerNetworkAccounts(target.value));
-                    //     break;
-                    // }
                   }}
                   style={{
                     paddingRight: "32px",
@@ -151,6 +150,16 @@ export const SettingsFormAlgorand = (props: P) => {
                     console.log("!@#!@#", target.value);
 
                     setValue("selectedAlgorandAccount", "");
+
+                    if (target.value !== "Pera") {
+                      peraWallet.disconnect();
+                      dispatch(
+                        updateState({
+                          accountsAlgorand: [],
+                          isPeraSessionConnected: false,
+                        })
+                      );
+                    }
 
                     dispatch(
                       updateState({
@@ -262,6 +271,7 @@ export const SettingsFormAlgorand = (props: P) => {
 
                       switch (settings.selectedAlgorandWallet) {
                         case "AlgoSigner":
+                          peraWallet.disconnect();
                           dispatch(
                             fetchAlgoSignerNetworkAccounts(
                               getValues("selectedAlgorandNetwork")
@@ -269,11 +279,15 @@ export const SettingsFormAlgorand = (props: P) => {
                           );
                           break;
                         case "Pera":
-                          dispatch(
-                            fetchPeraNetworkAccounts(
-                              getValues("selectedAlgorandNetwork")
-                            )
-                          );
+                          /*
+                           * Handled in RouteWithLoader Layout Component
+                           */
+
+                          // dispatch(
+                          //   fetchPeraNetworkAccounts(
+                          //     getValues("selectedAlgorandNetwork")
+                          //   )
+                          // );
                           break;
                       }
 
