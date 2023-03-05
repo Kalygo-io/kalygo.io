@@ -67,7 +67,7 @@ export const CashBuyContractForm = (props: P) => {
     control,
     setValue,
   } = useForm({
-    mode: "onBlur",
+    mode: "onSubmit",
     defaultValues: {
       escrowAmount1: "$0.10",
       escrowAmount2: "$0.10",
@@ -321,7 +321,7 @@ export const CashBuyContractForm = (props: P) => {
                     let result = formatCurrency(event.target, true);
                     event.target.value = result.input_val;
                     setValue("escrowAmount1", result.input_val);
-                    trigger("escrowTotal");
+                    // trigger("escrowTotal");
                   }}
                   onChange={(event) => {
                     let result = formatCurrency(event.target, false, false);
@@ -347,7 +347,7 @@ export const CashBuyContractForm = (props: P) => {
                     let result = formatCurrency(event.target, true);
                     event.target.value = result.input_val;
                     setValue("escrowAmount2", result.input_val);
-                    trigger("escrowTotal");
+                    // trigger("escrowTotal");
                   }}
                   onChange={(event) => {
                     let result = formatCurrency(event.target, false, false);
