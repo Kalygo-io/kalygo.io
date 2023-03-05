@@ -317,20 +317,20 @@ export const CashBuyContractForm = (props: P) => {
                   inputMode="numeric"
                   pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                   placeholder="Amount 1"
-                  onBlur={(event) => {
-                    let result = formatCurrency(event.target, true);
-                    event.target.value = result.input_val;
-                    setValue("escrowAmount1", result.input_val);
-                    // trigger("escrowTotal");
-                  }}
-                  onChange={(event) => {
-                    // let result = formatCurrency(event.target, false, false);
-                    // event.target.value = result.input_val;
-                    // event.target.setSelectionRange(
-                    //   result.caret_pos,
-                    //   result.caret_pos
-                    // );
-                  }}
+                  // onBlur={(event) => {
+                  // let result = formatCurrency(event.target, true);
+                  // event.target.value = result.input_val;
+                  // setValue("escrowAmount1", result.input_val);
+                  // trigger("escrowTotal");
+                  // }}
+                  // onChange={(event) => {
+                  // let result = formatCurrency(event.target, false, false);
+                  // event.target.value = result.input_val;
+                  // event.target.setSelectionRange(
+                  //   result.caret_pos,
+                  //   result.caret_pos
+                  // );
+                  // }}
                 />
               </Form.Group>
             </Col>
@@ -343,20 +343,20 @@ export const CashBuyContractForm = (props: P) => {
                   inputMode="numeric"
                   pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                   placeholder="Amount 2"
-                  onBlur={(event) => {
-                    let result = formatCurrency(event.target, true);
-                    event.target.value = result.input_val;
-                    setValue("escrowAmount2", result.input_val);
-                    // trigger("escrowTotal");
-                  }}
-                  onChange={(event) => {
-                    // let result = formatCurrency(event.target, false, false);
-                    // event.target.value = result.input_val;
-                    // event.target.setSelectionRange(
-                    //   result.caret_pos,
-                    //   result.caret_pos
-                    // );
-                  }}
+                  // onBlur={(event) => {
+                  //   let result = formatCurrency(event.target, true);
+                  //   event.target.value = result.input_val;
+                  //   setValue("escrowAmount2", result.input_val);
+                  // trigger("escrowTotal");
+                  // }}
+                  // onChange={(event) => {
+                  // let result = formatCurrency(event.target, false, false);
+                  // event.target.value = result.input_val;
+                  // event.target.setSelectionRange(
+                  //   result.caret_pos,
+                  //   result.caret_pos
+                  // );
+                  // }}
                 />
               </Form.Group>
             </Col>
