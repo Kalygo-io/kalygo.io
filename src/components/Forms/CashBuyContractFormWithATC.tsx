@@ -324,12 +324,12 @@ export const CashBuyContractForm = (props: P) => {
                     // trigger("escrowTotal");
                   }}
                   onChange={(event) => {
-                    let result = formatCurrency(event.target, false, false);
-                    event.target.value = result.input_val;
-                    event.target.setSelectionRange(
-                      result.caret_pos,
-                      result.caret_pos
-                    );
+                    // let result = formatCurrency(event.target, false, false);
+                    // event.target.value = result.input_val;
+                    // event.target.setSelectionRange(
+                    //   result.caret_pos,
+                    //   result.caret_pos
+                    // );
                   }}
                 />
               </Form.Group>
@@ -350,12 +350,12 @@ export const CashBuyContractForm = (props: P) => {
                     // trigger("escrowTotal");
                   }}
                   onChange={(event) => {
-                    let result = formatCurrency(event.target, false, false);
-                    event.target.value = result.input_val;
-                    event.target.setSelectionRange(
-                      result.caret_pos,
-                      result.caret_pos
-                    );
+                    // let result = formatCurrency(event.target, false, false);
+                    // event.target.value = result.input_val;
+                    // event.target.setSelectionRange(
+                    //   result.caret_pos,
+                    //   result.caret_pos
+                    // );
                   }}
                 />
               </Form.Group>
