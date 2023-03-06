@@ -14,7 +14,7 @@ import {
 
 import Preloader from "../../components/Preloader";
 
-import { HashLink } from "react-router-hash-link";
+import { NavbarOGComponent } from "../components/NavbarOG";
 
 export const RouteWithLoader = (props: any) => {
   const [loaded, setLoaded] = useState(false);
@@ -27,28 +27,7 @@ export const RouteWithLoader = (props: any) => {
 
   return (
     <>
-      <Navbar
-        variant="dark"
-        expand="lg"
-        bg="dark"
-        className="navbar-transparent navbar-theme-primary sticky-top"
-      >
-        <Container className="position-relative justify-content-between px-3">
-          <Navbar.Brand
-            as={HashLink}
-            to="/"
-            className="me-lg-3 d-flex align-items-center"
-          >
-            <span className="ms-2 brand-text d-none d-md-inline">Kalygo</span>
-          </Navbar.Brand>
-
-          <div className="d-flex align-items-center">
-            <Navbar.Collapse id="navbar-default-primary">
-              <Nav className="navbar-nav-hover align-items-lg-center"></Nav>
-            </Navbar.Collapse>
-          </div>
-        </Container>
-      </Navbar>
+      <NavbarOGComponent />
       <Preloader show={loaded ? false : true} />
       <Outlet />
       <footer className="footer py-4 bg-dark text-white">
