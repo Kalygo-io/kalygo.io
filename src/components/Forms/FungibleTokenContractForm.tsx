@@ -135,6 +135,8 @@ export const FungibleTokenContractForm = (props: P) => {
     }
   };
 
+  console.log("errors", errors);
+
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
@@ -176,10 +178,17 @@ export const FungibleTokenContractForm = (props: P) => {
               <Form.Group id="unit-name">
                 <Form.Label>Unit Name</Form.Label>
                 <Form.Control
-                  {...register("unitName", { required: true })}
+                  {...register("unitName", {
+                    required: true,
+                    maxLength: { value: 8, message: "maxLength is 8" },
+                  })}
+                  isInvalid={errors["unitName"] ? true : false}
                   type="string"
                   placeholder="Unit Name"
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.unitName?.message}
+                </Form.Control.Feedback>
               </Form.Group>
             </Col>
           </Row>
