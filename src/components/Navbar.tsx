@@ -21,7 +21,11 @@ export const NavbarComponent = (props: P) => {
   const { handleConnectWalletClick, handleDisconnectWalletClick } = props;
   const settings = useAppSelector((state: RootState) => state.settings);
 
-  let [accntBalance, setAccntBalance] = useState({
+  let [accntBalance, setAccntBalance] = useState<{
+    val: any;
+    loading: boolean;
+    error: any;
+  }>({
     val: -1,
     loading: false,
     error: null,
@@ -30,26 +34,32 @@ export const NavbarComponent = (props: P) => {
   const { pathname } = location;
 
   useEffect(() => {
-    console.log("useJEW");
-
     async function fetch() {
-      setAccntBalance({
-        val: accntBalance.val,
-        loading: true,
-        error: null,
-      });
+      try {
+        setAccntBalance({
+          val: accntBalance.val,
+          loading: true,
+          error: null,
+        });
 
-      let accountInfo = await Algod.getAlgod(settings.selectedAlgorandNetwork)
-        .accountInformation(settings.selectedAlgorandAccount)
-        .do();
+        let accountInfo = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+          .accountInformation(settings.selectedAlgorandAccount)
+          .do();
 
-      console.log("***", accountInfo["amount"]);
+        console.log("***", accountInfo["amount"]);
 
-      setAccntBalance({
-        val: accountInfo["amount"],
-        loading: false,
-        error: null,
-      });
+        setAccntBalance({
+          val: accountInfo["amount"],
+          loading: false,
+          error: null,
+        });
+      } catch (e) {
+        setAccntBalance({
+          val: -1,
+          loading: false,
+          error: e,
+        });
+      }
     }
 
     settings.selectedBlockchain === "Algorand" &&

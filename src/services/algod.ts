@@ -15,24 +15,24 @@ const supportedNetworks: any = {
   },
   TestNet: {
     algod: {
-      token: "4DDWlske7J1zToVwoFxb2NeDkBiYok82FnsO4mLj",
+      token: "L8aqpbBiwS55OTYOFpFsK9BCBhjaFSRb2p9D1Vdf",
       server: "https://testnet-algorand.api.purestake.io/ps2",
       port: 443,
     },
     indexer: {
-      token: "4DDWlske7J1zToVwoFxb2NeDkBiYok82FnsO4mLj",
+      token: "L8aqpbBiwS55OTYOFpFsK9BCBhjaFSRb2p9D1Vdf",
       server: "https://testnet-algorand.api.purestake.io/idx2",
       port: 443,
     },
   },
   MainNet: {
     algod: {
-      token: "4DDWlske7J1zToVwoFxb2NeDkBiYok82FnsO4mLj",
+      token: "L8aqpbBiwS55OTYOFpFsK9BCBhjaFSRb2p9D1Vdf",
       server: "https://mainnet-algorand.api.purestake.io/ps2",
       port: 443,
     },
     indexer: {
-      token: "4DDWlske7J1zToVwoFxb2NeDkBiYok82FnsO4mLj",
+      token: "L8aqpbBiwS55OTYOFpFsK9BCBhjaFSRb2p9D1Vdf",
       server: "https://mainnet-algorand.api.purestake.io/idx2",
       port: 443,
     },
