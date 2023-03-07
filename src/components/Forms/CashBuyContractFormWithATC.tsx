@@ -491,7 +491,7 @@ export const CashBuyContractForm = (props: P) => {
 
                     setValue("inspectPeriodStart", e.toString());
                   }}
-                  renderInput={(props, openCalendar) => (
+                  renderInput={(props, openCalendar, closeCalendar) => (
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faCalendarAlt} />
@@ -505,6 +505,9 @@ export const CashBuyContractForm = (props: P) => {
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
                           openCalendar();
+                        }}
+                        onBlur={(e: any) => {
+                          closeCalendar();
                         }}
                       />
                     </InputGroup>
