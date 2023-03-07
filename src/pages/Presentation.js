@@ -93,7 +93,10 @@ const Presentation = () => {
               <p className="mb-2">
                 <span className="fw-bold">Less stress, more time for you</span>
               </p>
-              <p>Block times average ~3.6 seconds and are final</p>
+              <p>
+                Block times differ amongst blockchains but can be as fast as
+                ~3.6 seconds
+              </p>
             </Col>
           </Row>
         </Container>
@@ -104,10 +107,7 @@ const Presentation = () => {
             <Col lg={5} className="order-lg-2 mb-0 mb-lg-0 text-right">
               <h1>Cheap</h1>
               <p className="mb-2 lead fw-bold">Low Transaction Fees</p>
-              <p className="mb-4">
-                Algorand's fees are among the lowest in the smart contract
-                landscape
-              </p>
+              <p className="mb-4">We'll match the lowest fees you can find</p>
             </Col>
           </Row>
         </Container>
