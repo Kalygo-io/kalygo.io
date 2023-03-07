@@ -100,7 +100,7 @@ export const RouteWithLoader = (props: any) => {
             </Col>
           </Row>
           <Row>
-            <Col xs={12} sm={12}>
+            <Col xs={12}>
               <div className="d-flex flex-row justify-content-evenly py-2">
                 <span
                   style={{
@@ -111,6 +111,20 @@ export const RouteWithLoader = (props: any) => {
                   }}
                 >
                   Governance
+                </span>
+              </div>
+            </Col>
+            <Col xs={12}>
+              <div className="d-flex flex-row justify-content-evenly pb-2">
+                <span
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    window.open("https://kalygo.io/Kalygo_Pitch_Deck.pdf");
+                  }}
+                >
+                  Deck
                 </span>
               </div>
             </Col>
