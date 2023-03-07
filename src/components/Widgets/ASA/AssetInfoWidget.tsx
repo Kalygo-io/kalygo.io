@@ -19,7 +19,6 @@ import { parseGlobalState } from "../../../pages/customSelectors/appl/parseGloba
 
 import algosdk from "algosdk";
 
-import { pageVisits, pageTraffic, pageRanking } from "../../../data/tables";
 import { AlgorandClient } from "../../../services/algorand_client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

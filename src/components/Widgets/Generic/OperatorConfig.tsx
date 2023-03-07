@@ -34,10 +34,6 @@ import {
   SalesValueChartphone,
 } from "../../Charts";
 
-import Profile1 from "../../assets/img/team/profile-picture-1.jpg";
-import ProfileCover from "../../assets/img/profile-cover.jpg";
-
-import teamMembers from "../../../data/teamMembers";
 import { RootState } from "../../../store/store";
 import { useAppSelector } from "../../../store/hooks";
 
@@ -46,16 +42,7 @@ export const OperatorConfig = () => {
 
   return (
     <Card border="light" className="text-center p-0 mb-4">
-      {/* <div
-        style={{ backgroundImage: `url(${ProfileCover})` }}
-        className="profile-cover rounded-top"
-      /> */}
       <Card.Body className="pb-0">
-        {/* <Card.Img
-          src={Profile1}
-          alt="Neil Portrait"
-          className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4"
-        /> */}
         <Card.Title>Operator Config</Card.Title>
 
         {settings.selectedBlockchain === "Ethereum" && (

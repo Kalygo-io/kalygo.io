@@ -23,9 +23,6 @@ import { useNavigate } from "react-router-dom";
 import { RoutesData } from "../routes";
 import { BgAnimation } from "./components/BgAnimation";
 
-import pages from "../data/pages";
-import features from "../data/features";
-
 const Presentation = () => {
   const navigate = useNavigate();
 

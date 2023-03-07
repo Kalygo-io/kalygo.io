@@ -12,7 +12,6 @@ import {
 import Profile1 from "../../assets/img/team/profile-picture-1.jpg";
 import ProfileCover from "../../assets/img/profile-cover.jpg";
 
-import teamMembers from "../../../data/teamMembers";
 import { RootState } from "../../../store/store";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { disconnectPera } from "../../../store/settings/settingsSlice";

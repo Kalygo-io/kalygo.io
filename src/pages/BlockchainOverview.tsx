@@ -5,9 +5,6 @@ import {
   faTruckLoading,
 } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row } from "react-bootstrap";
-import algosdk from "algosdk";
-import { totalOrders } from "../data/charts";
-import { CounterWidget } from "../components/Widgets";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { AlgorandClient } from "../services/algorand_client";
 import { RootState } from "../store/store";

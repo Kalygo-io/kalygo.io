@@ -9,8 +9,6 @@ import {
   Table,
 } from "react-bootstrap";
 
-import { pageVisits, pageTraffic, pageRanking } from "../../../data/tables";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -30,25 +28,8 @@ export const TimelineWidget = (props: P) => {
           </Col>
         </Row>
       </Card.Header>
-      {/* <Card.Body> */}
-      {/* <section className="timeline-wrapper">
-          <div className="middle-line"></div>
-          {events.map((i: any, idx: number) => {
-            return (
-              <div className={`box`} key={idx}>
-                <div className={`dot ${i.color}`}></div>
-              </div>
-            );
-          })}
-        </section> */}
+
       <Table responsive className="align-items-center table-flush">
-        {/* <thead className="thead-light">
-            <tr>
-              <th scope="col">Milestone</th>
-              <th scope="col">Color</th>
-              <th scope="col">Date</th>
-            </tr>
-          </thead> */}
         <tbody>
           {events.map((i: any, idx: number) => {
             // console.log("i", i);

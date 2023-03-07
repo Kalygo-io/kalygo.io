@@ -8,8 +8,6 @@ import {
   ProgressBar,
 } from "react-bootstrap";
 
-import teamMembers from "../../../data/teamMembers";
-
 interface P {
   buyer: string;
   seller: string;

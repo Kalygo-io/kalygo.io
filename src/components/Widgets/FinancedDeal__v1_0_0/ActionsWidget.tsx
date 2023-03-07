@@ -16,10 +16,6 @@ import {
   SalesValueChartphone,
 } from "../../Charts";
 
-import Profile1 from "../../assets/img/team/profile-picture-1.jpg";
-import ProfileCover from "../../assets/img/profile-cover.jpg";
-
-import teamMembers from "../../../data/teamMembers";
 import { RootState } from "../../../store/store";
 import { useAppSelector } from "../../../store/hooks";
 import { fundMinimumBalance } from "../../../contractActions/FinancedDeal__v1_0_0/fundMinimumBalance";
