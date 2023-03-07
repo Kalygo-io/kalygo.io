@@ -534,6 +534,7 @@ export const CashBuyContractForm = (props: P) => {
                           required: true,
                         })}
                         type="text"
+                        inputMode="none"
                         value={getValues("inspectPeriodStart")}
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
@@ -566,6 +567,7 @@ export const CashBuyContractForm = (props: P) => {
                           required: true,
                         })}
                         type="text"
+                        inputMode="none"
                         value={getValues("inspectPeriodEnd")}
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
@@ -601,6 +603,7 @@ export const CashBuyContractForm = (props: P) => {
                           required: true,
                         })}
                         type="text"
+                        inputMode="none"
                         value={getValues("inspectPeriodExtension")}
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
@@ -633,6 +636,7 @@ export const CashBuyContractForm = (props: P) => {
                           required: true,
                         })}
                         type="text"
+                        inputMode="none"
                         value={getValues("movingDate")}
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
@@ -668,6 +672,7 @@ export const CashBuyContractForm = (props: P) => {
                           required: true,
                         })}
                         type="text"
+                        inputMode="none"
                         value={getValues("closingDate")}
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
@@ -700,6 +705,7 @@ export const CashBuyContractForm = (props: P) => {
                           required: true,
                         })}
                         type="text"
+                        inputMode="none"
                         value={getValues("freeFundsDate")}
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
@@ -744,59 +750,6 @@ export const CashBuyContractForm = (props: P) => {
               </Form.Group>
             </Col>
           </Row>
-
-          {/* <Row>
-            <Col sm={12} className="mb-3">
-              <Form.Group id="titleCompany">
-                <Form.Label>Title Company</Form.Label>
-                <Form.Control
-                  {...register("titleCompany", {
-                    required: true,
-                  })}
-                  type="text"
-                  placeholder="Title Company Address"
-                />
-              </Form.Group>
-            </Col>
-          </Row> */}
-
-          {/* <h5 className="my-4">Property</h5>
-          <Row>
-            <Col sm={12} className="mb-3">
-              <Form.Group id="buyer">
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  {...register("propertyAddress", {
-                    required: true,
-                  })}
-                  type="text"
-                  placeholder="Address of the property"
-                />
-              </Form.Group>
-            </Col>
-            <Col sm={12} className="mb-3">
-              <Form.Group id="buyer">
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  {...register("propertyName", {
-                    required: true,
-                  })}
-                  type="text"
-                  placeholder="Id/Name of the property"
-                />
-              </Form.Group>
-            </Col>
-          </Row> */}
-
-          {/* <h5 className="my-4">Customization</h5>
-          <Row>
-            <Col sm={12} className="mb-3">
-              <Form.Group id="enableTimeChecks">
-                <Form.Label>Enable Time Checks</Form.Label>
-                <Form.Check {...register("enableTimeChecks", {})} />
-              </Form.Group>
-            </Col>
-          </Row> */}
 
           <div className="mt-3">
             <Button variant="primary" type="submit">
