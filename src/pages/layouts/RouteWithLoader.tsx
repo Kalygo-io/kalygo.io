@@ -115,7 +115,7 @@ export const RouteWithLoader = (props: any) => {
               </div>
             </Col>
             <Col xs={12}>
-              <div className="d-flex flex-row justify-content-evenly pb-2">
+              <div className="d-flex flex-row justify-content-evenly py-2">
                 <span
                   style={{
                     cursor: "pointer",
