@@ -92,7 +92,7 @@ const BlockchainOverview = () => {
           });
         }
       }
-    }, 3000);
+    }, 4000);
     return () => clearInterval(interval);
   });
 
