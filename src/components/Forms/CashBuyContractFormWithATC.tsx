@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Col, Row, Card, Form, Button, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -45,6 +45,13 @@ export const CashBuyContractForm = (props: P) => {
   const settings = useAppSelector((state: RootState) => state.settings);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const inputElInspStartDate = useRef<Datetime>(null);
+  const inputElInspEndDate = useRef<Datetime>(null);
+  const inputElInspExtDate = useRef<Datetime>(null);
+  const inputElMoveDate = useRef<Datetime>(null);
+  const inputElCloseDate = useRef<Datetime>(null);
+  const inputElFreeFundsDate = useRef<Datetime>(null);
 
   const [asset, setAsset] = useState<any>({
     val: undefined,
@@ -444,6 +451,10 @@ export const CashBuyContractForm = (props: P) => {
                     paddingRight: "32px",
                     textOverflow: "ellipsis",
                   }}
+                  onFocus={() => {
+                    // @ts-ignore
+                    inputElInspStartDate.current!._closeCalendar();
+                  }}
                 >
                   {stablecoinOptions.map((i: any, idx: number) => {
                     return (
@@ -474,6 +485,10 @@ export const CashBuyContractForm = (props: P) => {
                     })}
                     type="number"
                     placeholder="ASA"
+                    onFocus={() => {
+                      // @ts-ignore
+                      inputElInspStartDate.current!._closeCalendar();
+                    }}
                   />
                 </Form.Group>
               </Col>
@@ -486,9 +501,8 @@ export const CashBuyContractForm = (props: P) => {
                 <Form.Label>Inspection Period Start</Form.Label>
                 <Datetime
                   timeFormat={true}
+                  ref={inputElInspStartDate}
                   onChange={(e: any) => {
-                    // console.log("e", e.unix());
-
                     setValue("inspectPeriodStart", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
@@ -505,9 +519,9 @@ export const CashBuyContractForm = (props: P) => {
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
                           openCalendar();
-                        }}
-                        onBlur={(e: any) => {
-                          closeCalendar();
+
+                          // @ts-ignore
+                          inputElInspEndDate.current!._closeCalendar();
                         }}
                       />
                     </InputGroup>
@@ -520,6 +534,7 @@ export const CashBuyContractForm = (props: P) => {
                 <Form.Label>Inspection Period End</Form.Label>
                 <Datetime
                   timeFormat={true}
+                  ref={inputElInspEndDate}
                   onChange={(e: any) => {
                     // console.log("e", e.unix());
 
@@ -539,9 +554,10 @@ export const CashBuyContractForm = (props: P) => {
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
                           openCalendar();
-                        }}
-                        onBlur={(e: any) => {
-                          closeCalendar();
+                          // @ts-ignore
+                          inputElInspStartDate.current!._closeCalendar();
+                          // @ts-ignore
+                          inputElInspExtDate.current!._closeCalendar();
                         }}
                       />
                     </InputGroup>
@@ -557,9 +573,8 @@ export const CashBuyContractForm = (props: P) => {
                 <Form.Label>Inspection Period Extension</Form.Label>
                 <Datetime
                   timeFormat={true}
+                  ref={inputElInspExtDate}
                   onChange={(e: any) => {
-                    // console.log("e", e.unix());
-
                     setValue("inspectPeriodExtension", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
@@ -576,9 +591,10 @@ export const CashBuyContractForm = (props: P) => {
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
                           openCalendar();
-                        }}
-                        onBlur={(e: any) => {
-                          closeCalendar();
+                          // @ts-ignore
+                          inputElInspEndDate.current!._closeCalendar();
+                          // @ts-ignore
+                          inputElMoveDate.current!._closeCalendar();
                         }}
                       />
                     </InputGroup>
@@ -591,9 +607,8 @@ export const CashBuyContractForm = (props: P) => {
                 <Form.Label>Moving Date</Form.Label>
                 <Datetime
                   timeFormat={true}
+                  ref={inputElMoveDate}
                   onChange={(e: any) => {
-                    // console.log("e", e.unix());
-
                     setValue("movingDate", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
@@ -610,9 +625,10 @@ export const CashBuyContractForm = (props: P) => {
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
                           openCalendar();
-                        }}
-                        onBlur={(e: any) => {
-                          closeCalendar();
+                          // @ts-ignore
+                          inputElInspExtDate.current!._closeCalendar();
+                          // @ts-ignore
+                          inputElCloseDate.current!._closeCalendar();
                         }}
                       />
                     </InputGroup>
@@ -628,9 +644,8 @@ export const CashBuyContractForm = (props: P) => {
                 <Form.Label>Closing Date</Form.Label>
                 <Datetime
                   timeFormat={true}
+                  ref={inputElCloseDate}
                   onChange={(e: any) => {
-                    // console.log("e", e.unix());
-
                     setValue("closingDate", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
@@ -647,9 +662,10 @@ export const CashBuyContractForm = (props: P) => {
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
                           openCalendar();
-                        }}
-                        onBlur={(e: any) => {
-                          closeCalendar();
+                          // @ts-ignore
+                          inputElMoveDate.current!._closeCalendar();
+                          // @ts-ignore
+                          inputElFreeFundsDate.current!._closeCalendar();
                         }}
                       />
                     </InputGroup>
@@ -662,9 +678,8 @@ export const CashBuyContractForm = (props: P) => {
                 <Form.Label>Free Funds Date</Form.Label>
                 <Datetime
                   timeFormat={true}
+                  ref={inputElFreeFundsDate}
                   onChange={(e: any) => {
-                    // console.log("e", e.unix());
-
                     setValue("freeFundsDate", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
@@ -681,9 +696,8 @@ export const CashBuyContractForm = (props: P) => {
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
                           openCalendar();
-                        }}
-                        onBlur={(e: any) => {
-                          closeCalendar();
+                          // @ts-ignore
+                          inputElCloseDate.current!._closeCalendar();
                         }}
                       />
                     </InputGroup>
@@ -704,6 +718,10 @@ export const CashBuyContractForm = (props: P) => {
                   })}
                   type="text"
                   placeholder="Buyer Wallet Address"
+                  onFocus={() => {
+                    // @ts-ignore
+                    inputElFreeFundsDate.current!._closeCalendar();
+                  }}
                 />
               </Form.Group>
             </Col>
