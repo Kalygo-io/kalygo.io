@@ -522,7 +522,7 @@ export const CashBuyContractForm = (props: P) => {
 
                     setValue("inspectPeriodEnd", e.toString());
                   }}
-                  renderInput={(props, openCalendar) => (
+                  renderInput={(props, openCalendar, closeCalendar) => (
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faCalendarAlt} />
@@ -536,6 +536,9 @@ export const CashBuyContractForm = (props: P) => {
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
                           openCalendar();
+                        }}
+                        onBlur={(e: any) => {
+                          closeCalendar();
                         }}
                       />
                     </InputGroup>
@@ -556,7 +559,7 @@ export const CashBuyContractForm = (props: P) => {
 
                     setValue("inspectPeriodExtension", e.toString());
                   }}
-                  renderInput={(props, openCalendar) => (
+                  renderInput={(props, openCalendar, closeCalendar) => (
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faCalendarAlt} />
@@ -570,6 +573,9 @@ export const CashBuyContractForm = (props: P) => {
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
                           openCalendar();
+                        }}
+                        onBlur={(e: any) => {
+                          closeCalendar();
                         }}
                       />
                     </InputGroup>
@@ -587,7 +593,7 @@ export const CashBuyContractForm = (props: P) => {
 
                     setValue("movingDate", e.toString());
                   }}
-                  renderInput={(props, openCalendar) => (
+                  renderInput={(props, openCalendar, closeCalendar) => (
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faCalendarAlt} />
@@ -602,7 +608,9 @@ export const CashBuyContractForm = (props: P) => {
                         onFocus={(e: any) => {
                           openCalendar();
                         }}
-                        onChange={() => {}}
+                        onBlur={(e: any) => {
+                          closeCalendar();
+                        }}
                       />
                     </InputGroup>
                   )}
@@ -622,7 +630,7 @@ export const CashBuyContractForm = (props: P) => {
 
                     setValue("closingDate", e.toString());
                   }}
-                  renderInput={(props, openCalendar) => (
+                  renderInput={(props, openCalendar, closeCalendar) => (
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faCalendarAlt} />
@@ -637,7 +645,9 @@ export const CashBuyContractForm = (props: P) => {
                         onFocus={(e: any) => {
                           openCalendar();
                         }}
-                        onChange={() => {}}
+                        onBlur={(e: any) => {
+                          closeCalendar();
+                        }}
                       />
                     </InputGroup>
                   )}
@@ -654,7 +664,7 @@ export const CashBuyContractForm = (props: P) => {
 
                     setValue("freeFundsDate", e.toString());
                   }}
-                  renderInput={(props, openCalendar) => (
+                  renderInput={(props, openCalendar, closeCalendar) => (
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faCalendarAlt} />
@@ -669,7 +679,9 @@ export const CashBuyContractForm = (props: P) => {
                         onFocus={(e: any) => {
                           openCalendar();
                         }}
-                        onChange={() => {}}
+                        onBlur={(e: any) => {
+                          closeCalendar();
+                        }}
                       />
                     </InputGroup>
                   )}
