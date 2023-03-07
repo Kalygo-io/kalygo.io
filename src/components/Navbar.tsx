@@ -88,7 +88,6 @@ export const NavbarComponent = (props: P) => {
                   <>
                     &nbsp;
                     <FontAwesomeIcon color="#00a677" icon={faCircle} />
-                    &nbsp;Pera Connected
                   </>
                 )}
 
@@ -98,7 +97,6 @@ export const NavbarComponent = (props: P) => {
                   <>
                     &nbsp;
                     <FontAwesomeIcon icon={faCircle} />
-                    &nbsp;Pera Disconnected
                   </>
                 )}
             </Nav>
@@ -117,7 +115,12 @@ export const NavbarComponent = (props: P) => {
                 </span>{" "}
                 {accntBalance.val >= 0 ? (
                   <span>
-                    <b>{(accntBalance.val / 1000000).toFixed(6)} ALGO</b>
+                    <b>
+                      {Number.parseFloat(
+                        (accntBalance.val / 1000000).toFixed(6)
+                      )}{" "}
+                      ALGO
+                    </b>
                   </span>
                 ) : (
                   <>
