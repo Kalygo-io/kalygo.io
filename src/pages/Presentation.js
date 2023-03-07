@@ -45,7 +45,7 @@ const Presentation = () => {
                 KALYGO
               </h1>
               <h3 className="text-secondary text-white">
-                Bringing Algorand to the masses
+                Contracts for the Masses
               </h3>
               {/* <p className="text-muted fw-light mb-3 h5"></p> */}
               <div className="d-flex align-items-center justify-content-center py-2">
