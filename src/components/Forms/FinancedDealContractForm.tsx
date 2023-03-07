@@ -11,7 +11,7 @@ import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
 import { RootState } from "../../store/store";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import algosdk from "algosdk";
 import { clear_state_program } from "../../contractExports/contracts/financedDeal/clear_state_program";
 import { approval_program } from "../../contractExports/contracts/financedDeal/approval_program";
@@ -74,7 +74,9 @@ export const FinancedDealContractForm = (props: P) => {
     try {
       console.log("-> data <-", data);
 
-      let params = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+      let params = await AlgorandClient.getAlgod(
+        settings.selectedAlgorandNetwork
+      )
         .getTransactionParams()
         .do();
 
@@ -84,11 +86,11 @@ export const FinancedDealContractForm = (props: P) => {
       let onComplete = algosdk.OnApplicationComplete.NoOpOC;
 
       let a_prog = await compileProgram(
-        Algod.getAlgod(settings.selectedAlgorandNetwork),
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
         approval_program
       );
       let c_prog = await compileProgram(
-        Algod.getAlgod(settings.selectedAlgorandNetwork),
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
         clear_state_program
       );
 
@@ -187,7 +189,9 @@ export const FinancedDealContractForm = (props: P) => {
         return {};
       });
 
-      const res = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+      const res = await AlgorandClient.getAlgod(
+        settings.selectedAlgorandNetwork
+      )
         .sendRawTransaction(tmp[0].blob)
         .do();
 
@@ -198,7 +202,7 @@ export const FinancedDealContractForm = (props: P) => {
       showSuccessToast("Awaiting block confirmation...");
 
       const waiting = await algosdk.waitForConfirmation(
-        Algod.getAlgod(settings.selectedAlgorandNetwork),
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
         res.txId,
         32
       );

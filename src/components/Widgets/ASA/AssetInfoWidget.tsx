@@ -20,7 +20,7 @@ import { parseGlobalState } from "../../../pages/customSelectors/appl/parseGloba
 import algosdk from "algosdk";
 
 import { pageVisits, pageTraffic, pageRanking } from "../../../data/tables";
-import { Algod } from "../../../services/algod";
+import { AlgorandClient } from "../../../services/algorand_client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
@@ -59,7 +59,7 @@ export const AssetInfoWidget = (props: P) => {
   useEffect(() => {
     async function fetch() {
       try {
-        const appResponse = await Algod.getIndexer(
+        const appResponse = await AlgorandClient.getIndexer(
           settings.selectedAlgorandNetwork
         )
           .lookupAssetByID(Number.parseInt(id!))

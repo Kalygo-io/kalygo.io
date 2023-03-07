@@ -13,7 +13,7 @@ import get from "lodash/get";
 
 import { RootState } from "../../store/store";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import { compileProgram } from "../../ABI/utility/compileProgram";
 import { showErrorToast } from "../../utility/errorToast";
 import { showSuccessToast } from "../../utility/successToast";
@@ -130,7 +130,9 @@ export const CashBuyContractForm = (props: P) => {
         console.log("asaId", asaId);
         console.log("customAsaId", customAsaId);
 
-        let assetInfo = await Algod.getIndexer(settings.selectedAlgorandNetwork)
+        let assetInfo = await AlgorandClient.getIndexer(
+          settings.selectedAlgorandNetwork
+        )
           .searchForAssets()
           .index(
             asaId === "-1"
@@ -227,18 +229,20 @@ export const CashBuyContractForm = (props: P) => {
 
       const contract = new algosdk.ABIContract(ABI.contract);
       let atc = new AtomicTransactionComposer();
-      let params = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+      let params = await AlgorandClient.getAlgod(
+        settings.selectedAlgorandNetwork
+      )
         .getTransactionParams()
         .do();
 
       let onComplete = algosdk.OnApplicationComplete.NoOpOC;
 
       let a_prog = await compileProgram(
-        Algod.getAlgod(settings.selectedAlgorandNetwork),
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
         Buffer.from(ABI.source.approval, "base64").toString()
       );
       let c_prog = await compileProgram(
-        Algod.getAlgod(settings.selectedAlgorandNetwork),
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
         Buffer.from(ABI.source.clear, "base64").toString()
       );
 
@@ -289,7 +293,7 @@ export const CashBuyContractForm = (props: P) => {
       });
 
       const tx_id = await atc.submit(
-        Algod.getAlgod(settings.selectedAlgorandNetwork)
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork)
       );
 
       console.log("submit_response", tx_id);
@@ -297,7 +301,7 @@ export const CashBuyContractForm = (props: P) => {
       showSuccessToast("Contract creation request sent to network!");
       showSuccessToast("Awaiting block confirmation...");
       await algosdk.waitForConfirmation(
-        Algod.getAlgod(settings.selectedAlgorandNetwork),
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
         tx_id[0],
         32
       );

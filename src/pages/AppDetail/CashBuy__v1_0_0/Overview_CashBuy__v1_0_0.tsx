@@ -10,7 +10,7 @@ import { Buffer } from "buffer";
 import { RootState } from "../../../store/store";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { OperatorConfig } from "../../../components/Widgets/Generic/OperatorConfig";
-import { Algod } from "../../../services/algod";
+import { AlgorandClient } from "../../../services/algorand_client";
 import { useParams } from "react-router-dom";
 import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
@@ -30,7 +30,7 @@ async function fetchTxnHistory(network: string, app_address: string) {
   try {
     // console.log("fetch");
 
-    let txnHistoryForContract = await Algod.getIndexer(
+    let txnHistoryForContract = await AlgorandClient.getIndexer(
       // settings.selectedAlgorandNetwork
       network
     )
@@ -84,7 +84,7 @@ function Overview_CashBuy__v1_0_0() {
     const interval = setInterval(async () => {
       try {
         // STEP 1
-        const appResponse = await Algod.getIndexer(
+        const appResponse = await AlgorandClient.getIndexer(
           settings.selectedAlgorandNetwork
         )
           .lookupApplications(Number.parseInt(id!))
@@ -101,7 +101,7 @@ function Overview_CashBuy__v1_0_0() {
         const appAddress = await algosdk.getApplicationAddress(
           Number.parseInt(id!)
         );
-        const accountResponse = await Algod.getAlgod(
+        const accountResponse = await AlgorandClient.getAlgod(
           settings.selectedAlgorandNetwork
         )
           .accountInformation(appAddress)
@@ -134,7 +134,7 @@ function Overview_CashBuy__v1_0_0() {
     async function fetch() {
       try {
         // STEP 1
-        const appResponse = await Algod.getIndexer(
+        const appResponse = await AlgorandClient.getIndexer(
           settings.selectedAlgorandNetwork
         )
           .lookupApplications(Number.parseInt(id!))
@@ -151,7 +151,7 @@ function Overview_CashBuy__v1_0_0() {
           Number.parseInt(id!)
         );
         // STEP 2
-        const accountResponse = await Algod.getAlgod(
+        const accountResponse = await AlgorandClient.getAlgod(
           settings.selectedAlgorandNetwork
         )
           .accountInformation(appAddress)
@@ -169,7 +169,9 @@ function Overview_CashBuy__v1_0_0() {
         );
 
         // STEP 3
-        let assetInfo = await Algod.getIndexer(settings.selectedAlgorandNetwork)
+        let assetInfo = await AlgorandClient.getIndexer(
+          settings.selectedAlgorandNetwork
+        )
           .searchForAssets()
           .index(parsedGlobalState["glbl_asa_id"])
           .do();

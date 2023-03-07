@@ -8,7 +8,7 @@ import { Col, Row, Button, Dropdown } from "react-bootstrap";
 import { RootState } from "../../../store/store";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { OperatorConfig } from "../../../components/Widgets/Generic/OperatorConfig";
-import { Algod } from "../../../services/algod";
+import { AlgorandClient } from "../../../services/algorand_client";
 import { useParams } from "react-router-dom";
 import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
@@ -40,7 +40,7 @@ function AppDetail() {
   useEffect(() => {
     async function fetch() {
       try {
-        const appResponse = await Algod.getIndexer(
+        const appResponse = await AlgorandClient.getIndexer(
           settings.selectedAlgorandNetwork
         )
           .lookupApplications(Number.parseInt(id!))
@@ -69,7 +69,7 @@ function AppDetail() {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const appResponse = await Algod.getIndexer(
+        const appResponse = await AlgorandClient.getIndexer(
           settings.selectedAlgorandNetwork
         )
           .lookupApplications(Number.parseInt(id!))
@@ -88,7 +88,7 @@ function AppDetail() {
           Number.parseInt(id!)
         );
 
-        const accountResponse = await Algod.getAlgod(
+        const accountResponse = await AlgorandClient.getAlgod(
           settings.selectedAlgorandNetwork
         )
           .accountInformation(appAddress)
@@ -119,7 +119,7 @@ function AppDetail() {
   useEffect(() => {
     async function fetch() {
       try {
-        const appResponse = await Algod.getIndexer(
+        const appResponse = await AlgorandClient.getIndexer(
           settings.selectedAlgorandNetwork
         )
           .lookupApplications(Number.parseInt(id!))
@@ -138,7 +138,7 @@ function AppDetail() {
           Number.parseInt(id!)
         );
 
-        const accountResponse = await Algod.getAlgod(
+        const accountResponse = await AlgorandClient.getAlgod(
           settings.selectedAlgorandNetwork
         )
           .accountInformation(appAddress)

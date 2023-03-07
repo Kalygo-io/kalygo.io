@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { RoutesData } from "../../../routes";
 
-import { Algod } from "../../../services/algod";
+import { AlgorandClient } from "../../../services/algorand_client";
 import { useAppSelector } from "../../../store/hooks";
 import { RootState } from "../../../store/store";
 
@@ -37,7 +37,9 @@ async function fetchHolders(
   nextToken: string = ""
 ) {
   try {
-    const assetInfo = await Algod.getIndexer(settingsState.selectedNetwork)
+    const assetInfo = await AlgorandClient.getIndexer(
+      settingsState.selectedNetwork
+    )
       .lookupAssetBalances(Number.parseInt(assetId!))
       .nextToken(nextToken)
       .do();

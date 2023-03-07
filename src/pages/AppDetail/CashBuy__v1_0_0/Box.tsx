@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Col, Row, Card, ListGroup, Button, Form } from "react-bootstrap";
 import { RootState } from "../../../store/store";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { Algod } from "../../../services/algod";
+import { AlgorandClient } from "../../../services/algorand_client";
 import { showErrorToast } from "../../../utility/errorToast";
 import { showSuccessToast } from "../../../utility/successToast";
 import ABI from "../../../contractExports/contracts/cashBuy/application.json";
@@ -27,7 +27,7 @@ async function fetchTxns(
   try {
     console.log("fetch txn history for", Number.parseInt(app_id!));
 
-    let txnHistoryForContract = await Algod.getIndexer(
+    let txnHistoryForContract = await AlgorandClient.getIndexer(
       settings.selectedAlgorandNetwork
     )
       .searchForTransactions()
@@ -119,7 +119,9 @@ export function Box() {
   useEffect(() => {
     async function fetch() {
       try {
-        let boxValue = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+        let boxValue = await AlgorandClient.getAlgod(
+          settings.selectedAlgorandNetwork
+        )
           .getApplicationBoxByName(
             Number.parseInt(app_id!),
             new Uint8Array(Buffer.from(box || "", "utf8"))
@@ -147,7 +149,9 @@ export function Box() {
 
       const contract = new algosdk.ABIContract(ABI.contract);
       let atc = new AtomicTransactionComposer();
-      let params = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+      let params = await AlgorandClient.getAlgod(
+        settings.selectedAlgorandNetwork
+      )
         .getTransactionParams()
         .do();
 
@@ -185,12 +189,12 @@ export function Box() {
       });
 
       const tx_id = await atc.submit(
-        Algod.getAlgod(settings.selectedAlgorandNetwork)
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork)
       );
 
       showSuccessToast("Awaiting block confirmation...");
       await algosdk.waitForConfirmation(
-        Algod.getAlgod(settings.selectedAlgorandNetwork),
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
         tx_id[0],
         32
       );
@@ -213,7 +217,9 @@ export function Box() {
     try {
       const contract = new algosdk.ABIContract(ABI.contract);
       let atc = new AtomicTransactionComposer();
-      let params = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+      let params = await AlgorandClient.getAlgod(
+        settings.selectedAlgorandNetwork
+      )
         .getTransactionParams()
         .do();
 
@@ -249,12 +255,12 @@ export function Box() {
       });
 
       const tx_id = await atc.submit(
-        Algod.getAlgod(settings.selectedAlgorandNetwork)
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork)
       );
 
       showSuccessToast("Awaiting block confirmation...");
       await algosdk.waitForConfirmation(
-        Algod.getAlgod(settings.selectedAlgorandNetwork),
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
         tx_id[0],
         32
       );

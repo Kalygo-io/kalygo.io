@@ -1,4 +1,4 @@
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import algosdk from "algosdk";
 import { Buffer } from "buffer";
 import { showSuccessToast } from "../../utility/successToast";
@@ -20,7 +20,9 @@ export async function fundMinimumBalance(
 
     console.log("!!!@#!!!");
 
-    let params = await Algod.getAlgod(network).getTransactionParams().do();
+    let params = await AlgorandClient.getAlgod(network)
+      .getTransactionParams()
+      .do();
 
     console.log(params);
 

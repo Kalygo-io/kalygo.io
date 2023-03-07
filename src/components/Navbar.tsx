@@ -10,7 +10,7 @@ import settingsSlice from "../store/settings/settingsSlice";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Algod } from "../services/algod";
+import { AlgorandClient } from "../services/algorand_client";
 
 interface P {
   handleConnectWalletClick: () => void;
@@ -30,6 +30,9 @@ export const NavbarComponent = (props: P) => {
     loading: false,
     error: null,
   });
+
+  let [rfrshCounter, setRfrshCounter] = useState<number>(0);
+
   const location = useLocation();
   const { pathname } = location;
 
@@ -37,12 +40,14 @@ export const NavbarComponent = (props: P) => {
     async function fetch() {
       try {
         setAccntBalance({
-          val: accntBalance.val,
+          val: -1,
           loading: true,
           error: null,
         });
 
-        let accountInfo = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+        let accountInfo = await AlgorandClient.getAlgod(
+          settings.selectedAlgorandNetwork
+        )
           .accountInformation(settings.selectedAlgorandAccount)
           .do();
 
@@ -65,7 +70,7 @@ export const NavbarComponent = (props: P) => {
     settings.selectedBlockchain === "Algorand" &&
       settings.selectedAlgorandAccount &&
       fetch();
-  }, []);
+  }, [rfrshCounter]);
 
   console.log("==---==");
 
@@ -124,7 +129,14 @@ export const NavbarComponent = (props: P) => {
                     )}
                 </span>{" "}
                 {accntBalance.val >= 0 ? (
-                  <span>
+                  <span
+                    onClick={() => {
+                      setRfrshCounter(rfrshCounter + 1);
+                    }}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
                     <b>
                       {Number.parseFloat(
                         (accntBalance.val / 1000000).toFixed(6)

@@ -1,5 +1,5 @@
 import algosdk, { AtomicTransactionComposer, ABIArgument } from "algosdk";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import { Buffer } from "buffer";
 
 import { showErrorToast } from "../../utility/errorToast";
@@ -20,7 +20,9 @@ export async function optinContractToASA(
     console.log("optinContractToASA");
     const contract = new algosdk.ABIContract(ABI.contract);
     let atc = new AtomicTransactionComposer();
-    let params = await Algod.getAlgod(network).getTransactionParams().do();
+    let params = await AlgorandClient.getAlgod(network)
+      .getTransactionParams()
+      .do();
     params.flatFee = true;
     params.fee = 1000 * 2; // 1 fee for this txn and 1 for the optin from the contract into the ASA
     atc.addMethodCall({
@@ -33,7 +35,7 @@ export async function optinContractToASA(
       signer: signer,
       appForeignAssets: [fungibleTokenId],
     });
-    const tx_id = await atc.submit(Algod.getAlgod(network));
+    const tx_id = await atc.submit(AlgorandClient.getAlgod(network));
     console.log("submit_response", tx_id);
     showSuccessToast("Sent ASA optin request to network");
   } catch (e) {

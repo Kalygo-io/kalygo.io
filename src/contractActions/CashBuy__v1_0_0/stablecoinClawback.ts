@@ -3,7 +3,7 @@ import algosdk, {
   ABIArgument,
   makeAssetTransferTxnWithSuggestedParamsFromObject,
 } from "algosdk";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import { Buffer } from "buffer";
 
 import { showErrorToast } from "../../utility/errorToast";
@@ -25,7 +25,9 @@ export async function stablecoinClawback(
   try {
     console.log("stablecoinClawback from contract", contractAddress);
     let atc = new AtomicTransactionComposer();
-    let params = await Algod.getAlgod(network).getTransactionParams().do();
+    let params = await AlgorandClient.getAlgod(network)
+      .getTransactionParams()
+      .do();
     params.flatFee = true;
     params.fee = 1000 * 2; // 1 fee for this txn and 1 for the optin from the contract into the ASA
 
@@ -44,7 +46,7 @@ export async function stablecoinClawback(
     };
     atc.addTransaction(tws);
 
-    const tx_id = await atc.submit(Algod.getAlgod(network));
+    const tx_id = await atc.submit(AlgorandClient.getAlgod(network));
     console.log("submit_response", tx_id);
     showSuccessToast("Sent ASA clawback request to network");
   } catch (e) {

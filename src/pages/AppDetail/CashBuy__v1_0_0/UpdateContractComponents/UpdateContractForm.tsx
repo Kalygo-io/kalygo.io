@@ -18,7 +18,7 @@ import { supportedStablecoins } from "../../../../components/Forms/helpers/suppo
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
-import { Algod } from "../../../../services/algod";
+import { AlgorandClient } from "../../../../services/algorand_client";
 import moment from "moment-timezone";
 import { Tooltip } from "./Tooltip";
 
@@ -118,7 +118,9 @@ export function UpdateContractForm(props: P) {
 
       const contract = new algosdk.ABIContract(ABI.contract);
       let atc = new AtomicTransactionComposer();
-      let params = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+      let params = await AlgorandClient.getAlgod(
+        settings.selectedAlgorandNetwork
+      )
         .getTransactionParams()
         .do();
 
@@ -167,7 +169,7 @@ export function UpdateContractForm(props: P) {
       });
 
       const tx_id = await atc.submit(
-        Algod.getAlgod(settings.selectedAlgorandNetwork)
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork)
       );
 
       console.log("submit_response", tx_id);
@@ -176,7 +178,7 @@ export function UpdateContractForm(props: P) {
       showSuccessToast("Awaiting block confirmation...");
 
       await algosdk.waitForConfirmation(
-        Algod.getAlgod(settings.selectedAlgorandNetwork),
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
         tx_id[0],
         32
       );

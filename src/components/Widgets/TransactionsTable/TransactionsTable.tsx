@@ -20,7 +20,7 @@ import get from "lodash/get";
 import { useNavigate } from "react-router-dom";
 import { RoutesData } from "../../../routes";
 
-import { Algod } from "../../../services/algod";
+import { AlgorandClient } from "../../../services/algorand_client";
 import { useAppSelector } from "../../../store/hooks";
 import { RootState } from "../../../store/store";
 
@@ -36,7 +36,7 @@ async function fetchTxns(
   try {
     console.log("__fetchTxns__");
 
-    const accountTxnsResponse = await Algod.getIndexer(
+    const accountTxnsResponse = await AlgorandClient.getIndexer(
       settingsState.selectedAlgorandNetwork
     )
       .lookupAccountTransactions(settingsState.selectedAlgorandAccount)

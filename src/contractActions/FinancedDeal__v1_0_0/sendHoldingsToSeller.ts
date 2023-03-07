@@ -1,5 +1,5 @@
 import algosdk from "algosdk";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import { Buffer } from "buffer";
 import { showSuccessToast } from "../../utility/successToast";
 import { showErrorToast } from "../../utility/errorToast";
@@ -12,7 +12,9 @@ export async function sendHoldingsToSeller(
   to: string
 ) {
   try {
-    let params = await Algod.getAlgod(network).getTransactionParams().do();
+    let params = await AlgorandClient.getAlgod(network)
+      .getTransactionParams()
+      .do();
 
     params.flatFee = true;
     params.fee = 1000;

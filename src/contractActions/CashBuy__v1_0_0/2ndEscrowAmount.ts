@@ -2,7 +2,7 @@ import algosdk, {
   makeAssetTransferTxnWithSuggestedParamsFromObject,
   AtomicTransactionComposer,
 } from "algosdk";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import { Buffer } from "buffer";
 
 import { showErrorToast } from "../../utility/errorToast";
@@ -20,7 +20,7 @@ export async function secondEscrowAmount(
   try {
     console.log("2nd Escrow Amount");
 
-    let sp = await Algod.getAlgod(network).getTransactionParams().do();
+    let sp = await AlgorandClient.getAlgod(network).getTransactionParams().do();
     // Create a transaction
     const txn = makeAssetTransferTxnWithSuggestedParamsFromObject({
       assetIndex: fungibleTokenId,
@@ -37,7 +37,7 @@ export async function secondEscrowAmount(
 
     let atc = new AtomicTransactionComposer();
     atc.addTransaction(tws);
-    const tx_id = await atc.submit(Algod.getAlgod(network));
+    const tx_id = await atc.submit(AlgorandClient.getAlgod(network));
     console.log("submit_response", tx_id);
 
     showSuccessToast("Sent 2nd escrow token payment request to network");

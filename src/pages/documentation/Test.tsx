@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import algosdk, { AtomicTransactionComposer, Transaction } from "algosdk";
 import { showErrorToast } from "../../utility/errorToast";
 import { showSuccessToast } from "../../utility/successToast";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 
 import { signerForPera } from "../../contractActions/helpers/signers/PeraSigner";
 import { RootState } from "../../store/store";
@@ -36,7 +36,7 @@ const singlePayTxn = async (
   chain: AlgorandChainIDs,
   address: string
 ): Promise<ScenarioReturnType> => {
-  const suggestedParams = await Algod.getAlgod("TestNet")
+  const suggestedParams = await AlgorandClient.getAlgod("TestNet")
     .getTransactionParams()
     .do();
 
@@ -145,7 +145,7 @@ export function Test() {
           //     suggestedParams: params,
           //   });
 
-          const suggestedParams = await Algod.getAlgod("TestNet")
+          const suggestedParams = await AlgorandClient.getAlgod("TestNet")
             .getTransactionParams()
             .do();
 
@@ -171,7 +171,7 @@ export function Test() {
           console.log("atc", atc);
 
           const tx_id = await atc.submit(
-            Algod.getAlgod(settings.selectedAlgorandNetwork)
+            AlgorandClient.getAlgod(settings.selectedAlgorandNetwork)
           );
 
           showSuccessToast("Request sent to network!");
@@ -179,7 +179,7 @@ export function Test() {
           showSuccessToast("Awaiting block confirmation...");
 
           await algosdk.waitForConfirmation(
-            Algod.getAlgod(settings.selectedAlgorandNetwork),
+            AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
             tx_id[0],
             32
           );
@@ -208,7 +208,7 @@ export function Test() {
             settings.selectedAlgorandNetwork
           )?.signTransaction([transactions]);
 
-          const { txId } = await Algod.getAlgod(
+          const { txId } = await AlgorandClient.getAlgod(
             settings.selectedAlgorandNetwork
           )
             .sendRawTransaction(signedTransactions)

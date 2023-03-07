@@ -10,7 +10,7 @@ import { supportedStablecoins } from "../../../components/Forms/helpers/supporte
 import { RootState } from "../../../store/store";
 import moment from "moment-timezone";
 import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
-import { Algod } from "../../../services/algod";
+import { AlgorandClient } from "../../../services/algorand_client";
 
 import ABI from "../../../contractExports/contracts/cashBuy/application.json";
 import { signerForAlgoSigner } from "../../../contractActions/helpers/signers/AlgoSigner";
@@ -60,7 +60,7 @@ export function UpdateContract() {
     async function fetch() {
       try {
         // STEP 1
-        const appResponse = await Algod.getIndexer(
+        const appResponse = await AlgorandClient.getIndexer(
           settings.selectedAlgorandNetwork
         )
           .lookupApplications(Number.parseInt(id!))

@@ -9,7 +9,7 @@ import algosdk from "algosdk";
 import { totalOrders } from "../data/charts";
 import { CounterWidget } from "../components/Widgets";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
-import { Algod } from "../services/algod";
+import { AlgorandClient } from "../services/algorand_client";
 import { RootState } from "../store/store";
 
 import { showErrorToast } from "../utility/errorToast";
@@ -61,7 +61,7 @@ const BlockchainOverview = () => {
             error: null,
           });
         } else if (settings.selectedBlockchain === "Algorand") {
-          const response = await Algod.getAlgod(
+          const response = await AlgorandClient.getAlgod(
             settings.selectedAlgorandNetwork
           )
             .status()
@@ -102,10 +102,10 @@ const BlockchainOverview = () => {
         <Col className="mb-4">
           <h1>{settings.selectedBlockchain}</h1>
           {settings.selectedBlockchain === "Ethereum" && (
-            <h3>Network: {settings.selectedEthereumNetwork}</h3>
+            <h3>{settings.selectedEthereumNetwork}</h3>
           )}
           {settings.selectedBlockchain === "Algorand" && (
-            <h3>Network: {settings.selectedAlgorandNetwork}</h3>
+            <h3>{settings.selectedAlgorandNetwork}</h3>
           )}
         </Col>
       </Row>

@@ -13,7 +13,7 @@ import {
   updateState,
 } from "../../store/settings/settingsSlice";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import { PeraSession } from "../../services/peraSession";
 import { showErrorToast } from "../../utility/errorToast";
 
@@ -58,8 +58,8 @@ export const SettingsFormAlgorand = (props: P) => {
   const onSubmit = (data: any) => {
     dispatch(updateState(data));
 
-    Algod.setAlgod(data.selectedAlgorandNetwork);
-    Algod.setIndexer(data.selectedAlgorandNetwork);
+    AlgorandClient.setAlgod(data.selectedAlgorandNetwork);
+    AlgorandClient.setIndexer(data.selectedAlgorandNetwork);
   };
 
   console.log("__ __", settings.selectedAlgorandNetwork);

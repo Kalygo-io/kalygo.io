@@ -39,7 +39,7 @@ const supportedNetworks: any = {
   },
 };
 
-export class Algod {
+export class AlgorandClient {
   static algodInstance: any;
   static indexerInstance: any;
 
@@ -55,14 +55,14 @@ export class Algod {
         supportedNetworks[network]?.algod.port
       );
 
-      Algod.algodInstance = algodClient;
+      AlgorandClient.algodInstance = algodClient;
     } catch (err: any) {
       console.log(err.stack);
     }
   }
 
   static setAlgod(network: string) {
-    Algod.connectAlgod(network);
+    AlgorandClient.connectAlgod(network);
   }
 
   static async connectIndexer(network: string) {
@@ -77,35 +77,35 @@ export class Algod {
         supportedNetworks[network]?.indexer.port
       );
 
-      Algod.indexerInstance = indexerClient;
+      AlgorandClient.indexerInstance = indexerClient;
     } catch (err: any) {
       console.log(err.stack);
     }
   }
 
   static setIndexer(network: string) {
-    Algod.connectIndexer(network);
+    AlgorandClient.connectIndexer(network);
   }
 
   static getAlgod(network: string): algosdk.Algodv2 {
-    if (Algod.algodInstance) {
-      return Algod.algodInstance;
+    if (AlgorandClient.algodInstance) {
+      return AlgorandClient.algodInstance;
     } else {
       // console.log("connectAlgod");
 
-      Algod.connectAlgod(network);
-      return Algod.algodInstance;
+      AlgorandClient.connectAlgod(network);
+      return AlgorandClient.algodInstance;
     }
   }
 
   static getIndexer(network: string): algosdk.Indexer {
-    if (Algod.indexerInstance) {
-      return Algod.indexerInstance;
+    if (AlgorandClient.indexerInstance) {
+      return AlgorandClient.indexerInstance;
     } else {
       // console.log("connectIndexer");
 
-      Algod.connectIndexer(network);
-      return Algod.indexerInstance;
+      AlgorandClient.connectIndexer(network);
+      return AlgorandClient.indexerInstance;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import { showSuccessToast } from "../../utility/successToast";
 import { showErrorToast } from "../../utility/errorToast";
 import { supportedContracts } from "../../data/supportedContracts";
@@ -21,7 +21,7 @@ export async function fundMinimumBalance(
       network,
       amount,
     });
-    let sp = await Algod.getAlgod(network).getTransactionParams().do();
+    let sp = await AlgorandClient.getAlgod(network).getTransactionParams().do();
     // Create a transaction
     const ptxn = new Transaction({
       from: sender,
@@ -36,7 +36,7 @@ export async function fundMinimumBalance(
     };
     let atc = new AtomicTransactionComposer();
     atc.addTransaction(tws);
-    const tx_id = await atc.submit(Algod.getAlgod(network));
+    const tx_id = await atc.submit(AlgorandClient.getAlgod(network));
     console.log("submit_response", tx_id);
     showSuccessToast(
       "Request to fund minimum contract balance sent to network"

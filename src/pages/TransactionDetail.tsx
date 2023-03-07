@@ -17,7 +17,7 @@ import { Col, Row, Button, Dropdown } from "react-bootstrap";
 import { RootState } from "../store/store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { OperatorConfig } from "../components/Widgets/Generic/OperatorConfig";
-import { Algod } from "../services/algod";
+import { AlgorandClient } from "../services/algorand_client";
 import { useParams } from "react-router-dom";
 
 function TransactionDetail() {
@@ -32,7 +32,7 @@ function TransactionDetail() {
   useEffect(() => {
     async function fetch() {
       try {
-        const txnResponse = await Algod.getIndexer(
+        const txnResponse = await AlgorandClient.getIndexer(
           settings.selectedAlgorandNetwork
         )
           .lookupTransactionByID(id!)

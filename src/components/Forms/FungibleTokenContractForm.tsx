@@ -11,7 +11,7 @@ import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
 import { RootState } from "../../store/store";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import algosdk, { AtomicTransactionComposer, Transaction } from "algosdk";
 import { showErrorToast } from "../../utility/errorToast";
 import { showSuccessToast } from "../../utility/successToast";
@@ -66,7 +66,9 @@ export const FungibleTokenContractForm = (props: P) => {
     try {
       console.log("-> data <-", data);
 
-      let params = await Algod.getAlgod(settings.selectedAlgorandNetwork)
+      let params = await AlgorandClient.getAlgod(
+        settings.selectedAlgorandNetwork
+      )
         .getTransactionParams()
         .do();
 
@@ -111,7 +113,7 @@ export const FungibleTokenContractForm = (props: P) => {
       // @ts-ignore
       atc.addTransaction(tws);
       const tx_id = await atc.submit(
-        Algod.getAlgod(settings.selectedAlgorandNetwork)
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork)
       );
 
       showSuccessToast("ASA creation request sent to network!");
@@ -119,7 +121,7 @@ export const FungibleTokenContractForm = (props: P) => {
       showSuccessToast("Awaiting block confirmation...");
 
       await algosdk.waitForConfirmation(
-        Algod.getAlgod(settings.selectedAlgorandNetwork),
+        AlgorandClient.getAlgod(settings.selectedAlgorandNetwork),
         tx_id[0],
         32
       );

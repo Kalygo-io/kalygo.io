@@ -1,5 +1,5 @@
 import algosdk from "algosdk";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import { Buffer } from "buffer";
 
 import { showErrorToast } from "../../utility/errorToast";
@@ -15,7 +15,9 @@ export async function firstEscrowAmount(
   try {
     console.log("!!!");
 
-    let params = await Algod.getAlgod(network).getTransactionParams().do();
+    let params = await AlgorandClient.getAlgod(network)
+      .getTransactionParams()
+      .do();
 
     params.flatFee = true;
     params.fee = 1000;

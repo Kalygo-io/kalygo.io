@@ -3,7 +3,7 @@ import algosdk, {
   makeApplicationDeleteTxnFromObject,
   ABIArgument,
 } from "algosdk";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import { Buffer } from "buffer";
 import { showSuccessToast } from "../../utility/successToast";
 import { showErrorToast } from "../../utility/errorToast";
@@ -23,7 +23,9 @@ export async function deleteApp(
 
     const contract = new algosdk.ABIContract(ABI.contract);
     let atc = new AtomicTransactionComposer();
-    let params = await Algod.getAlgod(network).getTransactionParams().do();
+    let params = await AlgorandClient.getAlgod(network)
+      .getTransactionParams()
+      .do();
     params.flatFee = true;
     params.fee = 1000;
 
@@ -41,12 +43,16 @@ export async function deleteApp(
 
     atc.addTransaction(tws);
 
-    const tx_id = await atc.submit(Algod.getAlgod(network));
+    const tx_id = await atc.submit(AlgorandClient.getAlgod(network));
     console.log("submit_response", tx_id);
 
     showSuccessToast("Request to delete smart contract sent to network");
 
-    await algosdk.waitForConfirmation(Algod.getAlgod(network), tx_id[0], 32);
+    await algosdk.waitForConfirmation(
+      AlgorandClient.getAlgod(network),
+      tx_id[0],
+      32
+    );
 
     showSuccessToast("Successfully deleted application");
   } catch (e) {

@@ -1,5 +1,5 @@
 import algosdk, { AtomicTransactionComposer, ABIArgument } from "algosdk";
-import { Algod } from "../../services/algod";
+import { AlgorandClient } from "../../services/algorand_client";
 import { Buffer } from "buffer";
 import { showSuccessToast } from "../../utility/successToast";
 import { showErrorToast } from "../../utility/errorToast";
@@ -19,7 +19,9 @@ export async function buyerArbitration(
     console.log("buyerArbitration");
     const contract = new algosdk.ABIContract(ABI.contract);
     let atc = new AtomicTransactionComposer();
-    let params = await Algod.getAlgod(network).getTransactionParams().do();
+    let params = await AlgorandClient.getAlgod(network)
+      .getTransactionParams()
+      .do();
     params.flatFee = true;
     params.fee = 1000;
     atc.addMethodCall({
@@ -31,7 +33,7 @@ export async function buyerArbitration(
       note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
       signer,
     });
-    const tx_id = await atc.submit(Algod.getAlgod(network));
+    const tx_id = await atc.submit(AlgorandClient.getAlgod(network));
     console.log("submit_response", tx_id);
 
     showSuccessToast("Request to signal arbitration sent to network");

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Algod } from "../../../../services/algod";
+import { AlgorandClient } from "../../../../services/algorand_client";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { useParams } from "react-router-dom";
 import { RootState } from "../../../../store/store";
@@ -36,7 +36,7 @@ export function ProposedRevisionDiff(props: P) {
     async function fetch() {
       try {
         // STEP 1
-        const appResponse = await Algod.getIndexer(
+        const appResponse = await AlgorandClient.getIndexer(
           settings.selectedAlgorandNetwork
         )
           .lookupApplications(Number.parseInt(id!))
