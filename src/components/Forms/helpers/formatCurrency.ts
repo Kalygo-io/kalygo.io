@@ -83,6 +83,6 @@ export function formatCurrency(
   // put caret back in the right position
   var updated_len = input_val.length;
   caret_pos = updated_len - original_len + caret_pos;
-  input.setSelectionRange(caret_pos, caret_pos);
+  // input.setSelectionRange(caret_pos, caret_pos);
   return { input_val, caret_pos };
 }

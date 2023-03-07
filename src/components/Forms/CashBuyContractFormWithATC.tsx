@@ -36,6 +36,11 @@ interface P {
   accounts: string[];
 }
 
+function moveDecimalRight(n: number, moveDecimalRightBy: number) {
+  n *= Math.pow(10, moveDecimalRightBy);
+  return n;
+}
+
 export const CashBuyContractForm = (props: P) => {
   const settings = useAppSelector((state: RootState) => state.settings);
   const dispatch = useAppDispatch();
@@ -313,24 +318,22 @@ export const CashBuyContractForm = (props: P) => {
                 <Form.Label>Earnest Payment</Form.Label>
                 <Form.Control
                   {...register("escrowAmount1", { required: true })}
-                  type="tel"
-                  inputMode="numeric"
+                  inputMode="decimal"
                   pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                   placeholder="Amount 1"
-                  // onBlur={(event) => {
-                  // let result = formatCurrency(event.target, true);
-                  // event.target.value = result.input_val;
-                  // setValue("escrowAmount1", result.input_val);
-                  // trigger("escrowTotal");
-                  // }}
-                  // onChange={(event) => {
-                  // let result = formatCurrency(event.target, false, false);
-                  // event.target.value = result.input_val;
-                  // event.target.setSelectionRange(
-                  //   result.caret_pos,
-                  //   result.caret_pos
-                  // );
-                  // }}
+                  onBlur={(event) => {
+                    let result = formatCurrency(event.target, true);
+                    setValue("escrowAmount1", result.input_val);
+                    trigger("escrowTotal");
+                  }}
+                  onChange={(event) => {
+                    let result = formatCurrency(event.target, false, false);
+                    // event.target.value = result.input_val;
+                    // event.target.setSelectionRange(
+                    //   result.caret_pos,
+                    //   result.caret_pos
+                    // );
+                  }}
                 />
               </Form.Group>
             </Col>
@@ -339,24 +342,22 @@ export const CashBuyContractForm = (props: P) => {
                 <Form.Label>2nd Payment</Form.Label>
                 <Form.Control
                   {...register("escrowAmount2", { required: true })}
-                  type="tel"
-                  inputMode="numeric"
+                  inputMode="decimal"
                   pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                   placeholder="Amount 2"
-                  // onBlur={(event) => {
-                  //   let result = formatCurrency(event.target, true);
-                  //   event.target.value = result.input_val;
-                  //   setValue("escrowAmount2", result.input_val);
-                  // trigger("escrowTotal");
-                  // }}
-                  // onChange={(event) => {
-                  // let result = formatCurrency(event.target, false, false);
-                  // event.target.value = result.input_val;
-                  // event.target.setSelectionRange(
-                  //   result.caret_pos,
-                  //   result.caret_pos
-                  // );
-                  // }}
+                  onBlur={(event) => {
+                    let result = formatCurrency(event.target, true);
+                    setValue("escrowAmount2", result.input_val);
+                    trigger("escrowTotal");
+                  }}
+                  onChange={(event) => {
+                    let result = formatCurrency(event.target, false, false);
+                    // event.target.value = result.input_val;
+                    event.target.setSelectionRange(
+                      result.caret_pos,
+                      result.caret_pos
+                    );
+                  }}
                 />
               </Form.Group>
             </Col>
@@ -365,32 +366,41 @@ export const CashBuyContractForm = (props: P) => {
                 <Form.Label>Total Price</Form.Label>
                 <Form.Control
                   {...register("escrowTotal", {
-                    // required: true,
+                    required: true,
                     validate: (value, formValues) => {
-                      // console.log("value", value);
-                      // console.log("formValues", formValues);
-
+                      console.log("value", value);
+                      console.log("formValues", formValues);
                       let escrowAmount1AsInt;
                       try {
-                        escrowAmount1AsInt =
+                        escrowAmount1AsInt = Math.floor(
                           Number(
                             formValues.escrowAmount1.replace(/[^0-9.-]+/g, "")
-                          ) * 100;
+                          ) * 100
+                        );
                       } catch (e) {}
                       let escrowAmount2AsInt;
                       try {
-                        escrowAmount2AsInt =
+                        escrowAmount2AsInt = Math.floor(
                           Number(
                             formValues.escrowAmount2.replace(/[^0-9.-]+/g, "")
-                          ) * 100;
+                          ) * 100
+                        );
                       } catch (e) {}
                       let escrowTotalAsInt;
                       try {
-                        escrowTotalAsInt =
+                        escrowTotalAsInt = Math.floor(
                           Number(
                             formValues.escrowTotal.replace(/[^0-9.-]+/g, "")
-                          ) * 100;
+                          ) * 100
+                        );
                       } catch (e) {}
+
+                      console.log(
+                        "--->>>",
+                        escrowAmount1AsInt,
+                        escrowAmount2AsInt,
+                        escrowTotalAsInt
+                      );
 
                       if (
                         escrowAmount1AsInt &&
@@ -404,20 +414,18 @@ export const CashBuyContractForm = (props: P) => {
                       }
                     },
                   })}
-                  type="tel"
-                  inputMode="numeric"
+                  inputMode="decimal"
                   pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                   placeholder="Total Price"
                   isInvalid={errors["escrowTotal"] ? true : false}
                   onBlur={(event) => {
                     let result = formatCurrency(event.target, true);
-                    event.target.value = result.input_val;
                     setValue("escrowTotal", result.input_val);
                     trigger("escrowTotal");
                   }}
                   onChange={(event) => {
                     let result = formatCurrency(event.target, false, false);
-                    event.target.value = result.input_val;
+                    // event.target.value = result.input_val;
                     event.target.setSelectionRange(
                       result.caret_pos,
                       result.caret_pos
