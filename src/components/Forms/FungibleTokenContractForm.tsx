@@ -39,8 +39,9 @@ export const FungibleTokenContractForm = (props: P) => {
     defaultValues: {
       assetName: "Asset Name",
       totalSupply: 1,
+      decimals: 2,
       enableClawback: true,
-      unitName: "USDCa",
+      unitName: "ASSET",
       url: "URL",
     },
   });
@@ -80,7 +81,7 @@ export const FungibleTokenContractForm = (props: P) => {
       };
 
       const total = Number.parseInt(data.totalSupply); // how many of this asset there will be
-      const decimals = 2; // units of this asset are whole-integer amounts
+      const decimals = Number.parseInt(data.decimals); // units of this asset are whole-integer amounts
       const assetName = data.assetName;
       const unitName = data.unitName;
       const url = data.url;
@@ -157,20 +158,32 @@ export const FungibleTokenContractForm = (props: P) => {
                 />
               </Form.Group>
             </Col>
+          </Row>
 
-            <Col sm={12} className="mb-0">
-              <Form.Group id="equity-divisions">
-                <Form.Label>Total Supply</Form.Label>
+          <Row>
+            <Col sm={6} className="mb-3">
+              <Form.Group id="supply">
+                <Form.Label>Supply</Form.Label>
                 <Form.Control
-                  {...register("totalSupply", { required: true })}
+                  {...register("totalSupply", {
+                    required: true,
+                  })}
                   type="number"
-                  placeholder="Total Supply"
+                  placeholder="Supply"
+                  min="0"
                 />
+              </Form.Group>
+            </Col>
 
-                <p>
-                  One unit of this token would represent a{" "}
-                  {100 / getValues("totalSupply")}% stake
-                </p>
+            <Col sm={6} className="mb-3">
+              <Form.Group id="equity-divisions">
+                <Form.Label>Decimals</Form.Label>
+                <Form.Control
+                  {...register("decimals", { required: true })}
+                  type="number"
+                  placeholder="2"
+                  min="0"
+                />
               </Form.Group>
             </Col>
           </Row>

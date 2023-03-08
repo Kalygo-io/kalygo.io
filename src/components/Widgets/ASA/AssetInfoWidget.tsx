@@ -119,6 +119,14 @@ export const AssetInfoWidget = (props: P) => {
             </Col>
             <Col>
               <AssetDimensions
+                field={"Decimals"}
+                value={get(app, "val.asset.params.decimals", "ø")}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <AssetDimensions
                 field={"URL"}
                 value={get(app, "val.asset.params.url", "ø")}
               />

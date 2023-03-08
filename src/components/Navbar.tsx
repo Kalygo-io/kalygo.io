@@ -96,24 +96,6 @@ export const NavbarComponent = (props: P) => {
                       : "Connect Pera"}
                   </Button>
                 )}
-
-              {settings.selectedBlockchain === "Algorand" &&
-                settings.selectedAlgorandWallet === "Pera" &&
-                settings.isPeraSessionConnected && (
-                  <>
-                    &nbsp;
-                    <FontAwesomeIcon color="#00a677" icon={faCircle} />
-                  </>
-                )}
-
-              {settings.selectedBlockchain === "Algorand" &&
-                settings.selectedAlgorandWallet === "Pera" &&
-                !settings.isPeraSessionConnected && (
-                  <>
-                    &nbsp;
-                    <FontAwesomeIcon icon={faCircle} />
-                  </>
-                )}
             </Nav>
           }
 
@@ -122,6 +104,25 @@ export const NavbarComponent = (props: P) => {
             pathname !== "/dashboard/settings" && (
               <div>
                 <span>
+                  {settings.selectedBlockchain === "Algorand" &&
+                    settings.selectedAlgorandWallet === "Pera" &&
+                    settings.isPeraSessionConnected && (
+                      <>
+                        &nbsp;
+                        <FontAwesomeIcon color="#00a677" icon={faCircle} />
+                        &nbsp;
+                      </>
+                    )}
+
+                  {settings.selectedBlockchain === "Algorand" &&
+                    settings.selectedAlgorandWallet === "Pera" &&
+                    !settings.isPeraSessionConnected && (
+                      <>
+                        &nbsp;
+                        <FontAwesomeIcon icon={faCircle} />
+                        &nbsp;
+                      </>
+                    )}
                   {settings.selectedAlgorandAccount.substring(0, 4) +
                     "..." +
                     settings.selectedAlgorandAccount.substring(
