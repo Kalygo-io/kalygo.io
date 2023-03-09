@@ -168,6 +168,7 @@ export const FungibleTokenContractForm = (props: P) => {
                   {...register("totalSupply", {
                     required: true,
                   })}
+                  inputMode="decimal"
                   type="number"
                   placeholder="Supply"
                   min="0"
@@ -180,8 +181,9 @@ export const FungibleTokenContractForm = (props: P) => {
                 <Form.Label>Decimals</Form.Label>
                 <Form.Control
                   {...register("decimals", { required: true })}
+                  inputMode="decimal"
                   type="number"
-                  placeholder="2"
+                  placeholder="Decimals"
                   min="0"
                 />
               </Form.Group>
