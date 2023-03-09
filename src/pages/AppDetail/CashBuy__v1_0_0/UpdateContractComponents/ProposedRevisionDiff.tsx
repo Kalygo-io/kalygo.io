@@ -54,6 +54,8 @@ export function ProposedRevisionDiff(props: P) {
           }
         );
 
+        console.log("gState", gState);
+
         // let proposedUpdate: ContractUpdate =
         //   gState[`global_${role}_update`] || "ø";
 
@@ -86,15 +88,22 @@ export function ProposedRevisionDiff(props: P) {
   let roleRequestedRevision =
     globalState.val && globalState.val[`glbl_${role}_update`];
 
-  if (roleRequestedRevision && globalState.val) {
-    console.log(globalState.val["glbl_escrow_1"]);
-    console.log(roleRequestedRevision[2]);
-    console.log(typeof roleRequestedRevision[2]);
+  console.log("roleRequestedRevision", roleRequestedRevision);
 
-    console.log(
-      BigInt(globalState.val["glbl_escrow_1"]) !==
-        toObject(roleRequestedRevision[2])
-    );
+  if (roleRequestedRevision && globalState.val) {
+    // console.log(globalState.val["glbl_escrow_1"]);
+    // console.log(roleRequestedRevision[2]);
+    // console.log(typeof roleRequestedRevision[2]);
+    // console.log(
+    //   BigInt(globalState.val["glbl_escrow_1"]) !==
+    //     toObject(roleRequestedRevision[2])
+    // );
+    // console.log("2->", toObject(roleRequestedRevision[2]));
+    // console.log(
+    //   "3->",
+    //   roleRequestedRevision[3],
+    //   toObject(roleRequestedRevision[3])
+    // );
   }
 
   return (

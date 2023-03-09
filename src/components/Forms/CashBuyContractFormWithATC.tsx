@@ -187,15 +187,6 @@ export const CashBuyContractForm = (props: P) => {
         customAsaId,
       } = data;
 
-      // console.log(
-      //   "escrowAmount1",
-      //   escrowAmount1,
-      //   escrowAmount1.replace(/[^0-9.-]+/g, ""),
-      //   Number(escrowAmount1.replace(/[^0-9.-]+/g, ""))
-      // );
-
-      console.log("errors", errors);
-
       const assetDecimalsConfig = get(asset, "val.assets.0.params.decimals");
 
       console.log("assetDecimalsConfig --->", assetDecimalsConfig);

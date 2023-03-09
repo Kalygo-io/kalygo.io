@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { RootState } from "../../../../store/store";
 import ABI from "../../../../contractExports/contracts/cashBuy/application.json";
 import { signerForAlgoSigner } from "../../../../contractActions/helpers/signers/AlgoSigner";
+import { signerForPera } from "../../../../contractActions/helpers/signers/PeraSigner";
 
 import { showErrorToast } from "../../../../utility/errorToast";
 import { showSuccessToast } from "../../../../utility/successToast";
@@ -30,11 +31,16 @@ import algosdk, {
 } from "algosdk";
 
 function moveDecimal(n: bigint, moveDecimalLeftBy: number) {
+  console.log("--- moveDecimal ---", moveDecimalLeftBy);
   // var l = n.toString().length - 0;
   // var v = n / Math.pow(10, l);
 
-  n /= BigInt(Math.pow(10, moveDecimalLeftBy));
-  return n;
+  console.log("--n--", n);
+
+  let b = BigInt(Math.pow(10, 6));
+  let finalN = Number((n * BigInt(100)) / b) / 100;
+
+  return finalN;
 }
 
 const formatter = new Intl.NumberFormat("en-US", {
@@ -45,10 +51,11 @@ const formatter = new Intl.NumberFormat("en-US", {
 interface P {
   selectedAccount: string;
   globalState: any;
+  assetInfo: any;
 }
 
 export function UpdateContractForm(props: P) {
-  const { globalState } = props;
+  const { globalState, assetInfo } = props;
 
   const {
     register,
@@ -61,11 +68,6 @@ export function UpdateContractForm(props: P) {
     reset,
   } = useForm({
     defaultValues: {
-      // buyer: "YRRGGYPFQYUIKHTYCWL3V7FGMDNNVZ46QJKE6GQQDURQL3NIVUIUFQSXAY",
-      // seller: "YRRGGYPFQYUIKHTYCWL3V7FGMDNNVZ46QJKE6GQQDURQL3NIVUIUFQSXAY",
-      // escrowAmount1: "$100,000.00",
-      // escrowAmount2: "$100,000.00",
-      // escrowTotal: "$200,000.00",
       buyer: "",
       seller: "",
       escrowAmount1: "",
@@ -83,6 +85,8 @@ export function UpdateContractForm(props: P) {
   const settings = useAppSelector((state: RootState) => state.settings);
   let { id } = useParams();
 
+  let assetDecimals = get(assetInfo, "assets.0.params.decimals", 0);
+
   const onSubmit = async (data: any) => {
     try {
       console.log("-> data <-", data);
@@ -99,21 +103,24 @@ export function UpdateContractForm(props: P) {
         closingDate,
         freeFundsDate,
       } = data;
-      console.log("errors", errors);
 
       let escrowAmount1AsInt = escrowAmount1;
       try {
         escrowAmount1AsInt =
-          Number(escrowAmount1.replace(/[^0-9.-]+/g, "")) * 100;
+          Number(escrowAmount1.replace(/[^0-9.-]+/g, "")) *
+          Math.pow(10, assetDecimals);
       } catch (e) {}
       let escrowAmount2AsInt = escrowAmount2;
       try {
         escrowAmount2AsInt =
-          Number(escrowAmount2.replace(/[^0-9.-]+/g, "")) * 100;
+          Number(escrowAmount2.replace(/[^0-9.-]+/g, "")) *
+          Math.pow(10, assetDecimals);
       } catch (e) {}
       let escrowTotalAsInt = escrowTotal;
       try {
-        escrowTotalAsInt = Number(escrowTotal.replace(/[^0-9.-]+/g, "")) * 100;
+        escrowTotalAsInt =
+          Number(escrowTotal.replace(/[^0-9.-]+/g, "")) *
+          Math.pow(10, assetDecimals);
       } catch (e) {}
 
       const contract = new algosdk.ABIContract(ABI.contract);
@@ -145,6 +152,25 @@ export function UpdateContractForm(props: P) {
 
       console.log("methodByName", methodByName);
 
+      let atcSigner: {
+        (unsignedTxns: algosdk.Transaction[]): Promise<Uint8Array[]>;
+        (unsignedTxns: algosdk.Transaction[]): Promise<Uint8Array[]>;
+        (txnGroup: algosdk.Transaction[], indexesToSign: number[]): Promise<
+          Uint8Array[]
+        >;
+      };
+
+      console.log("!!! -> !!!", settings.selectedAlgorandWallet);
+
+      switch (settings.selectedAlgorandWallet) {
+        case "AlgoSigner":
+          atcSigner = signerForAlgoSigner;
+          break;
+        case "Pera":
+          atcSigner = signerForPera;
+          break;
+      }
+
       atc.addMethodCall({
         appID: Number.parseInt(id!),
         method: contract.getMethodByName(methodByName),
@@ -165,7 +191,7 @@ export function UpdateContractForm(props: P) {
         sender: settings.selectedAlgorandAccount,
         suggestedParams: params,
         note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
-        signer: signerForAlgoSigner,
+        signer: atcSigner!,
       });
 
       const tx_id = await atc.submit(
@@ -203,6 +229,7 @@ export function UpdateContractForm(props: P) {
   }
 
   console.log("globalState", globalState);
+  console.log("assetInfo in Form", assetInfo);
 
   return (
     <>
@@ -217,13 +244,19 @@ export function UpdateContractForm(props: P) {
             onClick={() => {
               if (globalState) {
                 const escrow1FORMATTED = `$${formatter.format(
-                  moveDecimal(BigInt(globalState["glbl_escrow_1"]), 2)
+                  moveDecimal(
+                    BigInt(globalState["glbl_escrow_1"]),
+                    assetDecimals
+                  )
                 )}`;
                 const escrow2FORMATTED = `$${formatter.format(
-                  moveDecimal(BigInt(globalState["glbl_escrow_2"]), 2)
+                  moveDecimal(
+                    BigInt(globalState["glbl_escrow_2"]),
+                    assetDecimals
+                  )
                 )}`;
                 const escrowTotalFORMATTED = `$${formatter.format(
-                  moveDecimal(BigInt(globalState["glbl_total"]), 2)
+                  moveDecimal(BigInt(globalState["glbl_total"]), assetDecimals)
                 )}`;
 
                 setValue("buyer", globalState["glbl_buyer"]);
@@ -279,13 +312,22 @@ export function UpdateContractForm(props: P) {
             onClick={() => {
               if (globalState["glbl_buyer_update"]) {
                 const escrow1FORMATTED = `$${formatter.format(
-                  moveDecimal(globalState["glbl_buyer_update"][2], 2)
+                  moveDecimal(
+                    globalState["glbl_buyer_update"][2],
+                    assetDecimals
+                  )
                 )}`;
                 const escrow2FORMATTED = `$${formatter.format(
-                  moveDecimal(globalState["glbl_buyer_update"][3], 2)
+                  moveDecimal(
+                    globalState["glbl_buyer_update"][3],
+                    assetDecimals
+                  )
                 )}`;
                 const escrowTotalFORMATTED = `$${formatter.format(
-                  moveDecimal(globalState["glbl_buyer_update"][4], 2)
+                  moveDecimal(
+                    globalState["glbl_buyer_update"][4],
+                    assetDecimals
+                  )
                 )}`;
 
                 setValue("buyer", globalState["glbl_buyer_update"][0]);
@@ -342,13 +384,22 @@ export function UpdateContractForm(props: P) {
             onClick={() => {
               if (globalState["glbl_seller_update"]) {
                 const escrow1FORMATTED = `$${formatter.format(
-                  moveDecimal(globalState["glbl_seller_update"][2], 2)
+                  moveDecimal(
+                    globalState["glbl_seller_update"][2],
+                    assetDecimals
+                  )
                 )}`;
                 const escrow2FORMATTED = `$${formatter.format(
-                  moveDecimal(globalState["glbl_seller_update"][3], 2)
+                  moveDecimal(
+                    globalState["glbl_seller_update"][3],
+                    assetDecimals
+                  )
                 )}`;
                 const escrowTotalFORMATTED = `$${formatter.format(
-                  moveDecimal(globalState["glbl_seller_update"][4], 2)
+                  moveDecimal(
+                    globalState["glbl_seller_update"][4],
+                    assetDecimals
+                  )
                 )}`;
 
                 setValue("buyer", globalState["glbl_seller_update"][0]);

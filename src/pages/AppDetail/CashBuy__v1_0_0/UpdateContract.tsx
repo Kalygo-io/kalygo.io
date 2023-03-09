@@ -29,11 +29,12 @@ import { ProposedRevisionDiff } from "./UpdateContractComponents/ProposedRevisio
 import { UpdateContractForm } from "./UpdateContractComponents/UpdateContractForm";
 
 export function UpdateContract() {
-  const [app, setApp] = useState<any>({
+  const [state, setState] = useState<any>({
     val: undefined,
     loading: false,
     error: undefined,
   });
+
   const settings = useAppSelector((state: RootState) => state.settings);
   let { id } = useParams();
 
@@ -66,26 +67,33 @@ export function UpdateContract() {
           .lookupApplications(Number.parseInt(id!))
           .do();
 
-        // console.log("appResponse", appResponse);
+        const parsedGlobalState = parseGlobalState(
+          appResponse?.application?.params &&
+            appResponse.application.params["global-state"],
+          ["glbl_buyer_update", "glbl_seller_update"],
+          {
+            glbl_seller_update: "(address,address,uint64,uint64,uint64)",
+            glbl_buyer_update: "(address,address,uint64,uint64,uint64)",
+          }
+        );
 
-        setApp({
-          val: parseGlobalState(
-            appResponse?.application?.params &&
-              appResponse.application.params["global-state"],
-            ["glbl_buyer_update", "glbl_seller_update"],
-            {
-              glbl_seller_update: "(address,address,uint64,uint64,uint64)",
-              glbl_buyer_update: "(address,address,uint64,uint64,uint64)",
-            }
-          ),
+        console.log("parsedGlobalState --->", parsedGlobalState);
+
+        let assetInfo = await AlgorandClient.getIndexer(
+          settings.selectedAlgorandNetwork
+        )
+          .searchForAssets()
+          .index(get(parsedGlobalState, "glbl_asa_id"))
+          .do();
+
+        setState({
+          val: {
+            contractGlobalState: parsedGlobalState,
+            assetInfo: assetInfo,
+          },
           loading: false,
           error: null,
         });
-        // const appAddress = await algosdk.getApplicationAddress(
-        //   Number.parseInt(id!)
-        // );
-
-        // setValue("escrowAmount1", "$11,111.11");
       } catch (e) {
         console.log("e", e);
 
@@ -100,7 +108,7 @@ export function UpdateContract() {
     fetch();
   }, []);
 
-  console.log("app", app);
+  console.log("updateContract component state", state);
 
   return (
     <>
@@ -125,7 +133,8 @@ export function UpdateContract() {
           <Accordion.Body>
             <UpdateContractForm
               selectedAccount={settings.selectedAlgorandAccount}
-              globalState={get(app, "val", null)}
+              globalState={get(state, "val.contractGlobalState", null)}
+              assetInfo={get(state, "val.assetInfo", null)}
             />
           </Accordion.Body>
         </Accordion.Item>
