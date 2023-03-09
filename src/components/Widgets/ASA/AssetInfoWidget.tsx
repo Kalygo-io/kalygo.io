@@ -2,16 +2,7 @@ import React, { useState, useEffect } from "react";
 import get from "lodash/get";
 import { useParams } from "react-router-dom";
 
-import {
-  Col,
-  Row,
-  Card,
-  Image,
-  Button,
-  ListGroup,
-  ProgressBar,
-  Table,
-} from "react-bootstrap";
+import { Col, Row, Card, ListGroup } from "react-bootstrap";
 
 import { RootState } from "../../../store/store";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";

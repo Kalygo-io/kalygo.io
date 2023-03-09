@@ -12,14 +12,30 @@ import { useParams } from "react-router-dom";
 import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
 
-import algosdk from "algosdk";
+import algosdk, { Transaction } from "algosdk";
 import { HoldersTable } from "../../../components/Widgets/ASA/HoldersTable";
 import { AssetInfoWidget } from "../../../components/Widgets/ASA/AssetInfoWidget";
+import { AssetActions } from "../../../components/Widgets/ASA/AssetActions";
+
+import { signerForAlgoSigner } from "../../../contractActions/helpers/signers/AlgoSigner";
+import { signerForPera } from "../../../contractActions/helpers/signers/PeraSigner";
 
 function OverviewAsset() {
   const settings = useAppSelector((state: RootState) => state.settings);
 
   let { id } = useParams();
+
+  let signer: any = signerForAlgoSigner;
+
+  console.log("!!! -> !!!", settings.selectedAlgorandWallet);
+  switch (settings.selectedAlgorandWallet) {
+    case "AlgoSigner":
+      signer = signerForAlgoSigner;
+      break;
+    case "Pera":
+      signer = signerForPera;
+      break;
+  }
 
   return (
     <>
@@ -32,6 +48,16 @@ function OverviewAsset() {
       <Row>
         <Col xs={12} className="mb-4">
           <HoldersTable />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={6} className="mb-4">
+          <AssetActions
+            sender={settings.selectedAlgorandAccount}
+            fungibleTokenId={Number.parseInt(id!)}
+            network={settings.selectedAlgorandNetwork}
+            atcSigner={signer}
+          />
         </Col>
       </Row>
     </>

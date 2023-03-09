@@ -29,7 +29,6 @@ export function RoleBoxWidget({
         <h5 className="mb-0">{boxKey} Notes</h5>
         <Button
           variant="primary"
-          type="submit"
           onClick={() => {
             navigate(
               `/dashboard/box/${appId}/${boxKey}/${rolesWithBoxes[boxKey]}`

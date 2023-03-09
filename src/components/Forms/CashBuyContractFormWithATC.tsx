@@ -36,11 +36,6 @@ interface P {
   accounts: string[];
 }
 
-function moveDecimalRight(n: number, moveDecimalRightBy: number) {
-  n *= Math.pow(10, moveDecimalRightBy);
-  return n;
-}
-
 export const CashBuyContractForm = (props: P) => {
   const settings = useAppSelector((state: RootState) => state.settings);
   const dispatch = useAppDispatch();
