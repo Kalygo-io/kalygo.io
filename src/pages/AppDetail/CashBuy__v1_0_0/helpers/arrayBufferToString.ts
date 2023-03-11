@@ -8,3 +8,5 @@ export function arrayBufferToString(buffer: any) {
 
   return binary;
 }
+
+export function boxDataToObj(buffer: any) {}

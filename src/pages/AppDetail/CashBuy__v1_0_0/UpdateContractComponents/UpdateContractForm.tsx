@@ -139,8 +139,8 @@ export function UpdateContractForm(props: P) {
 
       let methodByName = ``;
       if (settings.selectedAlgorandAccount === get(globalState, `glbl_buyer`)) {
-        // methodByName = `buyer_request_contract_update`;
-        methodByName = `seller_request_contract_update`;
+        methodByName = `buyer_request_contract_update`;
+        // methodByName = `seller_request_contract_update`;
       } else if (
         settings.selectedAlgorandAccount === get(globalState, `glbl_seller`)
       ) {
@@ -180,18 +180,28 @@ export function UpdateContractForm(props: P) {
           Math.floor(escrowAmount1AsInt), // glbl_escrow_1: "",
           Math.floor(escrowAmount2AsInt), // glbl_escrow_2: "",
           Math.floor(escrowTotalAsInt), // glbl_total: "",
-          // moment(inspectPeriodStart).unix(), // glbl_inspect_start_date: "",
-          // moment(inspectPeriodEnd).unix(), // glbl_inspect_end_date: "",
-          // moment(inspectPeriodExtension).unix(), // glbl_inspect_extension_date: "",
-          // moment(movingDate).unix(), // glbl_moving_date: "",
-          // moment(closingDate).unix(), // glbl_closing_date: "",
-          // moment(freeFundsDate).unix(), // glbl_free_funds_date: "",
+          moment(inspectPeriodStart).unix(), // glbl_inspect_start_date: "",
+          moment(inspectPeriodEnd).unix(), // glbl_inspect_end_date: "",
+          moment(inspectPeriodExtension).unix(), // glbl_inspect_extension_date: "",
+          moment(movingDate).unix(), // glbl_moving_date: "",
+          moment(closingDate).unix(), // glbl_closing_date: "",
+          moment(freeFundsDate).unix(), // glbl_free_funds_date: "",
           // asaId === "-1" ? Math.floor(customAsaId) : Number.parseInt(asaId), // glbl_asa_id: ""
         ] as ABIArgument[],
         sender: settings.selectedAlgorandAccount,
         suggestedParams: params,
         note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
         signer: atcSigner!,
+        boxes: [
+          {
+            appIndex: Number.parseInt(id!),
+            name: new Uint8Array(Buffer.from("buyer_updt", "utf8")),
+          },
+          {
+            appIndex: Number.parseInt(id!),
+            name: new Uint8Array(Buffer.from("seller_updt", "utf8")),
+          },
+        ],
       });
 
       const tx_id = await atc.submit(
@@ -218,8 +228,8 @@ export function UpdateContractForm(props: P) {
 
   let role = ``;
   if (settings.selectedAlgorandAccount === get(globalState, `glbl_buyer`)) {
-    // role = `Buyer`;
-    role = `Seller`;
+    role = `Buyer`;
+    // role = `Seller`;
   } else if (
     settings.selectedAlgorandAccount === get(globalState, `glbl_seller`)
   ) {
