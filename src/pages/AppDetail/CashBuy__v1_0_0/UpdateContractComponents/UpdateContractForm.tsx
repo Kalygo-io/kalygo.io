@@ -309,7 +309,7 @@ export function UpdateContractForm(props: P) {
                   moment(globalState["glbl_free_funds_date"] * 1000).toString()
                 );
               } else {
-                showErrorToast("No Buyer Proposed Revision");
+                showErrorToast("Error loading current state");
               }
             }}
           >

@@ -11,7 +11,10 @@ import {
   boxDataToObj,
 } from "../helpers/arrayBufferToString";
 
+import { ABIType } from "algosdk";
+
 import ts from "typescript";
+import { parseGlobalState } from "../../../customSelectors/appl/parseGlobalState";
 const { factory } = ts;
 
 interface P {
@@ -22,6 +25,12 @@ export function ProposedRevisionDiff(props: P) {
   let { role } = props;
 
   const [proposedRevision, setProposedRevision] = useState<any>({
+    val: undefined,
+    loading: false,
+    error: undefined,
+  });
+
+  const [globalState, setGlobalState] = useState<any>({
     val: undefined,
     loading: false,
     error: undefined,
@@ -53,11 +62,22 @@ export function ProposedRevisionDiff(props: P) {
           )
           .do();
 
+        // const ContractUpdateType = ABIType.from("(address,address,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64)");
+
         console.log("boxValue", boxValue);
-        console.log("***&&&", window.btoa(boxValue.toString()));
+
+        let decodedBoxValue = ABIType.from(
+          "(address,address,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64)"
+        ).decode(boxValue.value);
+
+        console.log("boxValue", boxValue);
+
+        console.log("decodedBoxValue", decodedBoxValue);
+
+        // console.log("***&&&", window.btoa(boxValue.toString()));
 
         setProposedRevision({
-          val: boxDataToObj(boxValue.value),
+          val: decodedBoxValue,
           loading: false,
           error: null,
         });
@@ -65,46 +85,33 @@ export function ProposedRevisionDiff(props: P) {
         // setValue("note", arrayBufferToString(boxValue.value).trimEnd());
 
         // STEP 1
-        // const appResponse = await AlgorandClient.getIndexer(
-        //   settings.selectedAlgorandNetwork
-        // )
-        //   .lookupApplications(Number.parseInt(id!))
-        //   .do();
+        const appResponse = await AlgorandClient.getIndexer(
+          settings.selectedAlgorandNetwork
+        )
+          .lookupApplications(Number.parseInt(id!))
+          .do();
 
-        // console.log("appResponse", appResponse);
+        console.log("appResponse", appResponse);
 
-        // const gState = parseGlobalState(
-        //   appResponse?.application?.params &&
-        //     appResponse.application.params["global-state"],
-        //   [`glbl_buyer_update`, `glbl_seller_update`],
-        //   {
-        //     [`glbl_buyer_update`]: "(address,address,uint64,uint64,uint64)",
-        //     [`glbl_seller_update`]: "(address,address,uint64,uint64,uint64)",
-        //   }
-        // );
+        const gState = parseGlobalState(
+          appResponse?.application?.params &&
+            appResponse.application.params["global-state"]
+        );
 
-        // console.log("gState", gState);
+        console.log("gState", gState);
 
-        // let proposedUpdate: ContractUpdate =
-        //   gState[`global_${role}_update`] || "ø";
-
-        // setProposedRevision({
-        //   val: gState,
-        //   loading: false,
-        //   error: null,
-        // });
-        // const appAddress = await algosdk.getApplicationAddress(
-        //   Number.parseInt(id!)
-        // );
-
-        // setValue("escrowAmount1", "$11,111.11");
+        setGlobalState({
+          val: gState,
+          loading: false,
+          error: null,
+        });
       } catch (e) {
-        // console.log("e", e);
-        // setProposedRevision({
-        //   val: null,
-        //   loading: false,
-        //   error: e,
-        // });
+        console.log("e", e);
+        setProposedRevision({
+          val: null,
+          loading: false,
+          error: e,
+        });
       }
     }
 
@@ -113,12 +120,12 @@ export function ProposedRevisionDiff(props: P) {
 
   console.log(`proposedRevision.val`, proposedRevision.val);
 
-  let roleRequestedRevision =
-    proposedRevision.val && proposedRevision.val[`glbl_${role}_update`];
+  // let roleRequestedRevision =
+  //   proposedRevision.val && proposedRevision.val[`glbl_${role}_update`];
 
-  console.log("roleRequestedRevision", roleRequestedRevision);
+  console.log("globalState", globalState);
 
-  if (roleRequestedRevision && proposedRevision.val) {
+  if (globalState.val && proposedRevision.val) {
     // console.log(proposedRevision.val["glbl_escrow_1"]);
     // console.log(roleRequestedRevision[2]);
     // console.log(typeof roleRequestedRevision[2]);
@@ -139,91 +146,89 @@ export function ProposedRevisionDiff(props: P) {
       {/* {proposedRevision.val && (
           <pre>{JSON.stringify(toObject(proposedRevision.val), undefined, 2)}</pre>
         )} */}
-      {roleRequestedRevision && proposedRevision.val ? (
+      {globalState.val && proposedRevision.val ? (
         <>
           <div>
             <b>Buyer </b>
-            <span>{proposedRevision.val["glbl_buyer"]}</span>
-            {proposedRevision.val["glbl_buyer"] !==
-              roleRequestedRevision[0] && (
+            <span>{globalState.val["glbl_buyer"]}</span>
+            {globalState.val["glbl_buyer"] !== proposedRevision.val[0] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
                 {" -> "}
-                {roleRequestedRevision[0]}
+                {proposedRevision.val[0]}
               </span>
             )}
           </div>
           {/*  */}
           <div>
             <b>Seller </b>
-            <span>{proposedRevision.val["glbl_seller"]}</span>
-            {proposedRevision.val["glbl_seller"] !==
-              roleRequestedRevision[0] && (
+            <span>{globalState.val["glbl_seller"]}</span>
+            {globalState.val["glbl_seller"] !== proposedRevision.val[1] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
                 {" -> "}
-                {roleRequestedRevision[1]}
+                {proposedRevision.val[1]}
               </span>
             )}
           </div>
           {/*  */}
           <div>
             <b>Escrow Amount 1 </b>
-            <span>{proposedRevision.val["glbl_escrow_1"]}</span>
-            {BigInt(proposedRevision.val["glbl_escrow_1"]) !==
-              roleRequestedRevision[2] && (
+            <span>{globalState.val["glbl_escrow_1"]}</span>
+            {BigInt(globalState.val["glbl_escrow_1"]) !==
+              proposedRevision.val[2] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
                 {" -> "}
-                {toObject(roleRequestedRevision[2])}
+                {toObject(proposedRevision.val[2])}
               </span>
             )}
           </div>
           {/*  */}
           <div>
             <b>Escrow Amount 2 </b>
-            <span>{proposedRevision.val["glbl_escrow_2"]}</span>
-            {BigInt(proposedRevision.val["glbl_escrow_2"]) !==
-              roleRequestedRevision[3] && (
+            <span>{globalState.val["glbl_escrow_2"]}</span>
+            {BigInt(globalState.val["glbl_escrow_2"]) !==
+              proposedRevision.val[3] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
                 {" -> "}
-                {toObject(roleRequestedRevision[3])}
+                {toObject(proposedRevision.val[3])}
               </span>
             )}
           </div>
           {/*  */}
           <div>
             <b>Escrow Total </b>
-            <span>{proposedRevision.val["glbl_total"]}</span>
-            {BigInt(proposedRevision.val["glbl_total"]) !==
-              roleRequestedRevision[4] && (
+            <span>{globalState.val["glbl_total"]}</span>
+            {BigInt(globalState.val["glbl_total"]) !==
+              proposedRevision.val[4] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
                 {" -> "}
-                {toObject(roleRequestedRevision[4])}
+                {toObject(proposedRevision.val[4])}
               </span>
             )}
           </div>
           {/*  */}
           <div>
-            <b>Inspect Start Date</b>
-            <span>{proposedRevision.val["glbl_inspect_start_date"]}</span>
+            <b>Inspect Start Date </b>
+            <span>{globalState.val["glbl_inspect_start_date"]}</span>
             {/* {proposedRevision.val["glbl_inspect_start_date"] !==
               roleRequestedRevision[5] && (
               <span
@@ -237,8 +242,8 @@ export function ProposedRevisionDiff(props: P) {
           </div>
           {/*  */}
           <div>
-            <b>Inspect End Date</b>
-            <span>{proposedRevision.val["glbl_inspect_end_date"]}</span>
+            <b>Inspect End Date </b>
+            <span>{globalState.val["glbl_inspect_end_date"]}</span>
             {/* {proposedRevision.val["glbl_inspect_end_date"] !==
               roleRequestedRevision[6] && (
               <span
@@ -252,8 +257,8 @@ export function ProposedRevisionDiff(props: P) {
           </div>
           {/*  */}
           <div>
-            <b>Inspect Extension</b>
-            <span>{proposedRevision.val["glbl_inspect_extension_date"]}</span>
+            <b>Inspect Extension </b>
+            <span>{globalState.val["glbl_inspect_extension_date"]}</span>
             {/* {proposedRevision.val["glbl_inspect_extension_date"] !==
               roleRequestedRevision[7] && (
               <span
@@ -267,8 +272,8 @@ export function ProposedRevisionDiff(props: P) {
           </div>
           {/*  */}
           <div>
-            <b>Moving Date</b>
-            <span>{proposedRevision.val["glbl_moving_date"]}</span>
+            <b>Moving Date </b>
+            <span>{globalState.val["glbl_moving_date"]}</span>
             {/* {proposedRevision.val["glbl_moving_date"] !==
               roleRequestedRevision[8] && (
               <span
@@ -282,8 +287,8 @@ export function ProposedRevisionDiff(props: P) {
           </div>
           {/*  */}
           <div>
-            <b>Closing Date</b>
-            <span>{proposedRevision.val["glbl_closing_date"]}</span>
+            <b>Closing Date </b>
+            <span>{globalState.val["glbl_closing_date"]}</span>
             {/* {proposedRevision.val["glbl_closing_date"] !==
               roleRequestedRevision[9] && (
               <span
@@ -297,8 +302,8 @@ export function ProposedRevisionDiff(props: P) {
           </div>
           {/*  */}
           <div>
-            <b>Free Funds Date</b>
-            <span>{proposedRevision.val["glbl_free_funds_date"]}</span>
+            <b>Free Funds Date </b>
+            <span>{globalState.val["glbl_free_funds_date"]}</span>
             {/* {proposedRevision.val["glbl_free_funds_date"] !==
               roleRequestedRevision[10] && (
               <span
