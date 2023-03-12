@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 import { RoutesData } from "../routes";
 import { BgAnimation } from "./components/BgAnimation";
-
-import { motion, useInView } from "framer-motion";
 import { Hero } from "./PresentationSections/Hero";
 import { Secure } from "./PresentationSections/Secure";
 import { Fast } from "./PresentationSections/Fast";
