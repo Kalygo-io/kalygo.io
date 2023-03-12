@@ -52,10 +52,17 @@ interface P {
   selectedAccount: string;
   globalState: any;
   assetInfo: any;
+  buyerProposedRevision: any;
+  sellerProposedRevision: any;
 }
 
 export function UpdateContractForm(props: P) {
-  const { globalState, assetInfo } = props;
+  const {
+    globalState,
+    assetInfo,
+    buyerProposedRevision,
+    sellerProposedRevision,
+  } = props;
 
   const {
     register,
@@ -240,6 +247,8 @@ export function UpdateContractForm(props: P) {
 
   console.log("globalState", globalState);
   console.log("assetInfo in Form", assetInfo);
+  console.log("buyerProposedRevision", buyerProposedRevision);
+  console.log("sellerProposedRevision", sellerProposedRevision);
 
   return (
     <>
@@ -269,45 +278,31 @@ export function UpdateContractForm(props: P) {
                   moveDecimal(BigInt(globalState["glbl_total"]), assetDecimals)
                 )}`;
 
-                setValue("buyer", globalState["glbl_buyer"]);
-                setValue("seller", globalState["glbl_seller"]);
-                setValue("escrowAmount1", escrow1FORMATTED);
-                setValue("escrowAmount2", escrow2FORMATTED);
-                setValue("escrowTotal", escrowTotalFORMATTED);
-                // inspectPeriodStart
-                setValue(
-                  "inspectPeriodStart",
-                  moment(
+                reset({
+                  buyer: globalState["glbl_buyer"],
+                  seller: globalState["glbl_seller"],
+                  escrowAmount1: escrow1FORMATTED,
+                  escrowAmount2: escrow2FORMATTED,
+                  escrowTotal: escrowTotalFORMATTED,
+                  inspectPeriodStart: moment(
                     globalState["glbl_inspect_start_date"] * 1000
-                  ).toString()
-                );
-                // inspectPeriodEnd
-                setValue(
-                  "inspectPeriodEnd",
-                  moment(globalState["glbl_inspect_end_date"] * 1000).toString()
-                );
-                // inspectPeriodExtension
-                setValue(
-                  "inspectPeriodExtension",
-                  moment(
+                  ).toString(),
+                  inspectPeriodEnd: moment(
+                    globalState["glbl_inspect_end_date"] * 1000
+                  ).toString(),
+                  inspectPeriodExtension: moment(
                     globalState["glbl_inspect_extension_date"] * 1000
-                  ).toString()
-                );
-                // movingDate
-                setValue(
-                  "movingDate",
-                  moment(globalState["glbl_moving_date"] * 1000).toString()
-                );
-                // closingDate
-                setValue(
-                  "closingDate",
-                  moment(globalState["glbl_closing_date"] * 1000).toString()
-                );
-                // freeFundsDate
-                setValue(
-                  "freeFundsDate",
-                  moment(globalState["glbl_free_funds_date"] * 1000).toString()
-                );
+                  ).toString(),
+                  movingDate: moment(
+                    globalState["glbl_moving_date"] * 1000
+                  ).toString(),
+                  closingDate: moment(
+                    globalState["glbl_closing_date"] * 1000
+                  ).toString(),
+                  freeFundsDate: moment(
+                    globalState["glbl_free_funds_date"] * 1000
+                  ).toString(),
+                });
               } else {
                 showErrorToast("Error loading current state");
               }
@@ -320,66 +315,42 @@ export function UpdateContractForm(props: P) {
             variant="info"
             className="m-1"
             onClick={() => {
-              if (globalState["glbl_buyer_update"]) {
+              if (buyerProposedRevision) {
                 const escrow1FORMATTED = `$${formatter.format(
-                  moveDecimal(
-                    globalState["glbl_buyer_update"][2],
-                    assetDecimals
-                  )
+                  moveDecimal(BigInt(buyerProposedRevision[2]), assetDecimals)
                 )}`;
                 const escrow2FORMATTED = `$${formatter.format(
-                  moveDecimal(
-                    globalState["glbl_buyer_update"][3],
-                    assetDecimals
-                  )
+                  moveDecimal(BigInt(buyerProposedRevision[3]), assetDecimals)
                 )}`;
                 const escrowTotalFORMATTED = `$${formatter.format(
-                  moveDecimal(
-                    globalState["glbl_buyer_update"][4],
-                    assetDecimals
-                  )
+                  moveDecimal(BigInt(buyerProposedRevision[4]), assetDecimals)
                 )}`;
 
-                setValue("buyer", globalState["glbl_buyer_update"][0]);
-                setValue("seller", globalState["glbl_buyer_update"][1]);
-                setValue("escrowAmount1", escrow1FORMATTED);
-                setValue("escrowAmount2", escrow2FORMATTED);
-                setValue("escrowTotal", escrowTotalFORMATTED);
-
-                // inspectPeriodStart
-                setValue(
-                  "inspectPeriodStart",
-                  moment(
-                    globalState["glbl_inspect_start_date"] * 1000
-                  ).toString()
-                );
-                // inspectPeriodEnd
-                setValue(
-                  "inspectPeriodEnd",
-                  moment(globalState["glbl_inspect_end_date"] * 1000).toString()
-                );
-                // inspectPeriodExtension
-                setValue(
-                  "inspectPeriodExtension",
-                  moment(
-                    globalState["glbl_inspect_extension_date"] * 1000
-                  ).toString()
-                );
-                // movingDate
-                setValue(
-                  "movingDate",
-                  moment(globalState["glbl_moving_date"] * 1000).toString()
-                );
-                // closingDate
-                setValue(
-                  "closingDate",
-                  moment(globalState["glbl_closing_date"] * 1000).toString()
-                );
-                // freeFundsDate
-                setValue(
-                  "freeFundsDate",
-                  moment(globalState["glbl_free_funds_date"] * 1000).toString()
-                );
+                reset({
+                  buyer: buyerProposedRevision[0],
+                  seller: buyerProposedRevision[1],
+                  escrowAmount1: escrow1FORMATTED,
+                  escrowAmount2: escrow2FORMATTED,
+                  escrowTotal: escrowTotalFORMATTED,
+                  inspectPeriodStart: moment(
+                    Number(buyerProposedRevision[5]) * 1000
+                  ).toString(),
+                  inspectPeriodEnd: moment(
+                    Number(buyerProposedRevision[6]) * 1000
+                  ).toString(),
+                  inspectPeriodExtension: moment(
+                    Number(buyerProposedRevision[7]) * 1000
+                  ).toString(),
+                  movingDate: moment(
+                    Number(buyerProposedRevision[8]) * 1000
+                  ).toString(),
+                  closingDate: moment(
+                    Number(buyerProposedRevision[9]) * 1000
+                  ).toString(),
+                  freeFundsDate: moment(
+                    Number(buyerProposedRevision[10]) * 1000
+                  ).toString(),
+                });
               } else {
                 showErrorToast("No Buyer Proposed Revision");
               }
@@ -392,66 +363,42 @@ export function UpdateContractForm(props: P) {
             variant="info"
             className="m-1"
             onClick={() => {
-              if (globalState["glbl_seller_update"]) {
+              if (sellerProposedRevision) {
                 const escrow1FORMATTED = `$${formatter.format(
-                  moveDecimal(
-                    globalState["glbl_seller_update"][2],
-                    assetDecimals
-                  )
+                  moveDecimal(sellerProposedRevision[2], assetDecimals)
                 )}`;
                 const escrow2FORMATTED = `$${formatter.format(
-                  moveDecimal(
-                    globalState["glbl_seller_update"][3],
-                    assetDecimals
-                  )
+                  moveDecimal(sellerProposedRevision[3], assetDecimals)
                 )}`;
                 const escrowTotalFORMATTED = `$${formatter.format(
-                  moveDecimal(
-                    globalState["glbl_seller_update"][4],
-                    assetDecimals
-                  )
+                  moveDecimal(sellerProposedRevision[4], assetDecimals)
                 )}`;
 
-                setValue("buyer", globalState["glbl_seller_update"][0]);
-                setValue("seller", globalState["glbl_seller_update"][1]);
-                setValue("escrowAmount1", escrow1FORMATTED);
-                setValue("escrowAmount2", escrow2FORMATTED);
-                setValue("escrowTotal", escrowTotalFORMATTED);
-
-                // inspectPeriodStart
-                setValue(
-                  "inspectPeriodStart",
-                  moment(
-                    globalState["glbl_inspect_start_date"] * 1000
-                  ).toString()
-                );
-                // inspectPeriodEnd
-                setValue(
-                  "inspectPeriodEnd",
-                  moment(globalState["glbl_inspect_end_date"] * 1000).toString()
-                );
-                // inspectPeriodExtension
-                setValue(
-                  "inspectPeriodExtension",
-                  moment(
-                    globalState["glbl_inspect_extension_date"] * 1000
-                  ).toString()
-                );
-                // movingDate
-                setValue(
-                  "movingDate",
-                  moment(globalState["glbl_moving_date"] * 1000).toString()
-                );
-                // closingDate
-                setValue(
-                  "closingDate",
-                  moment(globalState["glbl_closing_date"] * 1000).toString()
-                );
-                // freeFundsDate
-                setValue(
-                  "freeFundsDate",
-                  moment(globalState["glbl_free_funds_date"] * 1000).toString()
-                );
+                reset({
+                  buyer: sellerProposedRevision[0],
+                  seller: sellerProposedRevision[1],
+                  escrowAmount1: escrow1FORMATTED,
+                  escrowAmount2: escrow2FORMATTED,
+                  escrowTotal: escrowTotalFORMATTED,
+                  inspectPeriodStart: moment(
+                    Number(sellerProposedRevision[5]) * 1000
+                  ).toString(),
+                  inspectPeriodEnd: moment(
+                    Number(sellerProposedRevision[6]) * 1000
+                  ).toString(),
+                  inspectPeriodExtension: moment(
+                    Number(sellerProposedRevision[7]) * 1000
+                  ).toString(),
+                  movingDate: moment(
+                    Number(sellerProposedRevision[8]) * 1000
+                  ).toString(),
+                  closingDate: moment(
+                    Number(sellerProposedRevision[9]) * 1000
+                  ).toString(),
+                  freeFundsDate: moment(
+                    Number(sellerProposedRevision[10]) * 1000
+                  ).toString(),
+                });
               } else {
                 showErrorToast("No Seller Proposed Revision");
               }
@@ -468,8 +415,7 @@ export function UpdateContractForm(props: P) {
                   <Form.Label>Escrow 1</Form.Label>
                   <Form.Control
                     {...register("escrowAmount1", { required: true })}
-                    type="tel"
-                    inputMode="numeric"
+                    inputMode="decimal"
                     pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                     placeholder="Amount 1"
                     onBlur={(event) => {
@@ -494,8 +440,7 @@ export function UpdateContractForm(props: P) {
                   <Form.Label>Escrow 2</Form.Label>
                   <Form.Control
                     {...register("escrowAmount2", { required: true })}
-                    type="tel"
-                    inputMode="numeric"
+                    inputMode="decimal"
                     pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                     placeholder="Amount 2"
                     onBlur={(event) => {
@@ -556,8 +501,7 @@ export function UpdateContractForm(props: P) {
                         }
                       },
                     })}
-                    type="tel"
-                    inputMode="numeric"
+                    inputMode="decimal"
                     pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                     placeholder="Total Price"
                     isInvalid={errors["escrowTotal"] ? true : false}
@@ -617,8 +561,6 @@ export function UpdateContractForm(props: P) {
                   <Datetime
                     timeFormat={true}
                     onChange={(e: any) => {
-                      // console.log("e", e.unix());
-
                       setValue("inspectPeriodStart", e.toString());
                     }}
                     renderInput={(props, openCalendar) => (
@@ -631,6 +573,7 @@ export function UpdateContractForm(props: P) {
                             required: true,
                           })}
                           type="text"
+                          inputMode="none"
                           value={getValues("inspectPeriodStart")}
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
@@ -648,8 +591,6 @@ export function UpdateContractForm(props: P) {
                   <Datetime
                     timeFormat={true}
                     onChange={(e: any) => {
-                      // console.log("e", e.unix());
-
                       setValue("inspectPeriodEnd", e.toString());
                     }}
                     renderInput={(props, openCalendar) => (
@@ -662,6 +603,7 @@ export function UpdateContractForm(props: P) {
                             required: true,
                           })}
                           type="text"
+                          inputMode="none"
                           value={getValues("inspectPeriodEnd")}
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
@@ -682,8 +624,6 @@ export function UpdateContractForm(props: P) {
                   <Datetime
                     timeFormat={true}
                     onChange={(e: any) => {
-                      // console.log("e", e.unix());
-
                       setValue("inspectPeriodExtension", e.toString());
                     }}
                     renderInput={(props, openCalendar) => (
@@ -696,6 +636,7 @@ export function UpdateContractForm(props: P) {
                             required: true,
                           })}
                           type="text"
+                          inputMode="none"
                           value={getValues("inspectPeriodExtension")}
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
@@ -713,8 +654,6 @@ export function UpdateContractForm(props: P) {
                   <Datetime
                     timeFormat={true}
                     onChange={(e: any) => {
-                      // console.log("e", e.unix());
-
                       setValue("movingDate", e.toString());
                     }}
                     renderInput={(props, openCalendar) => (
@@ -727,6 +666,7 @@ export function UpdateContractForm(props: P) {
                             required: true,
                           })}
                           type="text"
+                          inputMode="none"
                           value={getValues("movingDate")}
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
@@ -748,8 +688,6 @@ export function UpdateContractForm(props: P) {
                   <Datetime
                     timeFormat={true}
                     onChange={(e: any) => {
-                      // console.log("e", e.unix());
-
                       setValue("closingDate", e.toString());
                     }}
                     renderInput={(props, openCalendar) => (
@@ -762,6 +700,7 @@ export function UpdateContractForm(props: P) {
                             required: true,
                           })}
                           type="text"
+                          inputMode="none"
                           value={getValues("closingDate")}
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
@@ -780,8 +719,6 @@ export function UpdateContractForm(props: P) {
                   <Datetime
                     timeFormat={true}
                     onChange={(e: any) => {
-                      // console.log("e", e.unix());
-
                       setValue("freeFundsDate", e.toString());
                     }}
                     renderInput={(props, openCalendar) => (
@@ -794,6 +731,7 @@ export function UpdateContractForm(props: P) {
                             required: true,
                           })}
                           type="text"
+                          inputMode="none"
                           value={getValues("freeFundsDate")}
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {

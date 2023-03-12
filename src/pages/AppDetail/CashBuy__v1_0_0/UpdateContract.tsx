@@ -24,6 +24,7 @@ import algosdk, {
   ABIArgument,
   Account,
   decodeUint64,
+  ABIType,
 } from "algosdk";
 import { ProposedRevisionDiff } from "./UpdateContractComponents/ProposedRevisionDiff";
 import { UpdateContractForm } from "./UpdateContractComponents/UpdateContractForm";
@@ -69,16 +70,12 @@ export function UpdateContract() {
 
         const parsedGlobalState = parseGlobalState(
           appResponse?.application?.params &&
-            appResponse.application.params["global-state"],
-          ["glbl_buyer_update", "glbl_seller_update"],
-          {
-            glbl_seller_update: "(address,address,uint64,uint64,uint64)",
-            glbl_buyer_update: "(address,address,uint64,uint64,uint64)",
-          }
+            appResponse.application.params["global-state"]
         );
 
         console.log("parsedGlobalState --->", parsedGlobalState);
 
+        // STEP 2
         let assetInfo = await AlgorandClient.getIndexer(
           settings.selectedAlgorandNetwork
         )
@@ -86,10 +83,56 @@ export function UpdateContract() {
           .index(get(parsedGlobalState, "glbl_asa_id"))
           .do();
 
+        // STEP 3 - Get Buyer Proposed Revision
+        let buyerDecodedBoxValue = null;
+        try {
+          let buyerBox = "buyer_updt";
+          let buyerBoxValue = await AlgorandClient.getAlgod(
+            settings.selectedAlgorandNetwork
+          )
+            .getApplicationBoxByName(
+              Number.parseInt(id!),
+              new Uint8Array(Buffer.from(buyerBox || "", "utf8"))
+            )
+            .do();
+
+          console.log("boxValue", buyerBoxValue);
+
+          buyerDecodedBoxValue = ABIType.from(
+            "(address,address,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64)"
+          ).decode(buyerBoxValue.value);
+
+          console.log("buyer decodedBoxValue", buyerDecodedBoxValue);
+        } catch (e) {}
+
+        // STEP 4 - Get Seller Proposed Revision
+        let sellerDecodedBoxValue = null;
+        try {
+          let sellerBox = "seller_updt";
+          let sellerBoxValue = await AlgorandClient.getAlgod(
+            settings.selectedAlgorandNetwork
+          )
+            .getApplicationBoxByName(
+              Number.parseInt(id!),
+              new Uint8Array(Buffer.from(sellerBox || "", "utf8"))
+            )
+            .do();
+
+          console.log("boxValue", sellerBoxValue);
+
+          let sellerDecodedBoxValue = ABIType.from(
+            "(address,address,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64)"
+          ).decode(sellerBoxValue.value);
+
+          console.log("seller decodedBoxValue", sellerDecodedBoxValue);
+        } catch (e) {}
+
         setState({
           val: {
             contractGlobalState: parsedGlobalState,
             assetInfo: assetInfo,
+            buyerProposedEdit: buyerDecodedBoxValue,
+            sellerProposedEdit: sellerDecodedBoxValue,
           },
           loading: false,
           error: null,
@@ -97,11 +140,11 @@ export function UpdateContract() {
       } catch (e) {
         console.log("e", e);
 
-        // setApp({
-        //   val: null,
-        //   loading: false,
-        //   error: e,
-        // });
+        setState({
+          val: null,
+          loading: false,
+          error: e,
+        });
       }
     }
 
@@ -115,17 +158,23 @@ export function UpdateContract() {
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <h1>Revise Contract</h1>
       </div>
-      <Accordion defaultActiveKey="0" alwaysOpen>
+      <Accordion defaultActiveKey="2" alwaysOpen>
         <Accordion.Item eventKey="0">
           <Accordion.Header>Last Seller Proposed Revision</Accordion.Header>
           <Accordion.Body>
-            <ProposedRevisionDiff role="seller" />
+            <ProposedRevisionDiff
+              globalState={get(state, "val.contractGlobalState", null)}
+              proposedRevision={get(state, "val.sellerProposedEdit", null)}
+            />
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="1">
           <Accordion.Header>Last Buyer Proposed Revision</Accordion.Header>
           <Accordion.Body>
-            <ProposedRevisionDiff role="buyer" />
+            <ProposedRevisionDiff
+              globalState={get(state, "val.contractGlobalState", null)}
+              proposedRevision={get(state, "val.buyerProposedEdit", null)}
+            />
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="2">
@@ -135,6 +184,12 @@ export function UpdateContract() {
               selectedAccount={settings.selectedAlgorandAccount}
               globalState={get(state, "val.contractGlobalState", null)}
               assetInfo={get(state, "val.assetInfo", null)}
+              buyerProposedRevision={get(state, "val.buyerProposedEdit", null)}
+              sellerProposedRevision={get(
+                state,
+                "val.sellerProposedEdit",
+                null
+              )}
             />
           </Accordion.Body>
         </Accordion.Item>
