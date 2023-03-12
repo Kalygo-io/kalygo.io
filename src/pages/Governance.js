@@ -42,43 +42,43 @@ const CustomRow = (props) => {
 };
 
 export function Governance() {
-  let [tokenMetadata, setTokenMetadata] = useState({
-    val: null,
-    loading: true,
-    error: null,
-  });
+  // let [tokenMetadata, setTokenMetadata] = useState({
+  //   val: null,
+  //   loading: true,
+  //   error: null,
+  // });
 
-  useEffect(() => {
-    async function fetch() {
-      try {
-        console.log("fetch");
-        const provider = new ethers.providers.JsonRpcProvider(
-          "https://virulent-smart-dream.discover.quiknode.pro/bf18a1026d8aa87ae439779802efb92be937e564/"
-        );
-        console.log("provider =>", provider);
-        const tokenMetadata = await provider.send(
-          "qn_getTokenMetadataByContractAddress",
-          {
-            contract: "0xeC63aE1781A29B10d4bd27b492D017310e871efB",
-          }
-        );
+  // useEffect(() => {
+  //   async function fetch() {
+  //     try {
+  //       console.log("fetch");
+  //       const provider = new ethers.providers.JsonRpcProvider(
+  //         "https://virulent-smart-dream.discover.quiknode.pro/bf18a1026d8aa87ae439779802efb92be937e564/"
+  //       );
+  //       console.log("provider =>", provider);
+  //       const tokenMetadata = await provider.send(
+  //         "qn_getTokenMetadataByContractAddress",
+  //         {
+  //           contract: "0xeC63aE1781A29B10d4bd27b492D017310e871efB",
+  //         }
+  //       );
 
-        setTokenMetadata({
-          val: tokenMetadata,
-          loading: false,
-          error: null,
-        });
-      } catch (e) {
-        setTokenMetadata({
-          val: null,
-          loading: false,
-          error: e,
-        });
-      }
-    }
+  //       setTokenMetadata({
+  //         val: tokenMetadata,
+  //         loading: false,
+  //         error: null,
+  //       });
+  //     } catch (e) {
+  //       setTokenMetadata({
+  //         val: null,
+  //         loading: false,
+  //         error: e,
+  //       });
+  //     }
+  //   }
 
-    fetch();
-  }, []);
+  //   fetch();
+  // }, []);
 
   return (
     <Container className="px-0">

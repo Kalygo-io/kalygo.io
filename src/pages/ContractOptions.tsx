@@ -27,12 +27,6 @@ let AlgorandContracts: ContractOption[] = [
     pathTo: RoutesData.FungibleTokenContract.path,
     disabled: false,
   },
-  // {
-  //   title: "Property Rights DAO",
-  //   desc: "Coming soon...",
-  //   pathTo: RoutesData.NewFinanceDealContract.path,
-  //   disabled: false,
-  // },
   {
     title: "Security Deposit",
     desc: "Peer-to-peer security deposit",
@@ -49,6 +43,48 @@ let AlgorandContracts: ContractOption[] = [
     title: "Financed Deal",
     desc: "Coming soon...",
     pathTo: RoutesData.NewFinanceDealContract.path,
+    disabled: true,
+  },
+  {
+    title: "Lottery",
+    desc: "Random winner from a pool of entrants chosen via a VRF oracle",
+    pathTo: "",
+    disabled: true,
+  },
+  {
+    title: "Custom Payout",
+    desc: "Collect & divvy up a sum of money",
+    pathTo: "",
+    disabled: true,
+  },
+  {
+    title: "Vote",
+    desc: "Propose a topic upon which parties can vote",
+    pathTo: "",
+    disabled: true,
+  },
+  {
+    title: "Timed Lockup",
+    desc: "Useful for confirming someone has the money required for a product or service",
+    pathTo: "",
+    disabled: true,
+  },
+  {
+    title: "Shared Canvas",
+    desc: "Collective Artwork",
+    pathTo: "",
+    disabled: true,
+  },
+  {
+    title: "Multisig Safe",
+    desc: "Treasury",
+    pathTo: "",
+    disabled: true,
+  },
+  {
+    title: "NFT Marketplace",
+    desc: "Oldie but Goodie",
+    pathTo: "",
     disabled: true,
   },
 ];
@@ -89,7 +125,7 @@ export default function ContractOptions() {
           return (
             <Col key={i.title} xs={12} sm={6} xl={4} className="mb-4">
               <Card className="h-100">
-                <Card.Body className="d-flex flex-column">
+                <Card.Body className="d-flex flex-column justify-content-between">
                   <Card.Title className="d-flex justify-content-between">
                     {i.title}{" "}
                     <Image
