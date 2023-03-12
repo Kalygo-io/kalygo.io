@@ -56,11 +56,18 @@ export function ProposedRevisionDiff(props: P) {
         <>
           <div>
             <b>Buyer </b>
-            <span>{globalState["glbl_buyer"]}</span>
+            <span
+              style={{
+                wordBreak: "break-word",
+              }}
+            >
+              {globalState["glbl_buyer"]}
+            </span>
             {globalState["glbl_buyer"] !== proposedRevision[0] && (
               <span
                 style={{
                   color: "green",
+                  wordBreak: "break-word",
                 }}
               >
                 {" -> "}
@@ -71,11 +78,18 @@ export function ProposedRevisionDiff(props: P) {
           {/*  */}
           <div>
             <b>Seller </b>
-            <span>{globalState["glbl_seller"]}</span>
+            <span
+              style={{
+                wordBreak: "break-word",
+              }}
+            >
+              {globalState["glbl_seller"]}
+            </span>
             {globalState["glbl_seller"] !== proposedRevision[1] && (
               <span
                 style={{
                   color: "green",
+                  wordBreak: "break-word",
                 }}
               >
                 {" -> "}
