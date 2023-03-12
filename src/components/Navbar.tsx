@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Nav, Navbar, Container, Button } from "react-bootstrap";
+import React, { useEffect, useState, useRef } from "react";
+import {
+  Nav,
+  Navbar,
+  Container,
+  Button,
+  Overlay,
+  Popover,
+} from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { RootState } from "../store/store";
@@ -20,6 +27,16 @@ interface P {
 export const NavbarComponent = (props: P) => {
   const { handleConnectWalletClick, handleDisconnectWalletClick } = props;
   const settings = useAppSelector((state: RootState) => state.settings);
+
+  const [show, setShow] = useState(false);
+  const [target, setTarget] = useState(null);
+  const ref = useRef(null);
+
+  const handleClick = (event: any) => {
+    console.log("!@#!@#");
+    setShow(!show);
+    setTarget(event.target);
+  };
 
   let [accntBalance, setAccntBalance] = useState<{
     val: any;
@@ -72,7 +89,7 @@ export const NavbarComponent = (props: P) => {
       fetch();
   }, [rfrshCounter]);
 
-  console.log("==---==");
+  console.log("==---== show", show);
 
   return (
     <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
@@ -102,8 +119,13 @@ export const NavbarComponent = (props: P) => {
           {settings.selectedBlockchain === "Algorand" &&
             settings.selectedAlgorandAccount.length > 12 &&
             pathname !== "/dashboard/settings" && (
-              <div>
-                <span>
+              <div
+                ref={ref}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                <span onClick={handleClick}>
                   {settings.selectedBlockchain === "Algorand" &&
                     settings.selectedAlgorandWallet === "Pera" &&
                     settings.isPeraSessionConnected && (
@@ -155,6 +177,31 @@ export const NavbarComponent = (props: P) => {
                 )}
               </div>
             )}
+          <Overlay
+            show={show}
+            target={target}
+            placement="bottom"
+            container={ref}
+            containerPadding={20}
+          >
+            <Popover id="popover-contained">
+              <Popover.Header as="h3">Settings</Popover.Header>
+              <Popover.Body>
+                <b>Blockchain </b>
+                {settings.selectedBlockchain}
+                <br />
+                <b>Network </b>
+                {settings.selectedAlgorandNetwork}
+                <br />
+                <b>Wallet </b>
+                {settings.selectedAlgorandWallet}
+                <br />
+                <b>Account </b>
+                {settings.selectedAlgorandAccount}
+                <br />
+              </Popover.Body>
+            </Popover>
+          </Overlay>
         </div>
       </Container>
     </Navbar>
