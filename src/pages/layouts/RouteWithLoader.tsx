@@ -21,7 +21,7 @@ export const RouteWithLoader = (props: any) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 800);
+    const timer = setTimeout(() => setLoaded(true), 500);
     return () => clearTimeout(timer);
   }, []);
 
