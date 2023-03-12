@@ -178,6 +178,11 @@ export const NavbarComponent = (props: P) => {
               </div>
             )}
           <Overlay
+            rootClose={true}
+            rootCloseEvent={"click"}
+            onHide={() => {
+              setShow(false);
+            }}
             show={show}
             target={target}
             placement="bottom"
