@@ -19,7 +19,7 @@ export function UpdateContractWidget({ appId }: P) {
   return (
     <Card border="light" className="shadow-sm mb-4">
       <Card.Header className="border-bottom border-light d-flex justify-content-between align-items-center">
-        <h5 className="mb-0">Revise Contract</h5>
+        <h5 className="mb-0 mx-2">Revise Contract</h5>
         <Button
           variant="primary"
           type="submit"

@@ -18,12 +18,13 @@ import { parseGlobalState } from "../../../customSelectors/appl/parseGlobalState
 const { factory } = ts;
 
 interface P {
+  role: string;
   proposedRevision: any;
   globalState: any;
 }
 
 export function ProposedRevisionDiff(props: P) {
-  let { globalState, proposedRevision } = props;
+  let { globalState, proposedRevision, role } = props;
 
   const settings = useAppSelector((state: RootState) => state.settings);
   let { id } = useParams();
@@ -40,11 +41,15 @@ export function ProposedRevisionDiff(props: P) {
   console.log(`*** ProposedRevisionDiff globalState`, globalState);
   console.log(`*>*>* ProposedRevisionDiff proposedRevision`, proposedRevision);
 
+  // if (role === "seller") {
+  //   debugger;
+  // }
+
   return (
     <>
       {/* {proposedRevision && (
-          <pre>{JSON.stringify(toObject(proposedRevision), undefined, 2)}</pre>
-        )} */}
+        <pre>{JSON.stringify(toObject(proposedRevision), undefined, 2)}</pre>
+      )} */}
       {globalState && proposedRevision ? (
         <>
           <div>
@@ -125,13 +130,15 @@ export function ProposedRevisionDiff(props: P) {
           <div>
             <b>Inspect Start Date </b>
             <span>{globalState["glbl_inspect_start_date"]}</span>
-            {globalState["glbl_inspect_start_date"] !== proposedRevision[5] && (
+            {BigInt(globalState["glbl_inspect_start_date"]) !==
+              proposedRevision[5] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
-                {proposedRevision[5]}
+                {" -> "}
+                {toObject(proposedRevision[5])}
               </span>
             )}
           </div>
@@ -139,13 +146,15 @@ export function ProposedRevisionDiff(props: P) {
           <div>
             <b>Inspect End Date </b>
             <span>{globalState["glbl_inspect_end_date"]}</span>
-            {globalState["glbl_inspect_end_date"] !== proposedRevision[6] && (
+            {BigInt(globalState["glbl_inspect_end_date"]) !==
+              proposedRevision[6] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
-                {proposedRevision[6]}
+                {" -> "}
+                {toObject(proposedRevision[6])}
               </span>
             )}
           </div>
@@ -153,14 +162,16 @@ export function ProposedRevisionDiff(props: P) {
           <div>
             <b>Inspect Extension </b>
             <span>{globalState["glbl_inspect_extension_date"]}</span>
-            {globalState["glbl_inspect_extension_date"] !==
+            {BigInt(globalState["glbl_inspect_extension_date"]) !==
               proposedRevision[7] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
-                {proposedRevision[7]}
+                {/* {proposedRevision[7]} */}
+                {" -> "}
+                {toObject(proposedRevision[7])}
               </span>
             )}
           </div>
@@ -168,13 +179,15 @@ export function ProposedRevisionDiff(props: P) {
           <div>
             <b>Moving Date </b>
             <span>{globalState["glbl_moving_date"]}</span>
-            {globalState["glbl_moving_date"] !== proposedRevision[8] && (
+            {BigInt(globalState["glbl_moving_date"]) !==
+              proposedRevision[8] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
-                {proposedRevision[8]}
+                {" -> "}
+                {toObject(proposedRevision[8])}
               </span>
             )}
           </div>
@@ -182,13 +195,15 @@ export function ProposedRevisionDiff(props: P) {
           <div>
             <b>Closing Date </b>
             <span>{globalState["glbl_closing_date"]}</span>
-            {globalState["glbl_closing_date"] !== proposedRevision[9] && (
+            {BigInt(globalState["glbl_closing_date"]) !==
+              proposedRevision[9] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
-                {proposedRevision[9]}
+                {" -> "}
+                {toObject(proposedRevision[9])}
               </span>
             )}
           </div>
@@ -196,13 +211,15 @@ export function ProposedRevisionDiff(props: P) {
           <div>
             <b>Free Funds Date </b>
             <span>{globalState["glbl_free_funds_date"]}</span>
-            {globalState["glbl_free_funds_date"] !== proposedRevision[10] && (
+            {BigInt(globalState["glbl_free_funds_date"]) !==
+              proposedRevision[10] && (
               <span
                 style={{
                   color: "green",
                 }}
               >
-                {proposedRevision[10]}
+                {" -> "}
+                {toObject(proposedRevision[10])}
               </span>
             )}
           </div>

@@ -120,7 +120,7 @@ export function UpdateContract() {
 
           console.log("boxValue", sellerBoxValue);
 
-          let sellerDecodedBoxValue = ABIType.from(
+          sellerDecodedBoxValue = ABIType.from(
             "(address,address,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64)"
           ).decode(sellerBoxValue.value);
 
@@ -163,6 +163,7 @@ export function UpdateContract() {
           <Accordion.Header>Last Seller Proposed Revision</Accordion.Header>
           <Accordion.Body>
             <ProposedRevisionDiff
+              role="seller"
               globalState={get(state, "val.contractGlobalState", null)}
               proposedRevision={get(state, "val.sellerProposedEdit", null)}
             />
@@ -172,6 +173,7 @@ export function UpdateContract() {
           <Accordion.Header>Last Buyer Proposed Revision</Accordion.Header>
           <Accordion.Body>
             <ProposedRevisionDiff
+              role="buyer"
               globalState={get(state, "val.contractGlobalState", null)}
               proposedRevision={get(state, "val.buyerProposedEdit", null)}
             />

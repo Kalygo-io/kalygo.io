@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Col, Row, Card, Form, Button, InputGroup } from "react-bootstrap";
 import Datetime from "react-datetime";
 import { useForm } from "react-hook-form";
@@ -63,6 +63,22 @@ export function UpdateContractForm(props: P) {
     buyerProposedRevision,
     sellerProposedRevision,
   } = props;
+
+  const inputElInspStartDate = useRef<Datetime>(null);
+  const inputElInspEndDate = useRef<Datetime>(null);
+  const inputElInspExtDate = useRef<Datetime>(null);
+  const inputElMoveDate = useRef<Datetime>(null);
+  const inputElCloseDate = useRef<Datetime>(null);
+  const inputElFreeFundsDate = useRef<Datetime>(null);
+
+  const dtInputs = [
+    inputElInspStartDate,
+    inputElInspEndDate,
+    inputElInspExtDate,
+    inputElMoveDate,
+    inputElCloseDate,
+    inputElFreeFundsDate,
+  ];
 
   const {
     register,
@@ -249,6 +265,15 @@ export function UpdateContractForm(props: P) {
   console.log("assetInfo in Form", assetInfo);
   console.log("buyerProposedRevision", buyerProposedRevision);
   console.log("sellerProposedRevision", sellerProposedRevision);
+
+  function closeOtherCalendars(currentCal: string) {
+    dtInputs.forEach((i) => {
+      if (i.current!.props.className !== currentCal) {
+        // @ts-ignore
+        i.current!._closeCalendar();
+      }
+    });
+  }
 
   return (
     <>
@@ -549,6 +574,9 @@ export function UpdateContractForm(props: P) {
                     })}
                     type="text"
                     placeholder="Seller Wallet Address"
+                    onFocus={(e: any) => {
+                      closeOtherCalendars("");
+                    }}
                   />
                 </Form.Group>
               </Col>
@@ -559,11 +587,13 @@ export function UpdateContractForm(props: P) {
                 <Form.Group id="inspect-period-start">
                   <Form.Label>Inspection Period Start</Form.Label>
                   <Datetime
+                    className="inspectPeriodStart"
                     timeFormat={true}
+                    ref={inputElInspStartDate}
                     onChange={(e: any) => {
                       setValue("inspectPeriodStart", e.toString());
                     }}
-                    renderInput={(props, openCalendar) => (
+                    renderInput={(props, openCalendar, closeCalendar) => (
                       <InputGroup>
                         <InputGroup.Text>
                           <FontAwesomeIcon icon={faCalendarAlt} />
@@ -578,6 +608,7 @@ export function UpdateContractForm(props: P) {
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
                             openCalendar();
+                            closeOtherCalendars("inspectPeriodStart");
                           }}
                         />
                       </InputGroup>
@@ -589,11 +620,13 @@ export function UpdateContractForm(props: P) {
                 <Form.Group id="inspect-period-end">
                   <Form.Label>Inspection Period End</Form.Label>
                   <Datetime
+                    className="inspectPeriodEnd"
                     timeFormat={true}
+                    ref={inputElInspEndDate}
                     onChange={(e: any) => {
                       setValue("inspectPeriodEnd", e.toString());
                     }}
-                    renderInput={(props, openCalendar) => (
+                    renderInput={(props, openCalendar, closeCalendar) => (
                       <InputGroup>
                         <InputGroup.Text>
                           <FontAwesomeIcon icon={faCalendarAlt} />
@@ -608,6 +641,7 @@ export function UpdateContractForm(props: P) {
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
                             openCalendar();
+                            closeOtherCalendars("inspectPeriodEnd");
                           }}
                         />
                       </InputGroup>
@@ -622,11 +656,13 @@ export function UpdateContractForm(props: P) {
                 <Form.Group id="inspect-period-end">
                   <Form.Label>Inspection Period Extension</Form.Label>
                   <Datetime
+                    className="inspectPeriodExtension"
                     timeFormat={true}
+                    ref={inputElInspExtDate}
                     onChange={(e: any) => {
                       setValue("inspectPeriodExtension", e.toString());
                     }}
-                    renderInput={(props, openCalendar) => (
+                    renderInput={(props, openCalendar, closeCalendar) => (
                       <InputGroup>
                         <InputGroup.Text>
                           <FontAwesomeIcon icon={faCalendarAlt} />
@@ -641,6 +677,7 @@ export function UpdateContractForm(props: P) {
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
                             openCalendar();
+                            closeOtherCalendars("inspectPeriodExtension");
                           }}
                         />
                       </InputGroup>
@@ -652,11 +689,13 @@ export function UpdateContractForm(props: P) {
                 <Form.Group id="closing-date">
                   <Form.Label>Moving Date</Form.Label>
                   <Datetime
+                    className="movingDate"
                     timeFormat={true}
+                    ref={inputElMoveDate}
                     onChange={(e: any) => {
                       setValue("movingDate", e.toString());
                     }}
-                    renderInput={(props, openCalendar) => (
+                    renderInput={(props, openCalendar, closeCalendar) => (
                       <InputGroup>
                         <InputGroup.Text>
                           <FontAwesomeIcon icon={faCalendarAlt} />
@@ -671,8 +710,8 @@ export function UpdateContractForm(props: P) {
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
                             openCalendar();
+                            closeOtherCalendars("movingDate");
                           }}
-                          onChange={() => {}}
                         />
                       </InputGroup>
                     )}
@@ -686,11 +725,13 @@ export function UpdateContractForm(props: P) {
                 <Form.Group id="closing-date">
                   <Form.Label>Closing Date</Form.Label>
                   <Datetime
+                    className="closingDate"
                     timeFormat={true}
+                    ref={inputElCloseDate}
                     onChange={(e: any) => {
                       setValue("closingDate", e.toString());
                     }}
-                    renderInput={(props, openCalendar) => (
+                    renderInput={(props, openCalendar, closeCalendar) => (
                       <InputGroup>
                         <InputGroup.Text>
                           <FontAwesomeIcon icon={faCalendarAlt} />
@@ -705,8 +746,8 @@ export function UpdateContractForm(props: P) {
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
                             openCalendar();
+                            closeOtherCalendars("closingDate");
                           }}
-                          onChange={() => {}}
                         />
                       </InputGroup>
                     )}
@@ -717,11 +758,13 @@ export function UpdateContractForm(props: P) {
                 <Form.Group id="closing-date">
                   <Form.Label>Free Funds Date</Form.Label>
                   <Datetime
+                    className="freeFundsDate"
                     timeFormat={true}
+                    ref={inputElFreeFundsDate}
                     onChange={(e: any) => {
                       setValue("freeFundsDate", e.toString());
                     }}
-                    renderInput={(props, openCalendar) => (
+                    renderInput={(props, openCalendar, closeCalendar) => (
                       <InputGroup>
                         <InputGroup.Text>
                           <FontAwesomeIcon icon={faCalendarAlt} />
@@ -736,8 +779,8 @@ export function UpdateContractForm(props: P) {
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
                             openCalendar();
+                            closeOtherCalendars("freeFundsDate");
                           }}
-                          onChange={() => {}}
                         />
                       </InputGroup>
                     )}
@@ -747,7 +790,13 @@ export function UpdateContractForm(props: P) {
             </Row>
 
             <div className="mt-3">
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                type="submit"
+                onFocus={(e: any) => {
+                  closeOtherCalendars("");
+                }}
+              >
                 Update
               </Button>
             </div>
