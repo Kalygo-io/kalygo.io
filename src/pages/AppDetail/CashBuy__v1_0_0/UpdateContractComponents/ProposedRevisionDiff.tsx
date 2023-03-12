@@ -15,6 +15,8 @@ import { ABIType } from "algosdk";
 
 import ts from "typescript";
 import { parseGlobalState } from "../../../customSelectors/appl/parseGlobalState";
+import moment from "moment";
+import { ErrorBoundary } from "../../../../components/ErrorBoundary";
 const { factory } = ts;
 
 interface P {
@@ -46,7 +48,7 @@ export function ProposedRevisionDiff(props: P) {
   // }
 
   return (
-    <>
+    <ErrorBoundary>
       {/* {proposedRevision && (
         <pre>{JSON.stringify(toObject(proposedRevision), undefined, 2)}</pre>
       )} */}
@@ -138,7 +140,9 @@ export function ProposedRevisionDiff(props: P) {
                 }}
               >
                 {" -> "}
-                {toObject(proposedRevision[5])}
+                {toObject(proposedRevision[5])
+                  ? new Date(toObject(proposedRevision[5])).toLocaleString()
+                  : "ERROR"}
               </span>
             )}
           </div>
@@ -154,7 +158,11 @@ export function ProposedRevisionDiff(props: P) {
                 }}
               >
                 {" -> "}
-                {toObject(proposedRevision[6])}
+                {toObject(proposedRevision[6])
+                  ? moment(
+                      toObject(proposedRevision[6]) * 1000
+                    ).toLocaleString()
+                  : "ERROR"}
               </span>
             )}
           </div>
@@ -169,9 +177,12 @@ export function ProposedRevisionDiff(props: P) {
                   color: "green",
                 }}
               >
-                {/* {proposedRevision[7]} */}
                 {" -> "}
-                {toObject(proposedRevision[7])}
+                {toObject(proposedRevision[7])
+                  ? moment(
+                      toObject(proposedRevision[7]) * 1000
+                    ).toLocaleString()
+                  : "ERROR"}
               </span>
             )}
           </div>
@@ -187,7 +198,11 @@ export function ProposedRevisionDiff(props: P) {
                 }}
               >
                 {" -> "}
-                {toObject(proposedRevision[8])}
+                {toObject(proposedRevision[8])
+                  ? moment(
+                      toObject(proposedRevision[8]) * 1000
+                    ).toLocaleString()
+                  : "ERROR"}
               </span>
             )}
           </div>
@@ -203,7 +218,11 @@ export function ProposedRevisionDiff(props: P) {
                 }}
               >
                 {" -> "}
-                {toObject(proposedRevision[9])}
+                {toObject(proposedRevision[9])
+                  ? moment(
+                      toObject(proposedRevision[9]) * 1000
+                    ).toLocaleString()
+                  : "ERROR"}
               </span>
             )}
           </div>
@@ -219,7 +238,11 @@ export function ProposedRevisionDiff(props: P) {
                 }}
               >
                 {" -> "}
-                {toObject(proposedRevision[10])}
+                {toObject(proposedRevision[10])
+                  ? moment(
+                      toObject(proposedRevision[10]) * 1000
+                    ).toLocaleString()
+                  : "ERROR"}
               </span>
             )}
           </div>
@@ -227,6 +250,6 @@ export function ProposedRevisionDiff(props: P) {
       ) : (
         "ø"
       )}
-    </>
+    </ErrorBoundary>
   );
 }
