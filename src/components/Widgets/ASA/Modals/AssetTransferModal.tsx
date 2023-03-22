@@ -77,7 +77,7 @@ export function AssetTransferModal(props: P) {
       let parsedAmount = amount.replaceAll(",", "");
       parsedAmount = Number.parseInt(parsedAmount);
 
-      debugger;
+      // debugger;
 
       await sendASA(
         account.addr,

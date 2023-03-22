@@ -79,7 +79,7 @@ export const FungibleTokenContractForm = (props: P) => {
       let parsedTotalSupply = data?.totalSupply?.replaceAll(",", "");
       parsedTotalSupply = Number.parseInt(parsedTotalSupply);
 
-      debugger;
+      // debugger;
 
       const total = Number.parseInt(parsedTotalSupply); // how many of this asset there will be
       const decimals = Number.parseInt(data.decimals); // units of this asset are whole-integer amounts

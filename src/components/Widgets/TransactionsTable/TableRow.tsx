@@ -39,7 +39,7 @@ interface TR {
 export const TableRow = (props: TR) => {
   let navigate = useNavigate();
 
-  // console.log("---", props);
+  console.log("---", props);
 
   const {
     id,
@@ -57,6 +57,7 @@ export const TableRow = (props: TR) => {
 
   let meta;
   let arg;
+  let assetTransferAssetId: string;
 
   switch (txType) {
     case "appl":
@@ -118,7 +119,7 @@ export const TableRow = (props: TR) => {
     case "axfer":
       // meta = `${Buffer.from(note, "base64").toString()}`;
       meta = `${assetTransferTransaction?.amount}`;
-
+      assetTransferAssetId = `${assetTransferTransaction!["asset-id"]}`;
       if (assetTransferTransaction!["asset-id"]) {
         arg = `asset-id: ${assetTransferTransaction!["asset-id"]}`;
       } else {
@@ -218,7 +219,16 @@ export const TableRow = (props: TR) => {
                   navigate(`/dashboard/app/asa/${createdAssetIndex}`);
                 }}
               >
-                <FontAwesomeIcon icon={faEye} className="me-2" /> View holders
+                <FontAwesomeIcon icon={faEye} className="me-2" /> Asset Overview
+              </Dropdown.Item>
+            )}
+            {txType === "axfer" && assetTransferTransaction && (
+              <Dropdown.Item
+                onClick={() => {
+                  navigate(`/dashboard/app/asa/${assetTransferAssetId}`);
+                }}
+              >
+                <FontAwesomeIcon icon={faEye} className="me-2" /> Asset Overview
               </Dropdown.Item>
             )}
             <Dropdown.Item

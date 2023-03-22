@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruckLoading } from "@fortawesome/free-solid-svg-icons";
+import { AiOutlineReload } from "react-icons/ai";
+
 import { useParams } from "react-router-dom";
 import get from "lodash/get";
 
@@ -64,6 +66,7 @@ async function fetchHolders(
 
 export const HoldersTable = () => {
   const settings = useAppSelector((state: RootState) => state.settings);
+  const [reloadCount, setReloadCount] = useState(0);
 
   const [asset, setAsset] = useState<any>({
     val: undefined,
@@ -77,7 +80,7 @@ export const HoldersTable = () => {
     console.log("load the AssetDetail page", id);
 
     fetchHolders(id!, settings, setAsset);
-  }, []);
+  }, [reloadCount]);
 
   console.log("asset.val", asset.val);
 
@@ -88,7 +91,22 @@ export const HoldersTable = () => {
       <Card.Header>
         <Row className="align-items-center">
           <Col>
-            <h5 className="mb-0">Holders</h5>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <h5 className="mb-0">Holders</h5>
+              <>
+                <AiOutlineReload
+                  onClick={() => {
+                    console.log("___ ___ ___");
+                    setReloadCount(reloadCount + 1);
+                  }}
+                />
+              </>
+            </div>
           </Col>
         </Row>
       </Card.Header>
