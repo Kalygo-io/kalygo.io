@@ -26,7 +26,7 @@ function OverviewAsset() {
 
   const [app, setApp] = useState<any>({
     val: undefined,
-    loading: false,
+    loading: true,
     error: undefined,
   });
 
@@ -73,27 +73,33 @@ function OverviewAsset() {
   return (
     <>
       <div className="d-flex flex-column justify-content-between flex-wrap flex-md-nowrap py-4"></div>
-      <Row>
-        <Col xs={12} className="mb-4">
-          <AssetInfoWidget />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12} className="mb-4">
-          <HoldersTable />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12} sm={12} md={8} lg={4} className="mb-4">
-          <AssetActions
-            sender={settings.selectedAlgorandAccount}
-            fungibleTokenId={Number.parseInt(id!)}
-            network={settings.selectedAlgorandNetwork}
-            atcSigner={signer}
-            fungibleTokenCreator={get(app, "val.asset.params.creator")}
-          />
-        </Col>
-      </Row>
+      {app.loading ? (
+        <>Loading...</>
+      ) : (
+        <>
+          <Row>
+            <Col xs={12} className="mb-4">
+              <AssetInfoWidget assetInfo={app} />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} sm={12} md={8} lg={4} className="mb-4">
+              <AssetActions
+                sender={settings.selectedAlgorandAccount}
+                fungibleTokenId={Number.parseInt(id!)}
+                network={settings.selectedAlgorandNetwork}
+                atcSigner={signer}
+                fungibleTokenCreator={get(app, "val.asset.params.creator")}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} className="mb-4">
+              <HoldersTable />
+            </Col>
+          </Row>
+        </>
+      )}
     </>
   );
 }

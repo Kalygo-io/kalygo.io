@@ -32,47 +32,23 @@ const AssetDimensions = (props: { field: string; value: string }) => {
   );
 };
 
-interface P {}
+interface P {
+  assetInfo: any;
+}
 
 export const AssetInfoWidget = (props: P) => {
-  const [app, setApp] = useState<any>({
-    val: undefined,
-    loading: false,
-    error: undefined,
-  });
+  let { assetInfo: app } = props;
+
+  // const [app, setApp] = useState<any>({
+  //   val: undefined,
+  //   loading: false,
+  //   error: undefined,
+  // });
 
   const settings = useAppSelector((state: RootState) => state.settings);
   let { id } = useParams();
 
   console.log("AssetInfoWidget id", id);
-
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const appResponse = await AlgorandClient.getIndexer(
-          settings.selectedAlgorandNetwork
-        )
-          .lookupAssetByID(Number.parseInt(id!))
-          .do();
-
-        console.log("appResponse", appResponse);
-
-        setApp({
-          val: appResponse,
-          loading: false,
-          error: null,
-        });
-      } catch (e) {
-        setApp({
-          val: null,
-          loading: false,
-          error: e,
-        });
-      }
-    }
-
-    fetch();
-  }, []);
 
   console.log("app.val", app.val);
 
