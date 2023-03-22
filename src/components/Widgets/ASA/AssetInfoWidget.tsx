@@ -81,7 +81,12 @@ export const AssetInfoWidget = (props: P) => {
       <Card.Header>
         <Row className="align-items-center">
           <Col>
-            <h5 className="mb-0">Asset Info</h5>
+            <h5 className="mb-0">
+              Asset Info{" "}
+              {get(app, "val.asset.index") ? (
+                <small>({get(app, "val.asset.index")})</small>
+              ) : null}{" "}
+            </h5>
           </Col>
         </Row>
       </Card.Header>

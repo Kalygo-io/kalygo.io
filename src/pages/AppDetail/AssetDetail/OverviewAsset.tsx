@@ -50,7 +50,7 @@ function OverviewAsset() {
         </Col>
       </Row>
       <Row>
-        <Col xs={12} sm={12} md={6} className="mb-4">
+        <Col xs={12} sm={12} md={8} lg={4} className="mb-4">
           <AssetActions
             sender={settings.selectedAlgorandAccount}
             fungibleTokenId={Number.parseInt(id!)}
