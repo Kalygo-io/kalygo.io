@@ -59,7 +59,7 @@ export function AssetTransferModal(props: P) {
     try {
       console.log("-> data <-", data);
 
-      const { receiver, amount } = data;
+      const { receiver, amount, note } = data;
 
       let params = await AlgorandClient.getAlgod(
         settings.selectedAlgorandNetwork
@@ -85,7 +85,8 @@ export function AssetTransferModal(props: P) {
         settings.selectedAlgorandNetwork,
         atcSigner,
         receiver,
-        parsedAmount
+        parsedAmount,
+        note
       );
 
       onHide();
@@ -166,7 +167,11 @@ export function AssetTransferModal(props: P) {
               <Form.Group id="note">
                 <Form.Label>Note</Form.Label>
                 <Form.Control
-                  {...register("note", {})}
+                  {...register("note", {
+                    maxLength: 1024,
+                  })}
+                  as="textarea"
+                  rows={4}
                   isInvalid={errors["note"] ? true : false}
                   type="string"
                   placeholder=""

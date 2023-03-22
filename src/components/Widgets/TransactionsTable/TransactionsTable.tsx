@@ -87,9 +87,9 @@ export const TransactionsTable = () => {
               <th className="border-bottom">Id</th>
               <th className="border-bottom">Type</th>
               <th className="border-bottom">Time</th>
-              <th className="border-bottom">Round</th>
-              <th className="border-bottom">Meta</th>
-              <th className="border-bottom">Arg</th>
+              {/* <th className="border-bottom">Round</th> */}
+              <th className="border-bottom">Hint #1</th>
+              <th className="border-bottom">Hint #2</th>
               <th className="border-bottom">Action</th>
             </tr>
           </thead>

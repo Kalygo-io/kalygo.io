@@ -162,9 +162,9 @@ export const TableRow = (props: TR) => {
           {new Date(roundTime * 1000).toLocaleString()}
         </span>
       </td>
-      <td>
+      {/* <td>
         <span className="fw-normal">{confirmedRound}</span>
-      </td>
+      </td> */}
       <td>
         <span className="fw-normal">{meta}</span>
       </td>

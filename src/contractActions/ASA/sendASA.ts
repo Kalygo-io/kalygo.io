@@ -15,7 +15,8 @@ export async function sendASA(
   network: string,
   signer: any,
   receiver: string,
-  amount: number
+  amount: number,
+  note: string
 ) {
   try {
     console.log("Transfer ASA");
@@ -27,7 +28,7 @@ export async function sendASA(
       to: receiver,
       suggestedParams: sp,
       amount: amount,
-      note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
+      note: new Uint8Array(Buffer.from(note)),
     });
     const tws = {
       txn: txn,
