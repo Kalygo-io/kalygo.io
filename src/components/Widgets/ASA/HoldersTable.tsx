@@ -95,6 +95,7 @@ export const HoldersTable = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
               <h5 className="mb-0">Holders</h5>
