@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Col, Row, Card, Form, Button, InputGroup } from "react-bootstrap";
+import { Col, Row, Card, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-import moment from "moment-timezone";
-import { Buffer } from "buffer";
-import Datetime from "react-datetime";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
 import { RootState } from "../../store/store";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
@@ -18,6 +12,8 @@ import { showSuccessToast } from "../../utility/successToast";
 
 import { signerForAlgoSigner } from "../../contractActions/helpers/signers/AlgoSigner";
 import { signerForPera } from "../../contractActions/helpers/signers/PeraSigner";
+
+import { formatCurrency, formatNumber } from "./helpers/formatCurrency";
 
 interface P {
   accounts: string[];
@@ -38,7 +34,7 @@ export const FungibleTokenContractForm = (props: P) => {
   } = useForm({
     defaultValues: {
       assetName: "Asset Name",
-      totalSupply: 1,
+      totalSupply: "1,000,000",
       decimals: 2,
       enableClawback: true,
       unitName: "ASSET",
@@ -80,7 +76,12 @@ export const FungibleTokenContractForm = (props: P) => {
         addr: settings.selectedAlgorandAccount,
       };
 
-      const total = Number.parseInt(data.totalSupply); // how many of this asset there will be
+      let parsedTotalSupply = data?.totalSupply?.replaceAll(",", "");
+      parsedTotalSupply = Number.parseInt(parsedTotalSupply);
+
+      debugger;
+
+      const total = Number.parseInt(parsedTotalSupply); // how many of this asset there will be
       const decimals = Number.parseInt(data.decimals); // units of this asset are whole-integer amounts
       const assetName = data.assetName;
       const unitName = data.unitName;
@@ -98,7 +99,6 @@ export const FungibleTokenContractForm = (props: P) => {
         assetURL: url,
         assetMetadataHash: "",
         defaultFrozen,
-
         freeze: account.addr,
         manager: account.addr,
         clawback: account.addr,
@@ -154,7 +154,8 @@ export const FungibleTokenContractForm = (props: P) => {
                     required: true,
                   })}
                   type="text"
-                  placeholder="Asset Name"
+                  placeholder=""
+                  isInvalid={errors["assetName"] ? true : false}
                 />
               </Form.Group>
             </Col>
@@ -169,9 +170,14 @@ export const FungibleTokenContractForm = (props: P) => {
                     required: true,
                   })}
                   inputMode="decimal"
-                  type="number"
-                  placeholder="Supply"
+                  pattern="^\d{1,3}(,\d{3})*"
+                  placeholder=""
                   min="0"
+                  isInvalid={errors["totalSupply"] ? true : false}
+                  onChange={(event) => {
+                    let result = formatNumber(event.target.value, true);
+                    setValue("totalSupply", result);
+                  }}
                 />
               </Form.Group>
             </Col>
@@ -183,8 +189,9 @@ export const FungibleTokenContractForm = (props: P) => {
                   {...register("decimals", { required: true })}
                   inputMode="decimal"
                   type="number"
-                  placeholder="Decimals"
+                  placeholder=""
                   min="0"
+                  isInvalid={errors["decimals"] ? true : false}
                 />
               </Form.Group>
             </Col>
@@ -201,7 +208,7 @@ export const FungibleTokenContractForm = (props: P) => {
                   })}
                   isInvalid={errors["unitName"] ? true : false}
                   type="string"
-                  placeholder="Unit Name"
+                  placeholder=""
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.unitName?.message}
@@ -219,7 +226,8 @@ export const FungibleTokenContractForm = (props: P) => {
                     required: true,
                   })}
                   type="text"
-                  placeholder="URL"
+                  placeholder=""
+                  isInvalid={errors["url"] ? true : false}
                 />
               </Form.Group>
             </Col>

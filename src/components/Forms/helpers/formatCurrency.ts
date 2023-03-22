@@ -1,6 +1,9 @@
 import { DOMElement } from "react";
 
-export function formatNumber(n: string, removeLeadingZeroes: boolean = true) {
+export function formatNumber(
+  n: string,
+  removeLeadingZeroes: boolean = true
+): string {
   // format number 1000000 to 1,234,567
   let tmp = n.replace(/\D/g, "");
   if (removeLeadingZeroes) {

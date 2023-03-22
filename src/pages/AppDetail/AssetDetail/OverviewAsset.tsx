@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { AlgorandClient } from "../../../services/algorand_client";
 import { useParams } from "react-router-dom";
 import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
-import { ErrorBoundary } from "../../../components/ErrorBoundary";
 
 import algosdk, { Transaction } from "algosdk";
 import { HoldersTable } from "../../../components/Widgets/ASA/HoldersTable";
@@ -51,7 +50,7 @@ function OverviewAsset() {
         </Col>
       </Row>
       <Row>
-        <Col xs={6} className="mb-4">
+        <Col xs={12} sm={12} md={6} className="mb-4">
           <AssetActions
             sender={settings.selectedAlgorandAccount}
             fungibleTokenId={Number.parseInt(id!)}

@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Col, Row, Card, Form, Button, InputGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-import { NumericFormat } from "react-number-format";
 import moment from "moment-timezone";
 import { Buffer } from "buffer";
 import Datetime from "react-datetime";
@@ -19,11 +18,7 @@ import { showErrorToast } from "../../utility/errorToast";
 import { showSuccessToast } from "../../utility/successToast";
 import { supportedContracts } from "../../data/supportedContracts";
 
-import algosdk, {
-  AtomicTransactionComposer,
-  ABIArgument,
-  Account,
-} from "algosdk";
+import algosdk, { AtomicTransactionComposer, ABIArgument } from "algosdk";
 
 import { formatCurrency } from "./helpers/formatCurrency";
 import { supportedStablecoins } from "./helpers/supportedStablecoins";
@@ -38,7 +33,6 @@ interface P {
 
 export const CashBuyContractForm = (props: P) => {
   const settings = useAppSelector((state: RootState) => state.settings);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const inputElInspStartDate = useRef<Datetime>(null);
