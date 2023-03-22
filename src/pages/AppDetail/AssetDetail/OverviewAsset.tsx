@@ -24,6 +24,40 @@ function OverviewAsset() {
 
   let { id } = useParams();
 
+  const [app, setApp] = useState<any>({
+    val: undefined,
+    loading: false,
+    error: undefined,
+  });
+
+  useEffect(() => {
+    async function fetch() {
+      try {
+        const appResponse = await AlgorandClient.getIndexer(
+          settings.selectedAlgorandNetwork
+        )
+          .lookupAssetByID(Number.parseInt(id!))
+          .do();
+
+        console.log("appResponse", appResponse);
+
+        setApp({
+          val: appResponse,
+          loading: false,
+          error: null,
+        });
+      } catch (e) {
+        setApp({
+          val: null,
+          loading: false,
+          error: e,
+        });
+      }
+    }
+
+    fetch();
+  }, []);
+
   let signer: any = signerForAlgoSigner;
 
   console.log("!!! -> !!!", settings.selectedAlgorandWallet);
@@ -56,6 +90,7 @@ function OverviewAsset() {
             fungibleTokenId={Number.parseInt(id!)}
             network={settings.selectedAlgorandNetwork}
             atcSigner={signer}
+            fungibleTokenCreator={get(app, "val.asset.params.creator")}
           />
         </Col>
       </Row>

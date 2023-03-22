@@ -17,10 +17,12 @@ export async function optoutToASA(
   sender: string,
   fungibleTokenId: number,
   network: string,
-  signer: any
+  signer: any,
+  closeRemainderTo: string
 ) {
   try {
     console.log("Opt-out ASA");
+    debugger;
     let sp = await AlgorandClient.getAlgod(network).getTransactionParams().do();
     // Create a transaction
     const txn = makeAssetTransferTxnWithSuggestedParamsFromObject({
@@ -30,7 +32,7 @@ export async function optoutToASA(
       suggestedParams: sp,
       amount: 0,
       note: new Uint8Array(Buffer.from("")),
-      closeRemainderTo: sender,
+      closeRemainderTo: closeRemainderTo,
     });
     const tws = {
       txn: txn,

@@ -12,10 +12,12 @@ interface P {
   fungibleTokenId: number;
   network: string;
   atcSigner: any;
+  fungibleTokenCreator: string;
 }
 
 export function AssetActions(props: P) {
-  let { sender, fungibleTokenId, network, atcSigner } = props;
+  let { sender, fungibleTokenId, network, atcSigner, fungibleTokenCreator } =
+    props;
 
   const [modalShow, setModalShow] = React.useState(false);
 
@@ -69,7 +71,13 @@ export function AssetActions(props: P) {
             variant="primary"
             onClick={() => {
               console.log("Opt-out...");
-              optoutToASA(sender, fungibleTokenId, network, atcSigner);
+              optoutToASA(
+                sender,
+                fungibleTokenId,
+                network,
+                atcSigner,
+                fungibleTokenCreator
+              );
             }}
             className="m-1"
           >
