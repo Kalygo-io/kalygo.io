@@ -28,15 +28,15 @@ export const NavbarComponent = (props: P) => {
   const { handleConnectWalletClick, handleDisconnectWalletClick } = props;
   const settings = useAppSelector((state: RootState) => state.settings);
 
-  const [show, setShow] = useState(false);
-  const [target, setTarget] = useState(null);
+  // const [show, setShow] = useState(false);
+  // const [target, setTarget] = useState(null);
   const ref = useRef(null);
 
-  const handleClick = (event: any) => {
-    console.log("!@#!@#");
-    setShow(!show);
-    setTarget(event.target);
-  };
+  // const handleClick = (event: any) => {
+  //   console.log("!@#!@#");
+  //   setShow(!show);
+  //   setTarget(event.target);
+  // };
 
   let [accntBalance, setAccntBalance] = useState<{
     val: any;
@@ -89,12 +89,12 @@ export const NavbarComponent = (props: P) => {
       fetch();
   }, [rfrshCounter]);
 
-  console.log("==---== show", show);
+  // console.log("==---== show", show);
 
   return (
     <Navbar variant="dark" expanded className="ps-0 pe-2 pb-0">
       <Container fluid className="px-0">
-        <div className="d-flex justify-content-between w-100">
+        <div className="d-flex flex-column align-items-end justify-content-between w-100">
           {
             <Nav className="align-items-center">
               {settings.selectedBlockchain === "Algorand" &&
@@ -125,7 +125,11 @@ export const NavbarComponent = (props: P) => {
                   cursor: "pointer",
                 }}
               >
-                <span onClick={handleClick}>
+                <span
+                  onClick={() => {
+                    // handleClick()
+                  }}
+                >
                   {settings.selectedBlockchain === "Algorand" &&
                     settings.selectedAlgorandWallet === "Pera" &&
                     settings.isPeraSessionConnected && (
@@ -177,7 +181,7 @@ export const NavbarComponent = (props: P) => {
                 )}
               </div>
             )}
-          <Overlay
+          {/* <Overlay
             rootClose={true}
             rootCloseEvent={"click"}
             onHide={() => {
@@ -206,7 +210,12 @@ export const NavbarComponent = (props: P) => {
                 <br />
               </Popover.Body>
             </Popover>
-          </Overlay>
+          </Overlay> */}
+          {settings.selectedBlockchain === "Algorand" &&
+            settings.selectedAlgorandAccount.length > 12 &&
+            pathname !== "/dashboard/settings" && (
+              <div>{settings.selectedAlgorandNetwork}</div>
+            )}
         </div>
       </Container>
     </Navbar>

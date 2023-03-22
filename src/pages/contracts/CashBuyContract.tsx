@@ -18,6 +18,7 @@ import { RootState } from "../../store/store";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { OperatorConfig } from "../../components/Widgets/Generic/OperatorConfig";
 import { CashBuyContractForm } from "../../components/Forms/CashBuyContractFormWithATC";
+import { YoutubeEmbed } from "../../components/YouTubeEmbed";
 // import { CashBuyContractForm } from "../../components/Forms/CashBuyContractFormWithSDK";
 
 const CashBuyContract = () => {
@@ -31,16 +32,31 @@ const CashBuyContract = () => {
       </div>
 
       <Row>
+        <Col xs={12} xl={8}>
+          <CashBuyContractForm accounts={settings.accountsAlgorand} />
+        </Col>
         <Col xs={12} xl={4}>
           <Row>
             <Col xs={12}>
-              <OperatorConfig />
+              <h4>Video Tutorials</h4>
+              <YoutubeEmbed embedId={"AY0v8ISTUO4"} />
+              <YoutubeEmbed embedId={"ntq8GAX5wR0"} />
+              <YoutubeEmbed embedId={"JyYYnNd-6rQ"} />
+              <YoutubeEmbed embedId={"a0-wldIvvdI"} />
+              <YoutubeEmbed embedId={"DqEGXP1bvSM"} />
+              <YoutubeEmbed embedId={"Iy7SvunR_UQ"} />
+              {/* <iframe
+                width="100%"
+                height="auto"
+                // aspectRatio={1.77}
+                src="https://www.youtube.com/embed/AY0v8ISTUO4"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe> */}
             </Col>
           </Row>
-        </Col>
-
-        <Col xs={12} xl={8}>
-          <CashBuyContractForm accounts={settings.accountsAlgorand} />
         </Col>
       </Row>
     </>

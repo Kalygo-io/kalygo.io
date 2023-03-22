@@ -242,7 +242,7 @@ function Overview_CashBuy__v1_0_0() {
 
       <Row>
         <Col xs={12} xl={4}>
-          <OperatorConfig />
+          {/* <OperatorConfig /> */}
           <ActionsWidget
             now={timelineEvents.now}
             inspectPeriodStart={timelineEvents.inspectPeriodStart}
