@@ -79,10 +79,17 @@ function OverviewAsset() {
         <>
           <Row>
             <Col xs={12} className="mb-4">
-              <AssetInfoWidget assetInfo={app} />
+              <AssetInfoWidget
+                sender={settings.selectedAlgorandAccount}
+                assetInfo={app}
+                atcSigner={signer}
+                network={settings.selectedAlgorandNetwork}
+                fungibleTokenId={Number.parseInt(id!)}
+                fungibleTokenCreator={get(app, "val.asset.params.creator")}
+              />
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col xs={12} sm={12} md={8} lg={4} className="mb-4">
               <AssetActions
                 sender={settings.selectedAlgorandAccount}
@@ -92,7 +99,7 @@ function OverviewAsset() {
                 fungibleTokenCreator={get(app, "val.asset.params.creator")}
               />
             </Col>
-          </Row>
+          </Row> */}
           <Row>
             <Col xs={12} className="mb-4">
               <HoldersTable />

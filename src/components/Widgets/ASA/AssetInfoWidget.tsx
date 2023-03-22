@@ -2,16 +2,28 @@ import React, { useState, useEffect } from "react";
 import get from "lodash/get";
 import { useParams } from "react-router-dom";
 
-import { Col, Row, Card, ListGroup } from "react-bootstrap";
+import {
+  Col,
+  Row,
+  Card,
+  ListGroup,
+  Dropdown,
+  DropdownButton,
+} from "react-bootstrap";
 
+import { MdArrowDropDown } from "react-icons/md";
 import { RootState } from "../../../store/store";
+import { AssetTransferModal } from "./Modals/AssetTransferModal";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { parseGlobalState } from "../../../pages/customSelectors/appl/parseGlobalState";
 
 import algosdk from "algosdk";
 
-import { AlgorandClient } from "../../../services/algorand_client";
+import { deleteASA } from "../../../contractActions/ASA/deleteASA";
+import { optinToASA } from "../../../contractActions/ASA/optIn";
+import { optoutToASA } from "../../../contractActions/ASA/optOut";
 
+import { AlgorandClient } from "../../../services/algorand_client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -34,108 +46,169 @@ const AssetDimensions = (props: { field: string; value: string }) => {
 
 interface P {
   assetInfo: any;
+  atcSigner: any;
+  network: string;
+  fungibleTokenId: number;
+  fungibleTokenCreator: string;
+  sender: string;
 }
 
 export const AssetInfoWidget = (props: P) => {
-  let { assetInfo: app } = props;
-
-  // const [app, setApp] = useState<any>({
-  //   val: undefined,
-  //   loading: false,
-  //   error: undefined,
-  // });
+  let {
+    assetInfo: app,
+    atcSigner,
+    network,
+    fungibleTokenId,
+    fungibleTokenCreator,
+    sender,
+  } = props;
 
   const settings = useAppSelector((state: RootState) => state.settings);
-  let { id } = useParams();
-
-  console.log("AssetInfoWidget id", id);
+  const [modalShow, setModalShow] = React.useState(false);
 
   console.log("app.val", app.val);
 
   return (
-    <Card border="light" className="shadow-sm">
-      <Card.Header>
-        <Row className="align-items-center">
-          <Col>
-            <h5 className="mb-0">
-              Asset Info{" "}
-              {get(app, "val.asset.index") ? (
-                <small>({get(app, "val.asset.index")})</small>
-              ) : null}{" "}
-            </h5>
-          </Col>
-        </Row>
-      </Card.Header>
-      <Card.Body>
-        <ListGroup className="list-group-flush list my--3">
-          <Row>
-            <Col>
-              <AssetDimensions
-                field={"Name"}
-                value={get(app, "val.asset.params.name", "ø")}
-              />
-            </Col>
-            <Col>
-              <AssetDimensions
-                field={"Unit Name"}
-                value={get(app, "val.asset.params.unit-name", "ø")}
-              />
+    <>
+      <Card border="light" className="shadow-sm">
+        <Card.Header>
+          <Row className="">
+            <Col className="d-flex align-items-center">
+              <span className="mb-0 display-4">
+                Asset Info{" "}
+                {get(app, "val.asset.index") ? (
+                  <small>({get(app, "val.asset.index")}) </small>
+                ) : null}
+                &nbsp;
+              </span>
+              {/* <DropdownButton as={"span"} title="Actions" key="success"> */}
+              <Dropdown>
+                <Dropdown.Toggle variant="light">
+                  {/* Actions */}
+                  <MdArrowDropDown />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    onClick={() => {
+                      console.log("sending...");
+                      setModalShow(true);
+                    }}
+                  >
+                    Send
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      // console.log("Opt-in");
+                      console.log("Opt-in...");
+                      optinToASA(sender, fungibleTokenId, network, atcSigner);
+                    }}
+                  >
+                    Opt-in
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      console.log("Opt-out...");
+                      optoutToASA(
+                        sender,
+                        fungibleTokenId,
+                        network,
+                        atcSigner,
+                        fungibleTokenCreator
+                      );
+                    }}
+                  >
+                    Opt-out
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      console.log("Delete");
+                      deleteASA(sender, fungibleTokenId, network, atcSigner);
+                    }}
+                  >
+                    Delete
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              {/* </DropdownButton> */}
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <AssetDimensions
-                field={"Supply"}
-                value={get(app, "val.asset.params.total", "ø")}
-              />
-            </Col>
-            <Col>
-              <AssetDimensions
-                field={"Decimals"}
-                value={get(app, "val.asset.params.decimals", "ø")}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <AssetDimensions
-                field={"URL"}
-                value={get(app, "val.asset.params.url", "ø")}
-              />
-            </Col>
-          </Row>
+        </Card.Header>
+        <Card.Body>
+          <ListGroup className="list-group-flush list my--3">
+            <Row>
+              <Col>
+                <AssetDimensions
+                  field={"Name"}
+                  value={get(app, "val.asset.params.name", "ø")}
+                />
+              </Col>
+              <Col>
+                <AssetDimensions
+                  field={"Unit Name"}
+                  value={get(app, "val.asset.params.unit-name", "ø")}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <AssetDimensions
+                  field={"Supply"}
+                  value={get(app, "val.asset.params.total", "ø")}
+                />
+              </Col>
+              <Col>
+                <AssetDimensions
+                  field={"Decimals"}
+                  value={get(app, "val.asset.params.decimals", "ø")}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <AssetDimensions
+                  field={"URL"}
+                  value={get(app, "val.asset.params.url", "ø")}
+                />
+              </Col>
+            </Row>
 
-          <Row>
-            <Col>
-              <AssetDimensions
-                field={"Creator"}
-                value={get(app, "val.asset.params.creator", "ø")}
-              />
-            </Col>
-            <Col>
-              <AssetDimensions
-                field={"Clawback"}
-                value={get(app, "val.asset.params.clawback", "ø")}
-              />
-            </Col>
-          </Row>
+            <Row>
+              <Col>
+                <AssetDimensions
+                  field={"Creator"}
+                  value={get(app, "val.asset.params.creator", "ø")}
+                />
+              </Col>
+              <Col>
+                <AssetDimensions
+                  field={"Clawback"}
+                  value={get(app, "val.asset.params.clawback", "ø")}
+                />
+              </Col>
+            </Row>
 
-          <Row>
-            <Col>
-              <AssetDimensions
-                field={"Manager"}
-                value={get(app, "val.asset.params.manager", "ø")}
-              />
-            </Col>
-            <Col>
-              <AssetDimensions
-                field={"Freeze"}
-                value={get(app, "val.asset.params.freeze", "ø")}
-              />
-            </Col>
-          </Row>
-        </ListGroup>
-      </Card.Body>
-    </Card>
+            <Row>
+              <Col>
+                <AssetDimensions
+                  field={"Manager"}
+                  value={get(app, "val.asset.params.manager", "ø")}
+                />
+              </Col>
+              <Col>
+                <AssetDimensions
+                  field={"Freeze"}
+                  value={get(app, "val.asset.params.freeze", "ø")}
+                />
+              </Col>
+            </Row>
+          </ListGroup>
+        </Card.Body>
+      </Card>
+      <AssetTransferModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        fungibletokenid={get(app, "val.asset.index")}
+      />
+    </>
   );
 };

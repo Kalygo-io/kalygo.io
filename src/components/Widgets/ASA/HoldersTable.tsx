@@ -14,8 +14,6 @@ import {
   Table,
   Col,
   Row,
-  Dropdown,
-  ProgressBar,
   Pagination,
   ButtonGroup,
 } from "react-bootstrap";

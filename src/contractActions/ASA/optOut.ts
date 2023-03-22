@@ -22,7 +22,6 @@ export async function optoutToASA(
 ) {
   try {
     console.log("Opt-out ASA");
-    debugger;
     let sp = await AlgorandClient.getAlgod(network).getTransactionParams().do();
     // Create a transaction
     const txn = makeAssetTransferTxnWithSuggestedParamsFromObject({

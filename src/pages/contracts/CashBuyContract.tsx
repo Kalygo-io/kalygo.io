@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBoxOpen,
@@ -22,6 +22,8 @@ import { YoutubeEmbed } from "../../components/YouTubeEmbed";
 // import { CashBuyContractForm } from "../../components/Forms/CashBuyContractFormWithSDK";
 
 const CashBuyContract = () => {
+  const [showVideos, setShowVideos] = useState(false);
+
   const settings = useAppSelector((state: RootState) => state.settings);
   const dispatch = useAppDispatch();
 
@@ -36,27 +38,27 @@ const CashBuyContract = () => {
           <CashBuyContractForm accounts={settings.accountsAlgorand} />
         </Col>
         <Col xs={12} xl={4}>
-          <Row>
-            <Col xs={12}>
-              <h4>Video Tutorials</h4>
-              <YoutubeEmbed embedId={"AY0v8ISTUO4"} />
-              <YoutubeEmbed embedId={"ntq8GAX5wR0"} />
-              <YoutubeEmbed embedId={"JyYYnNd-6rQ"} />
-              <YoutubeEmbed embedId={"a0-wldIvvdI"} />
-              <YoutubeEmbed embedId={"DqEGXP1bvSM"} />
-              <YoutubeEmbed embedId={"Iy7SvunR_UQ"} />
-              {/* <iframe
-                width="100%"
-                height="auto"
-                // aspectRatio={1.77}
-                src="https://www.youtube.com/embed/AY0v8ISTUO4"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              ></iframe> */}
-            </Col>
-          </Row>
+          {showVideos ? (
+            <Row>
+              <Col xs={12}>
+                <h4>Video Tutorials</h4>
+                <YoutubeEmbed embedId={"AY0v8ISTUO4"} />
+                <YoutubeEmbed embedId={"ntq8GAX5wR0"} />
+                <YoutubeEmbed embedId={"JyYYnNd-6rQ"} />
+                <YoutubeEmbed embedId={"a0-wldIvvdI"} />
+                <YoutubeEmbed embedId={"DqEGXP1bvSM"} />
+                <YoutubeEmbed embedId={"Iy7SvunR_UQ"} />
+              </Col>
+            </Row>
+          ) : (
+            <Button
+              onClick={() => {
+                setShowVideos(true);
+              }}
+            >
+              Show Videos
+            </Button>
+          )}
         </Col>
       </Row>
     </>

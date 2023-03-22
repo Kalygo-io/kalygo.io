@@ -85,11 +85,11 @@ export function AssetActions(props: P) {
           </Button>
         </Card.Body>
       </Card>
-      <AssetTransferModal
+      {/* <AssetTransferModal
         show={modalShow}
         onHide={() => setModalShow(false)}
         fungibletokenid={fungibleTokenId}
-      />
+      /> */}
     </>
   );
 }
