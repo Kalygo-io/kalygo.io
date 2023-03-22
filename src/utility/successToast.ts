@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 export function showSuccessToast(message: string) {
   toast.success(message, {
-    position: "bottom-right",
+    position: "bottom-left",
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,
