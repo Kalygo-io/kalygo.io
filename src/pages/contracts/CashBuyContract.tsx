@@ -41,7 +41,17 @@ const CashBuyContract = () => {
           {showVideos ? (
             <Row>
               <Col xs={12}>
-                <h4>Video Tutorials</h4>
+                <h4>
+                  Video Tutorials{" "}
+                  <Button
+                    size="sm"
+                    onClick={() => {
+                      setShowVideos(false);
+                    }}
+                  >
+                    Hide
+                  </Button>
+                </h4>
                 <YoutubeEmbed embedId={"AY0v8ISTUO4"} />
                 <YoutubeEmbed embedId={"ntq8GAX5wR0"} />
                 <YoutubeEmbed embedId={"JyYYnNd-6rQ"} />
