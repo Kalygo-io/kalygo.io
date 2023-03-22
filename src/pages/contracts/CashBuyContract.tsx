@@ -62,6 +62,7 @@ const CashBuyContract = () => {
             </Row>
           ) : (
             <Button
+              className="mb-4"
               onClick={() => {
                 setShowVideos(true);
               }}
