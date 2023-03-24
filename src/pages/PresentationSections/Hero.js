@@ -28,7 +28,7 @@ export function Hero() {
             <div className="react-big-icon d-none d-lg-block">
               <span className="fab fa-react"></span>
             </div>
-            <h1 className="fw-bolder text-secondary display-1 mb-0 ls-6">
+            <h1 className="fw-bolder text-secondary display-1 display-1-md mb-0 ls-6">
               KALYGO
             </h1>
             <h3>Contracts for the Masses</h3>

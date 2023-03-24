@@ -15,6 +15,13 @@
   }
 }
 
+.display-1-md {
+  @media ( min-width: map-get($grid-breakpoints, "md") ) {
+    font-size: 7rem;
+    line-height: 7rem;
+  }
+}
+
 // Line heights
 // from lh-100 to lh-300
 @for $nr from 0 to 21 {
