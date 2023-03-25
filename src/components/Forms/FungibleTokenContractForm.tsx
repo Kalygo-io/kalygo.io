@@ -13,7 +13,11 @@ import { showSuccessToast } from "../../utility/successToast";
 import { signerForAlgoSigner } from "../../contractActions/helpers/signers/AlgoSigner";
 import { signerForPera } from "../../contractActions/helpers/signers/PeraSigner";
 
-import { formatCurrency, formatNumber } from "./helpers/formatCurrency";
+import {
+  formatCurrency,
+  formatNumber,
+  formatNumberStandalone,
+} from "./helpers/formatCurrency";
 
 interface P {
   accounts: string[];
@@ -81,7 +85,15 @@ export const FungibleTokenContractForm = (props: P) => {
 
       // debugger;
 
-      const total = Number.parseInt(parsedTotalSupply); // how many of this asset there will be
+      let total: any = Number.parseInt(parsedTotalSupply); // how many of this asset there will be
+
+      if (
+        BigInt(9007199254740992) <= BigInt(total) &&
+        BigInt(total) <= BigInt(18446744073709550591)
+      ) {
+        total = BigInt(total);
+      }
+
       const decimals = Number.parseInt(data.decimals); // units of this asset are whole-integer amounts
       const assetName = data.assetName;
       const unitName = data.unitName;
@@ -171,15 +183,43 @@ export const FungibleTokenContractForm = (props: P) => {
                 <Form.Control
                   {...register("totalSupply", {
                     required: true,
+                    min: 0,
+                    validate: (value, formValues) => {
+                      let parsedTotalSupply: string | number =
+                        value?.replaceAll(",", "");
+                      parsedTotalSupply = Number.parseInt(parsedTotalSupply);
+
+                      if (
+                        0 <= parsedTotalSupply &&
+                        parsedTotalSupply <= Number.MAX_SAFE_INTEGER
+                      )
+                        return true;
+                      else if (
+                        BigInt(9007199254740992) <= BigInt(parsedTotalSupply) &&
+                        BigInt(parsedTotalSupply) <=
+                          BigInt(18446744073709550591)
+                      ) {
+                        return true;
+                      } else {
+                        return "max exceeded";
+                      }
+                    },
                   })}
-                  inputMode="decimal"
+                  inputMode="numeric"
                   pattern="^\d{1,3}(,\d{3})*"
                   placeholder=""
                   min="0"
                   isInvalid={errors["totalSupply"] ? true : false}
                   onChange={(event) => {
-                    let result = formatNumber(event.target.value, true);
-                    setValue("totalSupply", result);
+                    console.log("CHANGING...");
+
+                    let result = formatNumberStandalone(event.target, true);
+                    setValue("totalSupply", result.input_val);
+
+                    event.target.setSelectionRange(
+                      result.caret_pos,
+                      result.caret_pos
+                    );
                   }}
                 />
               </Form.Group>

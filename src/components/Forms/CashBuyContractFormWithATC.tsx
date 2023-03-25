@@ -335,8 +335,12 @@ export const CashBuyContractForm = (props: P) => {
                   onChange={(event) => {
                     let result = formatCurrency(event.target, false, false);
                     console.log("-> result.input_val ->", result.input_val);
-
                     setValue("escrowAmount1", result.input_val);
+
+                    event.target.setSelectionRange(
+                      result.caret_pos,
+                      result.caret_pos
+                    );
                   }}
                 />
               </Form.Group>
@@ -358,6 +362,11 @@ export const CashBuyContractForm = (props: P) => {
                   onChange={(event) => {
                     let result = formatCurrency(event.target, false, false);
                     setValue("escrowAmount2", result.input_val);
+
+                    event.target.setSelectionRange(
+                      result.caret_pos,
+                      result.caret_pos
+                    );
                   }}
                 />
               </Form.Group>
@@ -427,6 +436,11 @@ export const CashBuyContractForm = (props: P) => {
                   onChange={(event) => {
                     let result = formatCurrency(event.target, false, false);
                     setValue("escrowTotal", result.input_val);
+
+                    event.target.setSelectionRange(
+                      result.caret_pos,
+                      result.caret_pos
+                    );
                   }}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -486,6 +500,7 @@ export const CashBuyContractForm = (props: P) => {
                       required: true,
                     })}
                     type="number"
+                    min={0}
                     placeholder="ASA"
                     onFocus={() => {
                       // @ts-ignore

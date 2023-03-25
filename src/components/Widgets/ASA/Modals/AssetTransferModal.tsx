@@ -18,12 +18,13 @@ import { FaFileSignature } from "react-icons/fa";
 
 interface P {
   fungibletokenid: number;
+  unitName: string;
   onHide: () => void;
   show: boolean;
 }
 
 export function AssetTransferModal(props: P) {
-  const { fungibletokenid, onHide } = props;
+  const { fungibletokenid, onHide, unitName } = props;
 
   const settings = useAppSelector((state: RootState) => state.settings);
 
@@ -157,7 +158,7 @@ export function AssetTransferModal(props: P) {
             <Col sm={6} className="mb-3">
               <Form.Group id="equity-divisions">
                 <Form.Label>Unit Name</Form.Label>
-                <Form.Control disabled value={"UNIT NAME"} />
+                <Form.Control disabled value={unitName} />
               </Form.Group>
             </Col>
           </Row>
@@ -182,19 +183,18 @@ export function AssetTransferModal(props: P) {
               </Form.Group>
             </Col>
           </Row>
-
-          <div className="mt-3">
-            <Button variant="primary" type="submit">
+          <div className="mt-3 d-flex justify-content-end">
+            <Button variant="success" type="submit">
               Sign <FaFileSignature />
             </Button>
           </div>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="danger" onClick={props.onHide}>
+      {/* <Modal.Footer> */}
+      {/* <Button variant="danger" onClick={props.onHide}>
           Close
-        </Button>
-      </Modal.Footer>
+        </Button> */}
+      {/* </Modal.Footer> */}
     </Modal>
   );
 }

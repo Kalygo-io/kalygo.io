@@ -216,6 +216,19 @@ export const AssetInfoWidget = (props: P) => {
                 />
               </Col>
             </Row>
+            <Row>
+              <Col>
+                <AssetDimensions
+                  field={"Reserve"}
+                  value={
+                    get(app, "val.asset.params.reserve") ===
+                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ"
+                      ? "ø"
+                      : get(app, "val.asset.params.reserve", "ø")
+                  }
+                />
+              </Col>
+            </Row>
           </ListGroup>
         </Card.Body>
       </Card>
@@ -223,6 +236,7 @@ export const AssetInfoWidget = (props: P) => {
         show={modalShow}
         onHide={() => setModalShow(false)}
         fungibletokenid={get(app, "val.asset.index")}
+        unitName={get(app, "val.asset.params.unit-name", "ø")}
       />
     </>
   );

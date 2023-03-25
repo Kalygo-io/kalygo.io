@@ -89,3 +89,43 @@ export function formatCurrency(
   // input.setSelectionRange(caret_pos, caret_pos);
   return { input_val, caret_pos };
 }
+
+export function formatNumberStandalone(
+  input: any,
+  blur: boolean = true,
+  removeLeadingZeroes: boolean = true
+): {
+  input_val: string;
+  caret_pos: number;
+} {
+  // appends $ to value, validates decimal side
+  // and puts cursor back in right position.
+  // get input value
+  let input_val: string = input.value;
+
+  // don't validate empty input
+  if (input_val === "") {
+    return {
+      input_val: "",
+      caret_pos: 0,
+    };
+  }
+
+  // original length
+  let original_len = input_val.length;
+
+  // initial caret position
+  let caret_pos: number = input.selectionStart || 0;
+
+  // check for decimal
+
+  // no decimal entered
+  // add commas to number
+  // remove all non-digits
+  input_val = formatNumber(input_val);
+
+  // put caret back in the right position
+  var updated_len = input_val.length;
+  caret_pos = updated_len - original_len + caret_pos;
+  return { input_val, caret_pos };
+}
