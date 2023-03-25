@@ -3,8 +3,6 @@ import { Route, Routes, Navigate, Outlet } from "react-router-dom";
 import { RoutesData } from "../routes";
 import { ToastContainer, toast } from "react-toastify";
 
-import { HashLink } from "react-router-hash-link";
-
 // pages
 import Presentation from "./Presentation";
 import Upgrade from "./Upgrade";
@@ -16,23 +14,17 @@ import CashBuyContract from "./contracts/CashBuyContract";
 import NotFoundPage from "./examples/NotFound";
 
 // components
-import Sidebar from "../components/Sidebar";
-import { NavbarComponent } from "../components/Navbar";
-import Footer from "../components/Footer";
-import Preloader from "../components/Preloader";
-
-import { RootState } from "../store/store";
-import { updateState } from "../store/settings/settingsSlice";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
 import TransactionsOverview from "./TransactionsOverview";
 import TransactionDetail from "./TransactionDetail";
 import AppDetail from "./AppDetail";
 
 import ContractOptions from "./ContractOptions";
-import { BsFillNutFill } from "react-icons/bs";
 import FungibleTokenContract from "./contracts/FungibleTokenContract";
 import Overview_CashBuy__v1_0_0 from "./AppDetail/CashBuy__v1_0_0/Overview_CashBuy__v1_0_0";
 import OverviewAsset from "./AppDetail/AssetDetail/OverviewAsset";
+
+import { ASASearch } from "./ASASearch";
+
 import { Support } from "./documentation/Support";
 import { Test } from "./documentation/Test";
 import { Box } from "./AppDetail/CashBuy__v1_0_0/Box";
@@ -69,8 +61,8 @@ const Router = () => (
         </Route>
 
         <Route path={"tokens"} element={<AppDetail />}>
-          <Route path={"asa"} element={<>ASA search coming soon...</>}></Route>
-          <Route path={"nft"} element={<>NFT search coming soon...</>}></Route>
+          <Route path={"asa"} element={<ASASearch />}></Route>
+          <Route path={"nft"} element={<>Coming Soon...</>}></Route>
         </Route>
 
         <Route path={"support"} element={<Support />} />

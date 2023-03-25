@@ -151,8 +151,6 @@ export const CashBuyContractForm = (props: P) => {
     fetch();
   }, [asaId, customAsaId]);
 
-  console.log(get(asset, "val.assets.0.params.decimals", 0));
-
   const onSubmit = async (data: any) => {
     try {
       console.log("-> data <-", data);
@@ -228,8 +226,6 @@ export const CashBuyContractForm = (props: P) => {
 
       let atcSigner;
 
-      console.log("!!! -> !!!", settings.selectedAlgorandWallet);
-
       switch (settings.selectedAlgorandWallet) {
         case "AlgoSigner":
           atcSigner = signerForAlgoSigner;
@@ -295,7 +291,7 @@ export const CashBuyContractForm = (props: P) => {
     }
   };
 
-  // console.log("errors", errors);
+  console.log("errors", errors);
   // console.log("isValid", isValid);
 
   // console.log("asaId", asaId);
@@ -330,6 +326,7 @@ export const CashBuyContractForm = (props: P) => {
                   inputMode="decimal"
                   pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                   placeholder="Amount 1"
+                  isInvalid={errors["escrowAmount1"] ? true : false}
                   onBlur={(event) => {
                     let result = formatCurrency(event.target, true);
                     setValue("escrowAmount1", result.input_val);
@@ -337,6 +334,8 @@ export const CashBuyContractForm = (props: P) => {
                   }}
                   onChange={(event) => {
                     let result = formatCurrency(event.target, false, false);
+                    console.log("-> result.input_val ->", result.input_val);
+
                     setValue("escrowAmount1", result.input_val);
                   }}
                 />
@@ -350,6 +349,7 @@ export const CashBuyContractForm = (props: P) => {
                   inputMode="decimal"
                   pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$"
                   placeholder="Amount 2"
+                  isInvalid={errors["escrowAmount2"] ? true : false}
                   onBlur={(event) => {
                     let result = formatCurrency(event.target, true);
                     setValue("escrowAmount2", result.input_val);
@@ -735,8 +735,8 @@ export const CashBuyContractForm = (props: P) => {
             </Col>
           </Row>
 
-          <div className="mt-3">
-            <Button variant="primary" type="submit">
+          <div className="mt-3 d-flex justify-content-end">
+            <Button variant="success" type="submit">
               Create Contract
             </Button>
           </div>

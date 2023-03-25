@@ -187,10 +187,10 @@ const Sidebar = (props = {}) => {
                   title="ASAs"
                   link={RoutesData.TokenOptions_ASAs.path}
                 />
-                <NavItem
+                {/* <NavItem
                   title="NFTs"
                   link={RoutesData.TokenOptions_NFTs.path}
-                />
+                /> */}
               </CollapsableNavItem>
               <NavItem
                 title="Settings"

@@ -284,8 +284,8 @@ export const FungibleTokenContractForm = (props: P) => {
             </Col>
           </Row>
 
-          <div className="mt-3">
-            <Button variant="primary" type="submit">
+          <div className="mt-3 d-flex justify-content-end">
+            <Button variant="success" type="submit">
               Create
             </Button>
           </div>
