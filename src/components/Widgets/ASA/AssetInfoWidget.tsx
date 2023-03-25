@@ -182,7 +182,12 @@ export const AssetInfoWidget = (props: P) => {
               <Col>
                 <AssetDimensions
                   field={"Clawback"}
-                  value={get(app, "val.asset.params.clawback", "ø")}
+                  value={
+                    get(app, "val.asset.params.clawback") ===
+                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ"
+                      ? "ø"
+                      : get(app, "val.asset.params.clawback", "ø")
+                  }
                 />
               </Col>
             </Row>
@@ -191,13 +196,23 @@ export const AssetInfoWidget = (props: P) => {
               <Col>
                 <AssetDimensions
                   field={"Manager"}
-                  value={get(app, "val.asset.params.manager", "ø")}
+                  value={
+                    get(app, "val.asset.params.manager") ===
+                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ"
+                      ? "ø"
+                      : get(app, "val.asset.params.manager", "ø")
+                  }
                 />
               </Col>
               <Col>
                 <AssetDimensions
                   field={"Freeze"}
-                  value={get(app, "val.asset.params.freeze", "ø")}
+                  value={
+                    get(app, "val.asset.params.freeze") ===
+                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY5HFKQ"
+                      ? "ø"
+                      : get(app, "val.asset.params.freeze", "ø")
+                  }
                 />
               </Col>
             </Row>

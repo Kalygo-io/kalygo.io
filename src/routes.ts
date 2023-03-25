@@ -18,7 +18,6 @@ export const RoutesData = {
   Test: { path: "/dashboard/test" },
   Upgrade: { path: "/upgrade" },
   BootstrapTables: { path: "/tables/bootstrap-tables" },
-  Billing: { path: "/examples/billing" },
   Invoice: { path: "/examples/invoice" },
   Signin: { path: "/examples/sign-in" },
   Signup: { path: "/examples/sign-up" },
@@ -28,17 +27,15 @@ export const RoutesData = {
   NotFound: { path: "*" },
   ServerError: { path: "/examples/500" },
 
-  // docs
-  DocsOverview: { path: "/documentation/overview" },
-  DocsDownload: { path: "/documentation/download" },
-  DocsQuickStart: { path: "/documentation/quick-start" },
-  DocsLicense: { path: "/documentation/license" },
-  DocsFolderStructure: { path: "/documentation/folder-structure" },
-  DocsBuild: { path: "/documentation/build-tools" },
-  DocsChangelog: { path: "/documentation/changelog" },
+  // Collapsible Nav Menu
+  TokenOptions_ASAs: {
+    path: "/dashboard/tokens/asa",
+  },
+  TokenOptions_NFTs: {
+    path: "/dashboard/tokens/nft",
+  },
 
   // components
-  Accordions: { path: "/components/accordions" },
   Alerts: { path: "/components/alerts" },
   Badges: { path: "/components/badges" },
   Widgets: { path: "/widgets" },

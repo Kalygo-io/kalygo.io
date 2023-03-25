@@ -67,6 +67,12 @@ const Router = () => (
 
           <Route path={"asa/:id"} element={<OverviewAsset />} />
         </Route>
+
+        <Route path={"tokens"} element={<AppDetail />}>
+          <Route path={"asa"} element={<>ASA search coming soon...</>}></Route>
+          <Route path={"nft"} element={<>NFT search coming soon...</>}></Route>
+        </Route>
+
         <Route path={"support"} element={<Support />} />
         <Route path={"test"} element={<Test />} />
         <Route path={"contract-options"} element={<ContractOptions />} />
@@ -85,6 +91,7 @@ const Router = () => (
         />
         <Route path={"settings"} element={<Settings />} />
       </Route>
+
       <Route path={RoutesData.NotFound.path} element={<RouteWithLoader />}>
         <Route
           path={RoutesData.NotFound.path}

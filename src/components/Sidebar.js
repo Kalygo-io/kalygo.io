@@ -12,7 +12,11 @@ import {
   faGlobe,
   faTimes,
   faSignOutAlt,
+  faCoins,
 } from "@fortawesome/free-solid-svg-icons";
+
+import { MdGeneratingTokens } from "react-icons/md";
+
 import {
   Nav,
   Badge,
@@ -145,27 +149,6 @@ const Sidebar = (props = {}) => {
         >
           <div className="sidebar-inner px-4 pt-3">
             <div className="user-card d-flex d-md-none align-items-center justify-content-end justify-content-md-center pb-3">
-              {/* <div className="d-flex align-items-center">
-                <div className="user-avatar lg-avatar me-4">
-                  <Image
-                    src={ProfilePicture}
-                    className="card-img-top rounded-circle border-white"
-                  />
-                </div>
-                <div className="d-block">
-                  <h6>Hi, Jane</h6>
-                  <Button
-                    as={Link}
-                    variant="secondary"
-                    size="xs"
-                    to={RoutesData.Signin.path}
-                    className="text-dark"
-                  >
-                    <FontAwesomeIcon icon={faSignOutAlt} className="me-2" />{" "}
-                    Sign Out
-                  </Button>
-                </div>
-              </div> */}
               <Nav.Link
                 className="collapse-close d-md-none"
                 onClick={onCollapse}
@@ -195,6 +178,20 @@ const Sidebar = (props = {}) => {
                 icon={faCircleHalfStroke}
                 link={RoutesData.ContractOptions.path}
               />
+              <CollapsableNavItem
+                eventKey="dashboard/tokens/"
+                title="Tokens"
+                icon={faCoins}
+              >
+                <NavItem
+                  title="ASAs"
+                  link={RoutesData.TokenOptions_ASAs.path}
+                />
+                <NavItem
+                  title="NFTs"
+                  link={RoutesData.TokenOptions_NFTs.path}
+                />
+              </CollapsableNavItem>
               <NavItem
                 title="Settings"
                 icon={faCog}

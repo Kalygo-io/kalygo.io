@@ -39,6 +39,10 @@ export const FungibleTokenContractForm = (props: P) => {
       enableClawback: true,
       unitName: "ASSET",
       url: "URL",
+      manager: settings.selectedAlgorandAccount,
+      freeze: settings.selectedAlgorandAccount,
+      clawback: settings.selectedAlgorandAccount,
+      reserve: settings.selectedAlgorandAccount,
     },
   });
 
@@ -72,10 +76,6 @@ export const FungibleTokenContractForm = (props: P) => {
       params.flatFee = true;
       params.fee = 1000;
 
-      const account = {
-        addr: settings.selectedAlgorandAccount,
-      };
-
       let parsedTotalSupply = data?.totalSupply?.replaceAll(",", "");
       parsedTotalSupply = Number.parseInt(parsedTotalSupply);
 
@@ -89,9 +89,8 @@ export const FungibleTokenContractForm = (props: P) => {
 
       const defaultFrozen = false; // whether accounts should be frozen by default
 
-      // Create a transaction
-      const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
-        from: account.addr,
+      const txnObject: any = {
+        from: settings.selectedAlgorandAccount,
         total,
         decimals,
         assetName,
@@ -99,13 +98,17 @@ export const FungibleTokenContractForm = (props: P) => {
         assetURL: url,
         assetMetadataHash: "",
         defaultFrozen,
-        freeze: account.addr,
-        manager: account.addr,
-        clawback: account.addr,
-        reserve: account.addr,
-
         suggestedParams: params,
-      });
+      };
+
+      if (data.freeze) txnObject.freeze = data.freeze;
+      if (data.manager) txnObject.manager = data.manager;
+      if (data.clawback) txnObject.clawback = data.clawback;
+      if (data.reserve) txnObject.reserve = data.reserve;
+
+      // Create a transaction
+      const txn =
+        algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject(txnObject);
       const tws = {
         txn: txn,
         signer: atcSigner,
@@ -228,6 +231,54 @@ export const FungibleTokenContractForm = (props: P) => {
                   type="text"
                   placeholder=""
                   isInvalid={errors["url"] ? true : false}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col sm={6} className="mb-3">
+              <Form.Group>
+                <Form.Label>Manager</Form.Label>
+                <Form.Control
+                  {...register("manager")}
+                  placeholder=""
+                  type="text"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col sm={6} className="mb-3">
+              <Form.Group>
+                <Form.Label>Freeze</Form.Label>
+                <Form.Control
+                  {...register("freeze")}
+                  placeholder=""
+                  type="text"
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col sm={6} className="mb-3">
+              <Form.Group>
+                <Form.Label>Clawback</Form.Label>
+                <Form.Control
+                  {...register("clawback")}
+                  placeholder=""
+                  type="text"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col sm={6} className="mb-3">
+              <Form.Group>
+                <Form.Label>Reserve</Form.Label>
+                <Form.Control
+                  {...register("reserve")}
+                  placeholder=""
+                  type="text"
                 />
               </Form.Group>
             </Col>
