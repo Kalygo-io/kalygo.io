@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { RootState } from "../store/store";
 import { useAppSelector } from "../store/hooks";
-import { Form, InputGroup, Row, Col } from "react-bootstrap";
+import { Form, InputGroup, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
@@ -53,30 +53,30 @@ export function ASASearch() {
           }}
         >
           <h1>Search for an ASA</h1>
-          <FontAwesomeIcon icon={faSearch} />
         </div>
-        <Form
-          // <Form onSubmit={handleSubmit(onSubmit)} id="cash-buy-contract-form">
-          className="navbar-search"
-          onSubmit={handleSubmit(onSubmit)}
-          // (e) => {
-          // e.preventDefault();
-
-          // navigate("/dashboard/contract-options");
-          // }
-        >
+        <Form className="navbar-search" onSubmit={handleSubmit(onSubmit)}>
           <Form.Group id="topbarSearch">
             <InputGroup className="input-group-merge search-bar">
               <Form.Control
                 type="number"
+                inputMode="numeric"
                 placeholder="Search..."
                 isInvalid={errors["searchVal"] ? true : false}
                 {...register("searchVal", { required: true })}
-                // value={searchVal}
-                // onChange={handleChange}
               />
             </InputGroup>
           </Form.Group>
+          <div
+            style={{
+              textAlign: "center",
+              margin: "1em",
+            }}
+          >
+            <Button variant="success" type="submit">
+              <FontAwesomeIcon icon={faSearch} />
+              &nbsp;&nbsp;Search&nbsp;
+            </Button>
+          </div>
         </Form>
       </Col>
     </Row>
