@@ -42,7 +42,7 @@ export function prepareTimelineEventsArray(app: object) {
   const freeFundsDate = {
     title: "Free Funds Date",
     time: new Date(get(app, "val.glbl_free_funds_date", 0) * 1000).getTime(),
-    color: "rgba(0, 0, 0, 9.0)",
+    color: "rgba(0, 0, 0, 1.0)",
   };
 
   let timelineEvents = [

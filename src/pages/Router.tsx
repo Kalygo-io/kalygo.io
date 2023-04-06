@@ -5,7 +5,6 @@ import { ToastContainer, toast } from "react-toastify";
 
 // pages
 import Presentation from "./Presentation";
-import Upgrade from "./Upgrade";
 import BlockchainOverview from "./BlockchainOverview";
 import Settings from "./Settings";
 import FinanceDealContract from "./contracts/FinanceDealContract";
@@ -40,6 +39,7 @@ const Router = () => (
       <Route path="/" element={<RouteWithLoader />}>
         <Route path={""} element={<Presentation />} />
         <Route path={"governance"} element={<Governance />} />
+        {/* <Route path={"d3"} element={<Governance />} /> */}
       </Route>
 
       {/* pages */}
