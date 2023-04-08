@@ -79,24 +79,24 @@ export const CashBuyContractForm = (props: P) => {
   } = useForm({
     mode: "onSubmit",
     defaultValues: {
-      escrowAmount1: "$0.10",
-      escrowAmount2: "$0.10",
-      escrowTotal: "$0.20",
+      escrowAmount1: "$1,000.00",
+      escrowAmount2: "$1,000.00",
+      escrowTotal: "$2,000.00",
       // asaId: 95939489,
       asaId: defaultASAid,
       customAsaId: "",
-      // inspectPeriodStart: moment().add("0", "m").add("50", "s").toString(),
-      // inspectPeriodEnd: moment().add("1", "m").add("40", "s").toString(),
-      // inspectPeriodExtension: moment().add("2", "m").add("10", "s").toString(),
-      // movingDate: moment().add("2", "m").add("40", "s").toString(),
-      // closingDate: moment().add("3", "m").add("0", "s").toString(),
-      // freeFundsDate: moment().add("3", "m").add("20", "s").toString(),
-      inspectPeriodStart: moment().add("5", "m").toString(),
-      inspectPeriodEnd: moment().add("10", "m").toString(),
-      inspectPeriodExtension: moment().add("15", "m").toString(),
-      movingDate: moment().add("20", "m").toString(),
-      closingDate: moment().add("25", "m").toString(),
-      freeFundsDate: moment().add("30", "m").toString(),
+      inspectPeriodStart: moment().add("0", "m").add("15", "s").toString(),
+      inspectPeriodEnd: moment().add("0", "m").add("30", "s").toString(),
+      inspectPeriodExtension: moment().add("0", "m").add("45", "s").toString(),
+      movingDate: moment().add("1", "m").add("0", "s").toString(),
+      closingDate: moment().add("1", "m").add("15", "s").toString(),
+      freeFundsDate: moment().add("1", "m").add("30", "s").toString(),
+      // inspectPeriodStart: moment().add("1", "m").toString(),
+      // inspectPeriodEnd: moment().add("2", "m").toString(),
+      // inspectPeriodExtension: moment().add("3", "m").toString(),
+      // movingDate: moment().add("4", "m").toString(),
+      // closingDate: moment().add("5", "m").toString(),
+      // freeFundsDate: moment().add("6", "m").toString(),
       buyer: settings.selectedAlgorandAccount,
       seller: settings.selectedAlgorandAccount,
       // titleCompany:
@@ -518,9 +518,11 @@ export const CashBuyContractForm = (props: P) => {
                 <Form.Label>Inspection Period Start</Form.Label>
                 <Datetime
                   className="inspectPeriodStart"
-                  timeFormat={true}
+                  timeFormat={false}
+                  input={true}
                   ref={inputElInspStartDate}
                   onChange={(e: any) => {
+                    e = moment(e.unix() * 1000 + 1000 * 60 * 60 * 24 - 1);
                     setValue("inspectPeriodStart", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
@@ -554,6 +556,7 @@ export const CashBuyContractForm = (props: P) => {
                   timeFormat={true}
                   ref={inputElInspEndDate}
                   onChange={(e: any) => {
+                    e = moment(e.unix() * 1000 + 1000 * 60 * 60 * 24 - 1);
                     setValue("inspectPeriodEnd", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
@@ -590,6 +593,7 @@ export const CashBuyContractForm = (props: P) => {
                   timeFormat={true}
                   ref={inputElInspExtDate}
                   onChange={(e: any) => {
+                    e = moment(e.unix() * 1000 + 1000 * 60 * 60 * 24 - 1);
                     setValue("inspectPeriodExtension", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
@@ -623,6 +627,7 @@ export const CashBuyContractForm = (props: P) => {
                   timeFormat={true}
                   ref={inputElMoveDate}
                   onChange={(e: any) => {
+                    e = moment(e.unix() * 1000 + 1000 * 60 * 60 * 24 - 1);
                     setValue("movingDate", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
@@ -659,6 +664,7 @@ export const CashBuyContractForm = (props: P) => {
                   timeFormat={true}
                   ref={inputElCloseDate}
                   onChange={(e: any) => {
+                    e = moment(e.unix() * 1000 + 1000 * 60 * 60 * 24 - 1);
                     setValue("closingDate", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
@@ -686,12 +692,13 @@ export const CashBuyContractForm = (props: P) => {
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group id="closing-date">
-                <Form.Label>Free Funds Date</Form.Label>
+                <Form.Label>Closing Date Extension</Form.Label>
                 <Datetime
                   className="freeFundsDate"
                   timeFormat={true}
                   ref={inputElFreeFundsDate}
                   onChange={(e: any) => {
+                    e = moment(e.unix() * 1000 + 1000 * 60 * 60 * 24 - 1);
                     setValue("freeFundsDate", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (

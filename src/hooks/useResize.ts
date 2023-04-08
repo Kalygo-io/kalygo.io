@@ -22,7 +22,7 @@ export function useResize(ref: any) {
         width,
         height,
       });
-    }, 500);
+    }, 250);
 
     window.addEventListener("resize", getSize);
     getSize();

@@ -12,6 +12,8 @@ export const drawStaticElements = (
     title: string;
   }[]
 ) => {
+  console.log("timelineEvents -->", timelineEvents);
+
   drawBg(rootElement, windowSize);
   drawTimeline(rootElement, windowSize, timelineEvents);
   drawTimelineEvents(rootElement, windowSize, timelineEvents);

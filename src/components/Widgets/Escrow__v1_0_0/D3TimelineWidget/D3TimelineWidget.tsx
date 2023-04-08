@@ -10,7 +10,11 @@ interface P {
 }
 
 export const D3TimelineWidget = (props: P) => {
-  const { events } = props;
+  let { events } = props;
+
+  console.log("events", events);
+  events = [...events.slice(0, 3), ...events.slice(4)];
+  console.log("events", events);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const size = useResize(rootRef);
@@ -32,7 +36,7 @@ export const D3TimelineWidget = (props: P) => {
 
     if (size) {
       // prettier-ignore
-      select(rootRef.current).append("svg").attr("width", size.width).attr("height", size.height);
+      select(rootRef.current).append("svg").attr("width", size.width).attr("height", size.height).style("border", "1px solid rgb(234,237,242)").style("border-radius", "0.4375rem");
       drawStaticElements(rootRef.current!, size, events);
       // prettier-ignore
       Date.now() < events[events.length - 1].ts && drawAnimatedElements(rootRef.current!, size, events, Date.now());
@@ -60,7 +64,6 @@ export const D3TimelineWidget = (props: P) => {
         now < events[events.length - 1].ts &&
         size
       ) {
-        console.log(")0-09");
         clearAnimatedElements(rootRef.current!);
         drawAnimatedElements(rootRef.current!, size, events, now);
       }

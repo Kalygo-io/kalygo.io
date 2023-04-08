@@ -40,7 +40,7 @@ export function prepareTimelineEventsArray(app: object) {
   };
 
   const freeFundsDate = {
-    title: "Free Funds Date",
+    title: "Closing Date Extension",
     ts: new Date(get(app, "val.glbl_free_funds_date", 0) * 1000).getTime(),
     color: "rgb(32,32,32)",
   };
