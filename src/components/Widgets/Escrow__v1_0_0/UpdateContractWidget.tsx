@@ -24,7 +24,7 @@ export function UpdateContractWidget({ appId }: P) {
           variant="primary"
           type="submit"
           onClick={() => {
-            navigate(`/dashboard/app/cashBuy__v1_0_0/${appId}/update`);
+            navigate(`/dashboard/app/escrow__v1_0_0/${appId}/update`);
           }}
         >
           View/Edit

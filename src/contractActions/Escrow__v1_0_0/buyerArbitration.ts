@@ -8,40 +8,37 @@ import { supportedContracts } from "../../data/supportedContracts";
 import ABI from "../../contractExports/contracts/cashBuy/application.json";
 import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
 
-export async function withdrawEscrow(
+export async function buyerArbitration(
   sender: string,
+  contractAddress: string,
   appId: number,
-  fungibleTokenId: number,
   network: string,
   signer: any
 ) {
   try {
-    console.log("withdrawEscrow", sender, appId, fungibleTokenId, network);
+    console.log("buyerArbitration");
     const contract = new algosdk.ABIContract(ABI.contract);
     let atc = new AtomicTransactionComposer();
     let params = await AlgorandClient.getAlgod(network)
       .getTransactionParams()
       .do();
     params.flatFee = true;
-    params.fee = 1000 * 2; // 1 fee for this txn and 1 for the having contract send ASA to sender
+    params.fee = 1000;
     atc.addMethodCall({
       appID: appId,
-      method: contract.getMethodByName("withdraw_escrow_balance"),
+      method: contract.getMethodByName("buyer_set_arbitration"),
       methodArgs: [] as ABIArgument[],
       sender: sender,
       suggestedParams: params,
-      note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
+      note: new Uint8Array(Buffer.from(supportedContracts.escrow__v1_0_0)),
       signer,
-      appForeignAssets: [fungibleTokenId],
     });
     const tx_id = await atc.submit(AlgorandClient.getAlgod(network));
     console.log("submit_response", tx_id);
 
-    showSuccessToast("Withdraw escrow tokens request sent to network");
+    showSuccessToast("Request to signal arbitration sent to network");
   } catch (e) {
-    showErrorToast(
-      "Error occurred when sending withdraw escrow tokens request"
-    );
+    showErrorToast("Error occurred when sending signal arbitration request");
     console.error(e);
   }
 }

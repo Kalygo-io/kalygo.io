@@ -8,35 +8,37 @@ import { supportedContracts } from "../../data/supportedContracts";
 import ABI from "../../contractExports/contracts/cashBuy/application.json";
 import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
 
-export async function buyerPullOut(
+export async function withdrawBalance(
   sender: string,
+  contractAddress: string,
   appId: number,
   network: string,
   signer: any
 ) {
   try {
-    console.log("buyerPullOut");
+    console.log("withdrawBalance");
     const contract = new algosdk.ABIContract(ABI.contract);
     let atc = new AtomicTransactionComposer();
     let params = await AlgorandClient.getAlgod(network)
       .getTransactionParams()
       .do();
     params.flatFee = true;
-    params.fee = 1000;
+    params.fee = 1000 * 2; // 1 for this txn and 1 for the contract to send the balance to sender
     atc.addMethodCall({
       appID: appId,
-      method: contract.getMethodByName("buyer_set_pullout"),
+      method: contract.getMethodByName("withdraw_balance"),
       methodArgs: [] as ABIArgument[],
       sender: sender,
       suggestedParams: params,
-      note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
+      note: new Uint8Array(Buffer.from(supportedContracts.escrow__v1_0_0)),
       signer,
     });
     const tx_id = await atc.submit(AlgorandClient.getAlgod(network));
     console.log("submit_response", tx_id);
-    showSuccessToast("Request to signal pull out sent to network");
+
+    showSuccessToast("Withdraw balance request sent to network");
   } catch (e) {
-    showErrorToast("Error occurred when sending signal pull out request");
+    showErrorToast("Error occurred when sending withdraw balance request");
     console.error(e);
   }
 }

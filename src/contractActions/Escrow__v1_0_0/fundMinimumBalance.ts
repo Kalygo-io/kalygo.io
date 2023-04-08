@@ -27,7 +27,7 @@ export async function fundMinimumBalance(
       from: sender,
       to: contractAddress,
       amount: amount,
-      note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
+      note: new Uint8Array(Buffer.from(supportedContracts.escrow__v1_0_0)),
       ...sp,
     });
     const tws = {

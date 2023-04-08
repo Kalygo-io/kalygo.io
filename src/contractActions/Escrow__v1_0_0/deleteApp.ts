@@ -34,7 +34,7 @@ export async function deleteApp(
       appIndex: appId,
       from: sender,
       suggestedParams: params,
-      note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
+      note: new Uint8Array(Buffer.from(supportedContracts.escrow__v1_0_0)),
     });
     const tws = {
       txn: txn,

@@ -19,6 +19,8 @@ interface P {
 export const TimelineWidget = (props: P) => {
   let { events } = props;
 
+  console.log("events", events);
+
   return (
     <Card border="light" className="shadow-sm">
       <Card.Header>
@@ -32,8 +34,6 @@ export const TimelineWidget = (props: P) => {
       <Table responsive className="align-items-center table-flush">
         <tbody>
           {events.map((i: any, idx: number) => {
-            // console.log("i", i);
-
             return (
               <tr key={idx}>
                 <td>

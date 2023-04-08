@@ -183,8 +183,6 @@ export function UpdateContractForm(props: P) {
         >;
       };
 
-      console.log("!!! -> !!!", settings.selectedAlgorandWallet);
-
       switch (settings.selectedAlgorandWallet) {
         case "AlgoSigner":
           atcSigner = signerForAlgoSigner;
@@ -213,7 +211,7 @@ export function UpdateContractForm(props: P) {
         ] as ABIArgument[],
         sender: settings.selectedAlgorandAccount,
         suggestedParams: params,
-        note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
+        note: new Uint8Array(Buffer.from(supportedContracts.escrow__v1_0_0)),
         signer: atcSigner!,
         boxes: [
           {

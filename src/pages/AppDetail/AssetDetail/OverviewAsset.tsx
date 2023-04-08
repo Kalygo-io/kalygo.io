@@ -59,8 +59,6 @@ function OverviewAsset() {
   }, []);
 
   let signer: any = signerForAlgoSigner;
-
-  console.log("!!! -> !!!", settings.selectedAlgorandWallet);
   switch (settings.selectedAlgorandWallet) {
     case "AlgoSigner":
       signer = signerForAlgoSigner;

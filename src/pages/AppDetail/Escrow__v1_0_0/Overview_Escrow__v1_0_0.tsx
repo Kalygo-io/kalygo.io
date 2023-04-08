@@ -14,16 +14,17 @@ import { AlgorandClient } from "../../../services/algorand_client";
 import { useParams } from "react-router-dom";
 import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
-import { RolesWidget } from "../../../components/Widgets/CashBuy__v1_0_0/RolesWidget";
-import { TimelineWidget } from "../../../components/Widgets/CashBuy__v1_0_0/TimelineWidget";
-import { FlagsWidget } from "../../../components/Widgets/CashBuy__v1_0_0/FlagsWidget";
-import { EscrowWidget } from "../../../components/Widgets/CashBuy__v1_0_0/EscrowWidget";
-import { UpdateContractWidget } from "../../../components/Widgets/CashBuy__v1_0_0/UpdateContractWidget";
+import { RolesWidget } from "../../../components/Widgets/Escrow__v1_0_0/RolesWidget";
+// import { TimelineWidget } from "../../../components/Widgets/Escrow__v1_0_0/TimelineWidget";
+import { D3TimelineWidget } from "../../../components/Widgets/Escrow__v1_0_0/D3TimelineWidget/D3TimelineWidget";
+import { FlagsWidget } from "../../../components/Widgets/Escrow__v1_0_0/FlagsWidget";
+import { EscrowWidget } from "../../../components/Widgets/Escrow__v1_0_0/EscrowWidget";
+import { UpdateContractWidget } from "../../../components/Widgets/Escrow__v1_0_0/UpdateContractWidget";
 
 import algosdk from "algosdk";
-import { ActionsWidget } from "../../../components/Widgets/CashBuy__v1_0_0/ActionsWidget";
+import { ActionsWidget } from "../../../components/Widgets/Escrow__v1_0_0/ActionsWidget";
 import { prepareTimelineEventsArray } from "./helpers/prepareTimelineEventsArray";
-import { RoleBoxWidget } from "../../../components/Widgets/CashBuy__v1_0_0/RoleBoxWidget";
+import { RoleBoxWidget } from "../../../components/Widgets/Escrow__v1_0_0/RoleBoxWidget";
 import { arrayBufferToString } from "./helpers/arrayBufferToString";
 
 async function fetchTxnHistory(network: string, app_address: string) {
@@ -53,7 +54,7 @@ async function fetchTxnHistory(network: string, app_address: string) {
   }
 }
 
-function Overview_CashBuy__v1_0_0() {
+function Overview_Escrow__v1_0_0() {
   const [app, setApp] = useState<any>({
     val: undefined,
     loading: false,
@@ -81,53 +82,53 @@ function Overview_CashBuy__v1_0_0() {
   let { id } = useParams();
 
   useEffect(() => {
-    const interval = setInterval(async () => {
-      try {
-        // STEP 1
-        const appResponse = await AlgorandClient.getIndexer(
-          settings.selectedAlgorandNetwork
-        )
-          .lookupApplications(Number.parseInt(id!))
-          .do();
-        setApp({
-          val: parseGlobalState(
-            appResponse?.application?.params &&
-              appResponse.application.params["global-state"]
-          ),
-          loading: false,
-          error: null,
-        });
-        // STEP 2
-        const appAddress = await algosdk.getApplicationAddress(
-          Number.parseInt(id!)
-        );
-        const accountResponse = await AlgorandClient.getAlgod(
-          settings.selectedAlgorandNetwork
-        )
-          .accountInformation(appAddress)
-          .do();
-        setAccount({
-          val: accountResponse,
-          loading: false,
-          error: null,
-        });
-        // STEP 3
-        fetchTxnHistory(settings.selectedAlgorandNetwork, appAddress);
-      } catch (e) {
-        console.log("error!!", e);
-        setApp({
-          val: null,
-          loading: false,
-          error: e,
-        });
-        setAccount({
-          val: null,
-          loading: false,
-          error: e,
-        });
-      }
-    }, 5000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(async () => {
+    //   try {
+    //     // STEP 1
+    //     const appResponse = await AlgorandClient.getIndexer(
+    //       settings.selectedAlgorandNetwork
+    //     )
+    //       .lookupApplications(Number.parseInt(id!))
+    //       .do();
+    //     setApp({
+    //       val: parseGlobalState(
+    //         appResponse?.application?.params &&
+    //           appResponse.application.params["global-state"]
+    //       ),
+    //       loading: false,
+    //       error: null,
+    //     });
+    //     // STEP 2
+    //     const appAddress = await algosdk.getApplicationAddress(
+    //       Number.parseInt(id!)
+    //     );
+    //     const accountResponse = await AlgorandClient.getAlgod(
+    //       settings.selectedAlgorandNetwork
+    //     )
+    //       .accountInformation(appAddress)
+    //       .do();
+    //     setAccount({
+    //       val: accountResponse,
+    //       loading: false,
+    //       error: null,
+    //     });
+    //     // STEP 3
+    //     fetchTxnHistory(settings.selectedAlgorandNetwork, appAddress);
+    //   } catch (e) {
+    //     console.log("error!!", e);
+    //     setApp({
+    //       val: null,
+    //       loading: false,
+    //       error: e,
+    //     });
+    //     setAccount({
+    //       val: null,
+    //       loading: false,
+    //       error: e,
+    //     });
+    //   }
+    // }, 5000);
+    // return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -333,7 +334,8 @@ function Overview_CashBuy__v1_0_0() {
               />
             </Col>
             <Col xs={12} className="mb-4">
-              <TimelineWidget events={get(timelineEvents, "timeline", [])} />
+              {/* <TimelineWidget events={get(timelineEvents, "timeline", [])} /> */}
+              <D3TimelineWidget events={get(timelineEvents, "timeline", [])} />
             </Col>
             <Col xs={12} className="mb-4">
               <RolesWidget
@@ -353,4 +355,4 @@ function Overview_CashBuy__v1_0_0() {
   );
 }
 
-export default Overview_CashBuy__v1_0_0;
+export default Overview_Escrow__v1_0_0;

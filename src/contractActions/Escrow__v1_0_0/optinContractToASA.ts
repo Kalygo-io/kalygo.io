@@ -31,7 +31,7 @@ export async function optinContractToASA(
       methodArgs: [] as ABIArgument[],
       sender: sender,
       suggestedParams: params,
-      note: new Uint8Array(Buffer.from(supportedContracts.cashBuy__v1_0_0)),
+      note: new Uint8Array(Buffer.from(supportedContracts.escrow__v1_0_0)),
       signer: signer,
       appForeignAssets: [fungibleTokenId],
     });

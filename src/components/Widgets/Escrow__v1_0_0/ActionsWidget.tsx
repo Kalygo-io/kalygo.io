@@ -4,19 +4,19 @@ import { Card, Button } from "react-bootstrap";
 
 import { RootState } from "../../../store/store";
 import { useAppSelector } from "../../../store/hooks";
-import { optinContractToASA } from "../../../contractActions/CashBuy__v1_0_0/optinContractToASA";
-import { firstEscrowAmount } from "../../../contractActions/CashBuy__v1_0_0/1stEscrowAmount";
-import { secondEscrowAmount } from "../../../contractActions/CashBuy__v1_0_0/2ndEscrowAmount";
-import { buyerPullOut } from "../../../contractActions/CashBuy__v1_0_0/buyerPullOut";
-import { buyerArbitration } from "../../../contractActions/CashBuy__v1_0_0/buyerArbitration";
-import { sellerArbitration } from "../../../contractActions/CashBuy__v1_0_0/sellerArbitration";
-import { withdrawEscrow } from "../../../contractActions/CashBuy__v1_0_0/withdrawEscrow";
-import { withdrawBalance } from "../../../contractActions/CashBuy__v1_0_0/withdrawBalance";
-import { deleteApp } from "../../../contractActions/CashBuy__v1_0_0/deleteApp";
-import { fundMinimumBalance } from "../../../contractActions/CashBuy__v1_0_0/fundMinimumBalance";
-import { fundBuyerBox } from "../../../contractActions/CashBuy__v1_0_0/fundBuyerBox";
-import { optoutContractFromASA } from "../../../contractActions/CashBuy__v1_0_0/optoutContractFromASA";
-import { stablecoinClawback } from "../../../contractActions/CashBuy__v1_0_0/stablecoinClawback";
+import { optinContractToASA } from "../../../contractActions/Escrow__v1_0_0/optinContractToASA";
+import { firstEscrowAmount } from "../../../contractActions/Escrow__v1_0_0/1stEscrowAmount";
+import { secondEscrowAmount } from "../../../contractActions/Escrow__v1_0_0/2ndEscrowAmount";
+import { buyerPullOut } from "../../../contractActions/Escrow__v1_0_0/buyerPullOut";
+import { buyerArbitration } from "../../../contractActions/Escrow__v1_0_0/buyerArbitration";
+import { sellerArbitration } from "../../../contractActions/Escrow__v1_0_0/sellerArbitration";
+import { withdrawEscrow } from "../../../contractActions/Escrow__v1_0_0/withdrawEscrow";
+import { withdrawBalance } from "../../../contractActions/Escrow__v1_0_0/withdrawBalance";
+import { deleteApp } from "../../../contractActions/Escrow__v1_0_0/deleteApp";
+import { fundMinimumBalance } from "../../../contractActions/Escrow__v1_0_0/fundMinimumBalance";
+import { fundBuyerBox } from "../../../contractActions/Escrow__v1_0_0/fundBuyerBox";
+import { optoutContractFromASA } from "../../../contractActions/Escrow__v1_0_0/optoutContractFromASA";
+import { stablecoinClawback } from "../../../contractActions/Escrow__v1_0_0/stablecoinClawback";
 
 import { signerForAlgoSigner } from "../../../contractActions/helpers/signers/AlgoSigner";
 import { signerForPera } from "../../../contractActions/helpers/signers/PeraSigner";
@@ -92,7 +92,6 @@ export const ActionsWidget = (props: P) => {
   let atcSigner:
     | ((unsignedTxns: Transaction[]) => Promise<Uint8Array[]>)
     | ((unsignedTxns: Transaction[], addr: string) => Promise<Uint8Array[]>);
-  console.log("!!! -> !!!", settings.selectedAlgorandWallet);
   switch (settings.selectedAlgorandWallet) {
     case "AlgoSigner":
       atcSigner = signerForAlgoSigner;

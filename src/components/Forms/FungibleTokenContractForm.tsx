@@ -56,8 +56,6 @@ export const FungibleTokenContractForm = (props: P) => {
     | ((unsignedTxns: Transaction[]) => Promise<Uint8Array[]>)
     | ((unsignedTxns: Transaction[], addr: string) => Promise<Uint8Array[]>);
 
-  console.log("!!! -> !!!", settings.selectedAlgorandWallet);
-
   switch (settings.selectedAlgorandWallet) {
     case "AlgoSigner":
       atcSigner = signerForAlgoSigner;

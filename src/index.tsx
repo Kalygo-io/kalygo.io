@@ -15,11 +15,11 @@ import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 
 // console.log("package_json.resetRedux", package_json.resetRedux);
-Sentry.init({
-  dsn: "https://92d5188348a24f92bb7b85b7d0ff62dd@o4504900846813184.ingest.sentry.io/4504900846878720",
-  integrations: [new BrowserTracing()],
-  tracesSampleRate: 1.0,
-});
+// Sentry.init({
+//   dsn: "https://92d5188348a24f92bb7b85b7d0ff62dd@o4504900846813184.ingest.sentry.io/4504900846878720",
+//   integrations: [new BrowserTracing()],
+//   tracesSampleRate: 1.0,
+// });
 
 if (localStorage.getItem("clearReduxPersist") !== package_json.resetRedux) {
   persistor.purge();

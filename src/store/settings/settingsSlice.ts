@@ -237,8 +237,6 @@ export const disconnectPera = createAsyncThunk(
 export const fetchMetamaskNetworkAccounts = createAsyncThunk(
   "metamask/fetchNetworkAccounts",
   async (network: string, thunkAPI) => {
-    console.log("***--->>>", thunkAPI);
-
     if (typeof (window as any).ethereum !== "undefined") {
       // ethereum.request({ method: 'eth_requestAccounts' });
 
