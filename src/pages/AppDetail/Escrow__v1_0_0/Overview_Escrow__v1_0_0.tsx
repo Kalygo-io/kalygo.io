@@ -200,7 +200,7 @@ function Overview_Escrow__v1_0_0() {
     ? prepareTimelineEventsArray(app)
     : {
         timeline: [],
-        now: new Date().getTime(),
+        // now: new Date().getTime(),
         inspectPeriodStart: new Date().getTime(),
         inspectPeriodEnd: new Date().getTime(),
         inspectExtension: new Date().getTime(),
@@ -245,7 +245,8 @@ function Overview_Escrow__v1_0_0() {
         <Col xs={12} xl={4}>
           {/* <OperatorConfig /> */}
           <ActionsWidget
-            now={timelineEvents.now}
+            // now={timelineEvents.now}
+            now={new Date().getTime()}
             inspectPeriodStart={timelineEvents.inspectPeriodStart}
             inspectPeriodEnd={timelineEvents.inspectPeriodEnd}
             inspectPeriodExtension={timelineEvents.inspectExtension}
@@ -306,7 +307,8 @@ function Overview_Escrow__v1_0_0() {
           <Row>
             <Col xs={12} lg={6} className="mb-4">
               <EscrowWidget
-                now={timelineEvents.now}
+                // now={timelineEvents.now}
+                now={new Date().getTime()}
                 inspectPeriodEnd={timelineEvents.inspectPeriodEnd}
                 closingDate={timelineEvents.closingDate}
                 fungibleTokenName={escrowTokenName}

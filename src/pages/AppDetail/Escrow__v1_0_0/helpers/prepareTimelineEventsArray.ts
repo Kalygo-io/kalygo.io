@@ -1,52 +1,52 @@
 import get from "lodash/get";
 
 export function prepareTimelineEventsArray(app: object) {
-  const now = {
-    title: "Now",
-    time: new Date().getTime(),
-    color: "#60dafb",
-  };
+  // const now = {
+  //   title: "Now",
+  //   ts: new Date().getTime(),
+  //   color: "#60dafb",
+  // };
 
   const inspectPeriodStart = {
     title: "Inspection Begins",
-    time: new Date(get(app, "val.glbl_inspect_start_date", 0) * 1000).getTime(),
-    color: "rgba(0, 0, 0, 0.1)",
+    ts: new Date(get(app, "val.glbl_inspect_start_date", 0) * 1000).getTime(),
+    color: "rgb(245,245,245)",
   };
 
   const inspectPeriodEnd = {
     title: "Inspection Ends",
-    time: new Date(get(app, "val.glbl_inspect_end_date", 0) * 1000).getTime(),
-    color: "rgba(0, 0, 0, 0.3)",
+    ts: new Date(get(app, "val.glbl_inspect_end_date", 0) * 1000).getTime(),
+    color: "rgb(220,220,220)",
   };
 
   const inspectExtension = {
     title: "Inspection Extension",
-    time: new Date(
+    ts: new Date(
       get(app, "val.glbl_inspect_extension_date", 0) * 1000
     ).getTime(),
-    color: "rgba(0, 0, 0, 0.4)",
+    color: "rgb(190,190,190)",
   };
 
   const movingDate = {
     title: "Moving Date",
-    time: new Date(get(app, "val.glbl_moving_date", 0) * 1000).getTime(),
-    color: "rgba(0, 0, 0, 0.5)",
+    ts: new Date(get(app, "val.glbl_moving_date", 0) * 1000).getTime(),
+    color: "rgb(120,120,120)",
   };
 
   const closingDate = {
     title: "Closing Date",
-    time: new Date(get(app, "val.glbl_closing_date", 0) * 1000).getTime(),
-    color: "rgba(0, 0, 0, 0.9)",
+    ts: new Date(get(app, "val.glbl_closing_date", 0) * 1000).getTime(),
+    color: "rgb(96,96,96)",
   };
 
   const freeFundsDate = {
     title: "Free Funds Date",
-    time: new Date(get(app, "val.glbl_free_funds_date", 0) * 1000).getTime(),
-    color: "rgba(0, 0, 0, 1.0)",
+    ts: new Date(get(app, "val.glbl_free_funds_date", 0) * 1000).getTime(),
+    color: "rgb(32,32,32)",
   };
 
   let timelineEvents = [
-    now,
+    // now,
     inspectPeriodStart,
     inspectPeriodEnd,
     inspectExtension,
@@ -56,10 +56,10 @@ export function prepareTimelineEventsArray(app: object) {
   ];
 
   function compare(a: any, b: any) {
-    if (a.time < b.time) {
+    if (a.ts < b.ts) {
       return -1;
     }
-    if (a.time > b.time) {
+    if (a.ts > b.ts) {
       return 1;
     }
     return 0;
@@ -69,12 +69,12 @@ export function prepareTimelineEventsArray(app: object) {
 
   return {
     timeline: timelineEvents,
-    now: now.time,
-    inspectPeriodStart: inspectPeriodStart.time,
-    inspectPeriodEnd: inspectPeriodEnd.time,
-    inspectExtension: inspectExtension.time,
-    closingDate: closingDate.time,
-    movingDate: movingDate.time,
-    freeFundsDate: freeFundsDate.time,
+    // now: now.ts,
+    inspectPeriodStart: inspectPeriodStart.ts,
+    inspectPeriodEnd: inspectPeriodEnd.ts,
+    inspectExtension: inspectExtension.ts,
+    closingDate: closingDate.ts,
+    movingDate: movingDate.ts,
+    freeFundsDate: freeFundsDate.ts,
   };
 }
