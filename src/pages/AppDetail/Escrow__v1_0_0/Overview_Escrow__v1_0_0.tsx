@@ -205,7 +205,7 @@ function Overview_Escrow__v1_0_0() {
         <Col xs={12} className="mb-4">
           <Row>
             <Col xs={12} className="mb-4">
-              <D3Timeline />
+              <D3Timeline events={get(timelineEvents, "timeline", [])} />
             </Col>
           </Row>
         </Col>

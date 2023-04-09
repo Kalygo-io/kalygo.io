@@ -3,7 +3,17 @@ import { select } from "d3-selection";
 import { useResize } from "../../../../hooks/useResize";
 import { drawStaticElements } from "./helpers/drawStaticElements";
 
-export const D3Timeline = () => {
+interface P {
+  events: {
+    color: string;
+    title: string;
+    ts: number;
+  }[];
+}
+
+export const D3Timeline = (props: P) => {
+  const { events } = props;
+
   const rootRef = useRef<HTMLDivElement | null>(null);
   const size = useResize(rootRef);
 
@@ -16,7 +26,7 @@ export const D3Timeline = () => {
         .attr("width", size.width)
         .attr("height", size.height);
 
-      drawStaticElements(rootRef.current!, size);
+      drawStaticElements(rootRef.current!, size, events);
     }
   }, [size]);
 

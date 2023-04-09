@@ -1,8 +1,14 @@
 import { select } from "d3-selection";
+import { drawTimeline } from "../staticElements/drawTimeline";
 
 export const drawStaticElements = (
   rootElement: HTMLDivElement,
-  windowSize: { width: number; height: number }
+  windowSize: { width: number; height: number },
+  timelineEvents: {
+    color: string;
+    ts: number;
+    title: string;
+  }[]
 ) => {
   const { width, height } = windowSize;
 
@@ -13,4 +19,6 @@ export const drawStaticElements = (
     .attr("height", height)
     .attr("fill", "#61DAFB");
   // .attr("fill", "#f5f8fb");
+
+  drawTimeline(rootElement, windowSize, timelineEvents);
 };
