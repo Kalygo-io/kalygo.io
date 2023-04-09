@@ -32,7 +32,7 @@ export const drawTimelineEvent = (
       return scale(event);
     })
     .attr("cy", (d: any) => {
-      return height * (2 / 5);
+      return height * (1 / 2);
     })
     .style("fill", color)
     .attr("stroke", "rgba(0,0,0,1)");

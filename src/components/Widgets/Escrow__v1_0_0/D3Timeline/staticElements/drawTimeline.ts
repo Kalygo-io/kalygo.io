@@ -24,7 +24,7 @@ export const drawTimeline = (
   const axis = (axisBottom(scale) as any).ticks().tickFormat((d: any) => {
     // console.log("d", d);
     const date = new Date(d);
-    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+    return `${date.toLocaleDateString()}`;
   });
 
   select(rootElement)
@@ -32,10 +32,11 @@ export const drawTimeline = (
     .append("g")
     .attr("class", "x-axis")
     .attr("width", width)
-    .attr("transform", `translate(${0}, ${height * (2 / 5)})`)
+    .attr("transform", `translate(${0}, ${height * (1 / 2)})`)
     .call(axis)
     .selectAll("text")
     .style("text-anchor", "end")
+    .style("font-size", "16px")
     .attr("dx", "-2em")
     .attr("dy", "1em")
     .attr("transform", "rotate(-65)");

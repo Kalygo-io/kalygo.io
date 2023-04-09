@@ -27,13 +27,13 @@ export const drawCurrentTime = (
     .select("svg")
     .append("g")
     .append("circle")
-    .attr("r", 8)
+    .attr("r", 10)
     .attr("class", "current-time")
     .attr("cx", (d: any) => {
       return scale(currentTime);
     })
     .attr("cy", (d: any) => {
-      return height * (2 / 5);
+      return height * (1 / 2);
     })
     .style("fill", (d) => {
       // Step 1 - Calculate %

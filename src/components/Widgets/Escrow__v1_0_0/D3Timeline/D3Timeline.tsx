@@ -44,20 +44,22 @@ export const D3Timeline = (props: P) => {
   }, [size]);
 
   useEffect(() => {
-    animationRef.current.requestId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationRef.current.requestId!);
+    if (Date.now() < events[events.length - 1].ts && size) {
+      animationRef.current.requestId = requestAnimationFrame(animate);
+      return () => cancelAnimationFrame(animationRef.current.requestId!);
+    }
   }, [size]); // Make sure the effect runs only once
 
   const animate = (time: any) => {
-    // console.log("animate");
-    const FRAME_RATE = 1000 / 24; // in milliseconds ie : 2 is the amount of frames/sec
+    console.log("animate");
+    const FRAME_RATE = 1000 / 60; // in milliseconds ie: the denominator is the amount of frames/sec
     const now = Date.now();
     if (animationRef.current.previousTime !== undefined) {
       const deltaTime = time - animationRef.current.previousTime!;
       animationRef.current.elapsedFrame! += deltaTime;
       if (
         animationRef.current.elapsedFrame > FRAME_RATE &&
-        // now < events[events.length - 1].ts &&
+        now < events[events.length - 1].ts &&
         size
       ) {
         clearAnimatedElements(rootRef.current!);
@@ -69,9 +71,5 @@ export const D3Timeline = (props: P) => {
     animationRef.current.requestId = requestAnimationFrame(animate);
   };
 
-  return (
-    <div ref={rootRef} id="d3-timeline-widget">
-      D3Timeline
-    </div>
-  );
+  return <div ref={rootRef} id="d3-timeline-widget"></div>;
 };

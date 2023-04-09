@@ -1,19 +1,22 @@
-// #d3-timeline-widget {
-//     height: 33.33vh;
-//     width: calc(100%);
-//     display: grid;
-//     grid-template-columns: 1fr;
-//     grid-template-rows: 1fr;
+#d3-timeline-widget {
+    height: max(33.33vh, 320px);
+    width: calc(100%);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
 
+    svg {
+        border: 1px solid rgb(234,237,242);
+        border-radius: 0.4375rem;
+    }
+
+    .tick {
+        display: none;
     
-//     .tick {
-//         display: none;
-    
-//         &:first-of-type,
-//         &:last-of-type {
-//             display: block;
-//         }
-//     }
-      
-// }
+        &:first-of-type,
+        &:last-of-type {
+            display: block;
+        }
+    }
+}
 

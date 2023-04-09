@@ -36,7 +36,7 @@ export const drawTimelineEvents = (
       //   console.log("---", scale(d.ts));
       return scale(d.ts);
     })
-    .attr("transform", `translate(${0}, ${height * (2 / 5)})`)
+    .attr("transform", `translate(${0}, ${height * (1 / 2)})`)
     .attr("fill", function (d) {
       return d.color;
     })
@@ -48,7 +48,7 @@ export const drawTimelineEvents = (
         .attr("class", "timeline-event-text")
         .attr("font-family", "Arial")
         .attr("font-size", "16px")
-        .attr("y", height * (2 / 5) - 16 - 10)
+        .attr("y", height * (1 / 2) - 16 - 10)
         .attr("x", function (_d: any) {
           return scale(d.target.__data__.ts);
         })
@@ -67,7 +67,7 @@ export const drawTimelineEvents = (
         .append("tspan")
         .text(`${new Date(i.ts).toLocaleString()}`)
         .attr("x", scale(d.target.__data__.ts))
-        .attr("y", height * (2 / 5) - 32 - 10);
+        .attr("y", height * (1 / 2) - 32 - 10);
     })
     .on("mouseout", function (d, i) {
       select(rootElement).selectAll("text.timeline-event-text").remove();
