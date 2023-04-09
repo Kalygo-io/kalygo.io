@@ -12,7 +12,7 @@ import moment from "moment-timezone";
 import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
 import { AlgorandClient } from "../../../services/algorand_client";
 
-import ABI from "../../../contractExports/contracts/cashBuy/application.json";
+import ABI from "../../../contractExports/contracts/escrow/application.json";
 import { signerForAlgoSigner } from "../../../contractActions/helpers/signers/AlgoSigner";
 
 import { showErrorToast } from "../../../utility/errorToast";

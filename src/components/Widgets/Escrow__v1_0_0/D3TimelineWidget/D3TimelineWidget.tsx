@@ -12,9 +12,9 @@ interface P {
 export const D3TimelineWidget = (props: P) => {
   let { events } = props;
 
-  console.log("events", events);
-  events = [...events.slice(0, 3), ...events.slice(4)];
-  console.log("events", events);
+  // console.log("events", events);
+  // events = [...events.slice(0, 3), ...events.slice(4)];
+  // console.log("events", events);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const size = useResize(rootRef);

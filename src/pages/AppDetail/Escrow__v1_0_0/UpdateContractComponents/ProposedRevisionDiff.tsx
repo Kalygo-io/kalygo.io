@@ -202,26 +202,6 @@ export function ProposedRevisionDiff(props: P) {
           </div>
           {/*  */}
           <div>
-            <b>Moving Date </b>
-            <span>{globalState["glbl_moving_date"]}</span>
-            {BigInt(globalState["glbl_moving_date"]) !==
-              proposedRevision[8] && (
-              <span
-                style={{
-                  color: "green",
-                }}
-              >
-                {" -> "}
-                {toObject(proposedRevision[8])
-                  ? moment(
-                      toObject(proposedRevision[8]) * 1000
-                    ).toLocaleString()
-                  : "ERROR"}
-              </span>
-            )}
-          </div>
-          {/*  */}
-          <div>
             <b>Closing Date </b>
             <span>{globalState["glbl_closing_date"]}</span>
             {BigInt(globalState["glbl_closing_date"]) !==

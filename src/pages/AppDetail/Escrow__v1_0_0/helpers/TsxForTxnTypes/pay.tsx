@@ -10,7 +10,7 @@ import algosdk, {
   ABIContract,
 } from "algosdk";
 
-import ABI from "../../../../../contractExports/contracts/cashBuy/application.json";
+import ABI from "../../../../../contractExports/contracts/escrow/application.json";
 
 // function buf2hex(buffer) {
 //   // buffer is an ArrayBuffer

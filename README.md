@@ -24,4 +24,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 `npm run deploy`
 
-## Appears to work with Node.js lts/fermium
+## Appears to work with Node.js lts/fermium aka 14.21.3

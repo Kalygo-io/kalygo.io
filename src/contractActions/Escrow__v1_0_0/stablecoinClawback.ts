@@ -10,7 +10,7 @@ import { showErrorToast } from "../../utility/errorToast";
 import { showSuccessToast } from "../../utility/successToast";
 import { supportedContracts } from "../../data/supportedContracts";
 
-import ABI from "../../contractExports/contracts/cashBuy/application.json";
+import ABI from "../../contractExports/contracts/escrow/application.json";
 import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
 
 export async function stablecoinClawback(

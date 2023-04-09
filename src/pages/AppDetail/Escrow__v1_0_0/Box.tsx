@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { AlgorandClient } from "../../../services/algorand_client";
 import { showErrorToast } from "../../../utility/errorToast";
 import { showSuccessToast } from "../../../utility/successToast";
-import ABI from "../../../contractExports/contracts/cashBuy/application.json";
+import ABI from "../../../contractExports/contracts/escrow/application.json";
 
 import { useForm } from "react-hook-form";
 import algosdk, { AtomicTransactionComposer, ABIArgument } from "algosdk";

@@ -200,13 +200,12 @@ function Overview_Escrow__v1_0_0() {
     ? prepareTimelineEventsArray(app)
     : {
         timeline: [],
-        // now: new Date().getTime(),
         inspectPeriodStart: new Date().getTime(),
         inspectPeriodEnd: new Date().getTime(),
         inspectExtension: new Date().getTime(),
         movingDate: new Date().getTime(),
         closingDate: new Date().getTime(),
-        freeFundsDate: new Date().getTime(),
+        closingDateExtension: new Date().getTime(),
       };
 
   // console.log("app.val", app.val);
@@ -251,8 +250,7 @@ function Overview_Escrow__v1_0_0() {
             inspectPeriodEnd={timelineEvents.inspectPeriodEnd}
             inspectPeriodExtension={timelineEvents.inspectExtension}
             closingDate={timelineEvents.closingDate}
-            freeFundsDate={timelineEvents.freeFundsDate}
-            movingDate={timelineEvents.movingDate}
+            freeFundsDate={timelineEvents.closingDateExtension}
             fungibleTokenId={escrowTokenId}
             fungibleTokenBalance={escrowTokenBalance}
             balance={get(account.val, "amount", 0)}

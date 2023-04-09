@@ -23,7 +23,7 @@ import algosdk, { AtomicTransactionComposer, ABIArgument } from "algosdk";
 import { formatCurrency } from "./helpers/formatCurrency";
 import { supportedStablecoins } from "./helpers/supportedStablecoins";
 
-import ABI from "../../contractExports/contracts/cashBuy/application.json";
+import ABI from "../../contractExports/contracts/escrow/application.json";
 import { signerForAlgoSigner } from "../../contractActions/helpers/signers/AlgoSigner";
 import { signerForPera } from "../../contractActions/helpers/signers/PeraSigner";
 
@@ -38,17 +38,15 @@ export const CashBuyContractForm = (props: P) => {
   const inputElInspStartDate = useRef<Datetime>(null);
   const inputElInspEndDate = useRef<Datetime>(null);
   const inputElInspExtDate = useRef<Datetime>(null);
-  const inputElMoveDate = useRef<Datetime>(null);
   const inputElCloseDate = useRef<Datetime>(null);
-  const inputElFreeFundsDate = useRef<Datetime>(null);
+  const inputElCloseExtDate = useRef<Datetime>(null);
 
   const dtInputs = [
     inputElInspStartDate,
     inputElInspEndDate,
     inputElInspExtDate,
-    inputElMoveDate,
     inputElCloseDate,
-    inputElFreeFundsDate,
+    inputElCloseExtDate,
   ];
 
   const [asset, setAsset] = useState<any>({
@@ -90,13 +88,13 @@ export const CashBuyContractForm = (props: P) => {
       inspectPeriodExtension: moment().add("0", "m").add("45", "s").toString(),
       movingDate: moment().add("1", "m").add("0", "s").toString(),
       closingDate: moment().add("1", "m").add("15", "s").toString(),
-      freeFundsDate: moment().add("1", "m").add("30", "s").toString(),
+      closingDateExtension: moment().add("1", "m").add("30", "s").toString(),
       // inspectPeriodStart: moment().add("1", "m").toString(),
       // inspectPeriodEnd: moment().add("2", "m").toString(),
       // inspectPeriodExtension: moment().add("3", "m").toString(),
       // movingDate: moment().add("4", "m").toString(),
       // closingDate: moment().add("5", "m").toString(),
-      // freeFundsDate: moment().add("6", "m").toString(),
+      // closingDateExtension: moment().add("6", "m").toString(),
       buyer: settings.selectedAlgorandAccount,
       seller: settings.selectedAlgorandAccount,
       // titleCompany:
@@ -164,12 +162,9 @@ export const CashBuyContractForm = (props: P) => {
         inspectPeriodStart,
         inspectPeriodEnd,
         inspectPeriodExtension,
-        movingDate,
         closingDate,
-        freeFundsDate,
+        closingDateExtension,
         enableTimeChecks,
-        propertyAddress,
-        propertyName,
         asaId,
         customAsaId,
       } = data;
@@ -247,9 +242,8 @@ export const CashBuyContractForm = (props: P) => {
           moment(inspectPeriodStart).unix(), // glbl_inspect_start_date: "",
           moment(inspectPeriodEnd).unix(), // glbl_inspect_end_date: "",
           moment(inspectPeriodExtension).unix(), // glbl_inspect_extension_date: "",
-          moment(movingDate).unix(), // glbl_moving_date: "",
           moment(closingDate).unix(), // glbl_closing_date: "",
-          moment(freeFundsDate).unix(), // glbl_free_funds_date: "",
+          moment(closingDateExtension).unix(), // glbl_free_funds_date: "",
           asaId === "-1" ? Math.floor(customAsaId) : Number.parseInt(asaId), // glbl_asa_id: ""
         ] as ABIArgument[],
         approvalProgram: a_prog,
@@ -621,43 +615,6 @@ export const CashBuyContractForm = (props: P) => {
             </Col>
             <Col md={6} className="mb-3">
               <Form.Group id="closing-date">
-                <Form.Label>Moving Date</Form.Label>
-                <Datetime
-                  className="movingDate"
-                  timeFormat={true}
-                  ref={inputElMoveDate}
-                  onChange={(e: any) => {
-                    e = moment(e.unix() * 1000 + 1000 * 60 * 60 * 24 - 1);
-                    setValue("movingDate", e.toString());
-                  }}
-                  renderInput={(props, openCalendar, closeCalendar) => (
-                    <InputGroup>
-                      <InputGroup.Text>
-                        <FontAwesomeIcon icon={faCalendarAlt} />
-                      </InputGroup.Text>
-                      <Form.Control
-                        {...register("movingDate", {
-                          required: true,
-                        })}
-                        type="text"
-                        inputMode="none"
-                        value={getValues("movingDate")}
-                        placeholder="mm/dd/yyyy"
-                        onFocus={(e: any) => {
-                          openCalendar();
-                          closeOtherCalendars("movingDate");
-                        }}
-                      />
-                    </InputGroup>
-                  )}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col md={6} className="mb-3">
-              <Form.Group id="closing-date">
                 <Form.Label>Closing Date</Form.Label>
                 <Datetime
                   className="closingDate"
@@ -690,16 +647,19 @@ export const CashBuyContractForm = (props: P) => {
                 />
               </Form.Group>
             </Col>
+          </Row>
+
+          <Row>
             <Col md={6} className="mb-3">
               <Form.Group id="closing-date">
                 <Form.Label>Closing Date Extension</Form.Label>
                 <Datetime
-                  className="freeFundsDate"
+                  className="closingDateExtension"
                   timeFormat={true}
-                  ref={inputElFreeFundsDate}
+                  ref={inputElCloseExtDate}
                   onChange={(e: any) => {
                     e = moment(e.unix() * 1000 + 1000 * 60 * 60 * 24 - 1);
-                    setValue("freeFundsDate", e.toString());
+                    setValue("closingDateExtension", e.toString());
                   }}
                   renderInput={(props, openCalendar, closeCalendar) => (
                     <InputGroup>
@@ -707,16 +667,16 @@ export const CashBuyContractForm = (props: P) => {
                         <FontAwesomeIcon icon={faCalendarAlt} />
                       </InputGroup.Text>
                       <Form.Control
-                        {...register("freeFundsDate", {
+                        {...register("closingDateExtension", {
                           required: true,
                         })}
                         type="text"
                         inputMode="none"
-                        value={getValues("freeFundsDate")}
+                        value={getValues("closingDateExtension")}
                         placeholder="mm/dd/yyyy"
                         onFocus={(e: any) => {
                           openCalendar();
-                          closeOtherCalendars("freeFundsDate");
+                          closeOtherCalendars("closingDateExtension");
                         }}
                       />
                     </InputGroup>

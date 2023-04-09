@@ -27,21 +27,17 @@ export function prepareTimelineEventsArray(app: object) {
     color: "rgb(190,190,190)",
   };
 
-  const movingDate = {
-    title: "Moving Date",
-    ts: new Date(get(app, "val.glbl_moving_date", 0) * 1000).getTime(),
-    color: "rgb(120,120,120)",
-  };
-
   const closingDate = {
     title: "Closing Date",
     ts: new Date(get(app, "val.glbl_closing_date", 0) * 1000).getTime(),
     color: "rgb(96,96,96)",
   };
 
-  const freeFundsDate = {
+  const closingDateExtension = {
     title: "Closing Date Extension",
-    ts: new Date(get(app, "val.glbl_free_funds_date", 0) * 1000).getTime(),
+    ts: new Date(
+      get(app, "val.glbl_closing_extension_date", 0) * 1000
+    ).getTime(),
     color: "rgb(32,32,32)",
   };
 
@@ -50,9 +46,8 @@ export function prepareTimelineEventsArray(app: object) {
     inspectPeriodStart,
     inspectPeriodEnd,
     inspectExtension,
-    movingDate,
     closingDate,
-    freeFundsDate,
+    closingDateExtension,
   ];
 
   function compare(a: any, b: any) {
@@ -74,7 +69,6 @@ export function prepareTimelineEventsArray(app: object) {
     inspectPeriodEnd: inspectPeriodEnd.ts,
     inspectExtension: inspectExtension.ts,
     closingDate: closingDate.ts,
-    movingDate: movingDate.ts,
-    freeFundsDate: freeFundsDate.ts,
+    closingDateExtension: closingDateExtension.ts,
   };
 }

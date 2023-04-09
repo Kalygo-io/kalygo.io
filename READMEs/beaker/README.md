@@ -13,4 +13,4 @@ escrowContract = EscrowContract()
 escrowContract.dump("./build")
 ```
 
-- 2. `npx beaker-ts generate src/contractExports/contracts/cashBuy/application.json src/contractExports/contracts/cashBuy/`
+- 2. `npx beaker-ts generate src/contractExports/contracts/escrow/application.json src/contractExports/contracts/escrow/`

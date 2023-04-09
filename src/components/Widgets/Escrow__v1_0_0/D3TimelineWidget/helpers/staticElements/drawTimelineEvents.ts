@@ -65,7 +65,11 @@ export const drawTimelineEvents = (
         })
         .style("fill", "#004669")
         .style("font-weight", "bold")
-        .html(`${i.title} ${new Date(i.ts).toLocaleString()}`);
+        .text(`${i.title}`)
+        .append("tspan")
+        .text(`${new Date(i.ts).toLocaleString()}`)
+        .attr("x", scale(d.target.__data__.ts))
+        .attr("y", height * (2 / 5) - 32 - 10);
     })
     .on("mouseout", function (d, i) {
       select(rootElement).selectAll("text.timeline-event-text").remove();

@@ -8,7 +8,7 @@ import { Buffer } from "buffer";
 import { showSuccessToast } from "../../utility/successToast";
 import { showErrorToast } from "../../utility/errorToast";
 import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
-import ABI from "../../contractExports/contracts/cashBuy/application.json";
+import ABI from "../../contractExports/contracts/escrow/application.json";
 import { supportedContracts } from "../../data/supportedContracts";
 
 export async function deleteApp(

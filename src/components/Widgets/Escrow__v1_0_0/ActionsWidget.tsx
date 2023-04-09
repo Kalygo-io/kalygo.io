@@ -39,7 +39,6 @@ interface P {
   inspectPeriodStart: number;
   inspectPeriodEnd: number;
   inspectPeriodExtension: number;
-  movingDate: number;
   closingDate: number;
   freeFundsDate: number;
   buyerPulloutFlag: number;
@@ -65,7 +64,6 @@ export const ActionsWidget = (props: P) => {
     inspectPeriodStart,
     inspectPeriodEnd,
     inspectPeriodExtension,
-    movingDate,
     closingDate,
     freeFundsDate,
     buyerPulloutFlag,
@@ -175,7 +173,7 @@ export const ActionsWidget = (props: P) => {
 
             {
               /* prettier-ignore */
-              (buyerPulloutFlag === 1 && movingDate < now && buyerArbitrationFlag < 1 && sellerArbitrationFlag < 1 && fungibleTokenBalance > 0)
+              (buyerPulloutFlag === 1 && inspectPeriodExtension < now && buyerArbitrationFlag < 1 && sellerArbitrationFlag < 1 && fungibleTokenBalance > 0)
               ||
               (buyerArbitrationFlag === 1 && freeFundsDate < now && sellerArbitrationFlag < 1 && fungibleTokenBalance > 0) ?
               <Button

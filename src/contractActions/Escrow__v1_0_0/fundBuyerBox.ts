@@ -9,7 +9,7 @@ import algosdk, {
   ABIArgument,
 } from "algosdk";
 import { signerForAlgoSigner } from "../helpers/signers/AlgoSigner";
-import ABI from "../../contractExports/contracts/cashBuy/application.json";
+import ABI from "../../contractExports/contracts/escrow/application.json";
 
 export async function fundBuyerBox(
   sender: string,

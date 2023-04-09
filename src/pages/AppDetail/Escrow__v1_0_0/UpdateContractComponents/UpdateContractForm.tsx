@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import get from "lodash/get";
 import { useAppDispatch, useAppSelector } from "../../../../store/hooks";
 import { RootState } from "../../../../store/store";
-import ABI from "../../../../contractExports/contracts/cashBuy/application.json";
+import ABI from "../../../../contractExports/contracts/escrow/application.json";
 import { signerForAlgoSigner } from "../../../../contractActions/helpers/signers/AlgoSigner";
 import { signerForPera } from "../../../../contractActions/helpers/signers/PeraSigner";
 
@@ -676,39 +676,6 @@ export function UpdateContractForm(props: P) {
                           onFocus={(e: any) => {
                             openCalendar();
                             closeOtherCalendars("inspectPeriodExtension");
-                          }}
-                        />
-                      </InputGroup>
-                    )}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6} className="mb-3">
-                <Form.Group id="closing-date">
-                  <Form.Label>Moving Date</Form.Label>
-                  <Datetime
-                    className="movingDate"
-                    timeFormat={true}
-                    ref={inputElMoveDate}
-                    onChange={(e: any) => {
-                      setValue("movingDate", e.toString());
-                    }}
-                    renderInput={(props, openCalendar, closeCalendar) => (
-                      <InputGroup>
-                        <InputGroup.Text>
-                          <FontAwesomeIcon icon={faCalendarAlt} />
-                        </InputGroup.Text>
-                        <Form.Control
-                          {...register("movingDate", {
-                            required: true,
-                          })}
-                          type="text"
-                          inputMode="none"
-                          value={getValues("movingDate")}
-                          placeholder="mm/dd/yyyy"
-                          onFocus={(e: any) => {
-                            openCalendar();
-                            closeOtherCalendars("movingDate");
                           }}
                         />
                       </InputGroup>
