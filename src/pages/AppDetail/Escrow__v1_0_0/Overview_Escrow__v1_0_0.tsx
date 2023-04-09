@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
 import { RolesWidget } from "../../../components/Widgets/Escrow__v1_0_0/RolesWidget";
-// import { D3TimelineWidget } from "../../../components/Widgets/Escrow__v1_0_0/D3TimelineWidget/D3TimelineWidget";
+import { D3Timeline } from "../../../components/Widgets/Escrow__v1_0_0/D3Timeline/D3Timeline";
 import { TimelineWidget } from "../../../components/Widgets/Escrow__v1_0_0/TimelineWidget";
 import { FlagsWidget } from "../../../components/Widgets/Escrow__v1_0_0/FlagsWidget";
 import { EscrowWidget } from "../../../components/Widgets/Escrow__v1_0_0/EscrowWidget";
@@ -202,13 +202,13 @@ function Overview_Escrow__v1_0_0() {
       </div>
 
       <Row>
-        {/* <Col xs={12} className="mb-4">
+        <Col xs={12} className="mb-4">
           <Row>
             <Col xs={12} className="mb-4">
-              <D3TimelineWidget events={get(timelineEvents, "timeline", [])} />
+              <D3Timeline />
             </Col>
           </Row>
-        </Col> */}
+        </Col>
         <Col xs={12} xl={4}>
           <ActionsWidget
             now={new Date().getTime()}
@@ -299,7 +299,7 @@ function Overview_Escrow__v1_0_0() {
               />
             </Col>
             <Col xs={12} className="mb-4">
-              <TimelineWidget events={get(timelineEvents, "timeline", [])} />
+              {/* <TimelineWidget events={get(timelineEvents, "timeline", [])} /> */}
               {/* <D3TimelineWidget events={get(timelineEvents, "timeline", [])} /> */}
             </Col>
             <Col xs={12} className="mb-4">
