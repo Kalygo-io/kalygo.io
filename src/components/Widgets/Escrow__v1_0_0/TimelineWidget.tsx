@@ -52,7 +52,7 @@ export const TimelineWidget = (props: P) => {
                 <td style={{ color: i.color }}>
                   <FontAwesomeIcon icon={faCircle} className="me-1" />
                 </td>
-                <td>{new Date(i.time).toLocaleString()}</td>
+                <td>{new Date(i.ts).toLocaleString()}</td>
               </tr>
             );
           })}

@@ -15,8 +15,8 @@ import { useParams } from "react-router-dom";
 import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
 import { ErrorBoundary } from "../../../components/ErrorBoundary";
 import { RolesWidget } from "../../../components/Widgets/Escrow__v1_0_0/RolesWidget";
-// import { TimelineWidget } from "../../../components/Widgets/Escrow__v1_0_0/TimelineWidget";
 import { D3TimelineWidget } from "../../../components/Widgets/Escrow__v1_0_0/D3TimelineWidget/D3TimelineWidget";
+import { TimelineWidget } from "../../../components/Widgets/Escrow__v1_0_0/TimelineWidget";
 import { FlagsWidget } from "../../../components/Widgets/Escrow__v1_0_0/FlagsWidget";
 import { EscrowWidget } from "../../../components/Widgets/Escrow__v1_0_0/EscrowWidget";
 import { UpdateContractWidget } from "../../../components/Widgets/Escrow__v1_0_0/UpdateContractWidget";
@@ -236,7 +236,7 @@ function Overview_Escrow__v1_0_0() {
   ) : (
     <ErrorBoundary>
       <div className="d-flex flex-column flex-wrap flex-md-nowrap align-items-center py-4">
-        <h1>Cash Buy</h1>
+        <h1>Escrow</h1>
         {/* <h6>{get(account, "val.address", "")}</h6> */}
       </div>
 
@@ -334,8 +334,8 @@ function Overview_Escrow__v1_0_0() {
               />
             </Col>
             <Col xs={12} className="mb-4">
-              {/* <TimelineWidget events={get(timelineEvents, "timeline", [])} /> */}
-              <D3TimelineWidget events={get(timelineEvents, "timeline", [])} />
+              <TimelineWidget events={get(timelineEvents, "timeline", [])} />
+              {/* <D3TimelineWidget events={get(timelineEvents, "timeline", [])} /> */}
             </Col>
             <Col xs={12} className="mb-4">
               <RolesWidget

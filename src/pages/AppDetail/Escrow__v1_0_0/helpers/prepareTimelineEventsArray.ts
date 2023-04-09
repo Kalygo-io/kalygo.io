@@ -7,6 +7,9 @@ export function prepareTimelineEventsArray(app: object) {
   //   color: "#60dafb",
   // };
 
+  console.log("app", app);
+  debugger;
+
   const inspectPeriodStart = {
     title: "Inspection Begins",
     ts: new Date(get(app, "val.glbl_inspect_start_date", 0) * 1000).getTime(),
@@ -61,6 +64,8 @@ export function prepareTimelineEventsArray(app: object) {
   }
 
   timelineEvents.sort(compare);
+
+  debugger;
 
   return {
     timeline: timelineEvents,
