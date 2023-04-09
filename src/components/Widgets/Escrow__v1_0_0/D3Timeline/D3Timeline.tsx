@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { select } from "d3-selection";
 import { useResize } from "../../../../hooks/useResize";
+import { drawStaticElements } from "./helpers/drawStaticElements";
 
 export const D3Timeline = () => {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -14,6 +15,8 @@ export const D3Timeline = () => {
         .append("svg")
         .attr("width", size.width)
         .attr("height", size.height);
+
+      drawStaticElements(rootRef.current!, size);
     }
   }, [size]);
 
