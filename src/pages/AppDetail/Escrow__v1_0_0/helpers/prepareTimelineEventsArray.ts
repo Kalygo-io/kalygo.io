@@ -8,7 +8,6 @@ export function prepareTimelineEventsArray(app: object) {
   // };
 
   console.log("app", app);
-  debugger;
 
   const inspectPeriodStart = {
     title: "Inspection Begins",
@@ -64,8 +63,6 @@ export function prepareTimelineEventsArray(app: object) {
   }
 
   timelineEvents.sort(compare);
-
-  debugger;
 
   return {
     timeline: timelineEvents,

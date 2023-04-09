@@ -103,7 +103,9 @@ export const ActionsWidget = (props: P) => {
     <Card border="light" className="text-center p-0 mb-4">
       <Card.Body className="">
         <Card.Title>Actions</Card.Title>
-        {operator === buyer && <div className="pt-2">Buyer</div>}
+        {operator === buyer && operator !== seller && (
+          <div className="pt-2">Buyer</div>
+        )}
         {operator === buyer && (
           <>
             {
@@ -119,7 +121,9 @@ export const ActionsWidget = (props: P) => {
                     escrowAmount1,
                     atcSigner
                   );
-                }}>Send 1st Escrow</Button> : <Button size="sm" className="m-1" disabled>Send 1st Escrow</Button>
+                }}>Send 1st Escrow</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>Send 1st Escrow</Button>
             }
 
             {
@@ -136,7 +140,9 @@ export const ActionsWidget = (props: P) => {
                     escrowAmount2,
                     atcSigner
                   );
-                }}>Send 2nd Escrow</Button> : <Button size="sm" className="m-1" disabled>Send 2nd Escrow</Button>
+                }}>Send 2nd Escrow</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>Send 2nd Escrow</Button>
             }
 
             {
@@ -154,7 +160,9 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandNetwork,
                     atcSigner
                   );
-                }}>Buyer Arbitration</Button> : <Button size="sm" className="m-1" disabled>Buyer Arbitration</Button>
+                }}>{/* Buyer */} Request Arbitration</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>{/* Buyer */} Request Arbitration</Button>
             }
 
             {
@@ -168,7 +176,9 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandNetwork,
                     atcSigner
                   );
-                }}>Buyer Pullout</Button> : <Button size="sm" className="m-1" disabled>Buyer Pullout</Button>
+                }}>{/* Buyer */} Pull Out</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>{/* Buyer */} Pull Out</Button>
             }
 
             {
@@ -188,7 +198,9 @@ export const ActionsWidget = (props: P) => {
                       settings.selectedAlgorandNetwork,
                       atcSigner
                     );
-                  }}>Buyer Withdraw ASA</Button> : <Button size="sm" className="m-1" disabled>Buyer Withdraw ASA</Button>
+                  }}>{/* Buyer */} Withdraw ASA</Button> : 
+                  null
+              // <Button variant="white" size="sm" className="m-1" disabled>{/* Buyer */} Withdraw ASA</Button>
             }
             {
               /* prettier-ignore */
@@ -203,7 +215,9 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandNetwork,
                     atcSigner
                   );
-                }}>Buyer Withdraw Balance</Button> : <Button size="sm" className="m-1" disabled>Buyer Withdraw Balance</Button>
+                }}>{/* Buyer */} Withdraw L1</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>{/* Buyer */} Withdraw L1</Button>
             }
             {
               /* prettier-ignore */
@@ -220,7 +234,9 @@ export const ActionsWidget = (props: P) => {
                       fungibleTokenId,
                       atcSigner
                     );
-                  }}>Optin to ASA</Button> : <Button size="sm" className="m-1" disabled>Optin to ASA</Button>
+                  }}>Optin to ASA</Button> : 
+                  null
+              // <Button variant="white" size="sm" className="m-1" disabled>Optin to ASA</Button>
             }
 
             {
@@ -239,11 +255,12 @@ export const ActionsWidget = (props: P) => {
                     fungibleTokenId,
                     atcSigner
                   );
-                }}>Buyer Optout from ASA</Button> : <Button size="sm" className="m-1" disabled>Buyer Optout from ASA </Button>
+                }}>{/* Buyer */} Optout from ASA</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>{/* Buyer */} Optout from ASA </Button>
             }
 
-            {
-              /* prettier-ignore */
+            {/* {
               (balance === 0 && freeFundsDate < now) ?
               <Button variant="danger" size="sm" className="m-1"
                 onClick={() => {
@@ -254,11 +271,13 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandNetwork,
                     atcSigner
                   );
-                }}>Buyer Delete App</Button> : <Button size="sm" className="m-1" disabled>Buyer Delete App</Button>
-            }
+                }}>Buyer Delete App</Button> : <Button variant="white" size="sm" className="m-1" disabled>Buyer Delete App</Button>
+            } */}
           </>
         )}
-        {operator === seller && <div className="pt-2">Seller</div>}
+        {operator === seller && operator !== buyer && (
+          <div className="pt-2">Seller</div>
+        )}
         {operator === seller && (
           <>
             {
@@ -277,7 +296,9 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandNetwork,
                     atcSigner
                   );
-                }}>Seller Arbitration</Button> : <Button size="sm" className="m-1" disabled>Seller Arbitration</Button>
+                }}>{/* Seller */} Request Arbitration</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>{/* Seller */} Request Arbitration</Button>
             }
             {
               /* prettier-ignore */
@@ -298,8 +319,10 @@ export const ActionsWidget = (props: P) => {
                   );
                 }}
               >
-                Seller Withdraw ASA
-              </Button> : <Button size="sm" className="m-1" disabled>Seller Withdraw ASA</Button>
+                {/* Seller */} Withdraw ASA
+              </Button> : 
+              null
+              // <Button variant="white" size="sm" className="m-1" disabled>{/* Seller */} Withdraw ASA</Button>
             }
             {
               /* prettier-ignore */
@@ -318,7 +341,9 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandNetwork,
                     atcSigner
                   );
-                }}>Seller Withdraw Balance</Button> : <Button size="sm" className="m-1" disabled>Seller Withdraw Balance</Button>
+                }}>{/* Seller */} Withdraw L1</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>{/* Seller */} Withdraw L1</Button>
             }
             {
               /* prettier-ignore */
@@ -340,12 +365,13 @@ export const ActionsWidget = (props: P) => {
                   );
                 }}
               >
-                Seller Optout from ASA
-              </Button> : <Button size="sm" className="m-1" disabled>Seller Optout from ASA</Button>
+                {/* Seller */} Optout from ASA
+              </Button> : 
+              null
+              // <Button variant="white" size="sm" className="m-1" disabled>{/* Seller */} Optout from ASA</Button>
             }
 
-            {
-              /* prettier-ignore */
+            {/* {
               (balance === 0 && freeFundsDate < now) ?
               <Button variant="danger" size="sm" className="m-1"
                 onClick={() => {
@@ -356,10 +382,8 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandNetwork,
                     atcSigner
                   );
-
-                  // navigate("/dashboard/transactions")
-                }}>Seller Delete App</Button> : <Button size="sm" className="m-1" disabled>Seller Delete App</Button>
-            }
+                }}>Seller Delete App</Button> : <Button variant="white" size="sm" className="m-1" disabled>Seller Delete App</Button>
+            } */}
           </>
         )}
         {operator === stablecoinIssuerClawbackAddress && (
@@ -386,7 +410,7 @@ export const ActionsWidget = (props: P) => {
                     fungibleTokenBalance,
                     atcSigner
                   );
-                }}>Clawback to Buyer</Button> : <Button size="sm" className="m-1" disabled>Clawback to Buyer</Button>
+                }}>Clawback to Buyer</Button> : <Button variant="white" size="sm" className="m-1" disabled>Clawback to Buyer</Button>
             }
 
             {
@@ -407,11 +431,11 @@ export const ActionsWidget = (props: P) => {
                     fungibleTokenBalance,
                     atcSigner
                   );
-                }}>Clawback to Seller</Button> : <Button size="sm" className="m-1" disabled>Clawback to Seller</Button>
+                }}>Clawback to Seller</Button> : <Button variant="white" size="sm" className="m-1" disabled>Clawback to Seller</Button>
             }
           </>
         )}
-        {true && <div className="pt-2">General</div>}
+        {/* {true && <div className="pt-2">General</div>} */}
         {true && (
           <>
             {
@@ -439,7 +463,9 @@ export const ActionsWidget = (props: P) => {
                     mbr,
                     atcSigner
                   );
-                }}>Fund MBR</Button> : <Button size="sm" className="m-1" disabled>Fund MBR</Button>
+                }}>{/* Fund MBR */} Send L1</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>{/* Fund MBR */} Send L1</Button>
             }
 
             {
@@ -456,7 +482,9 @@ export const ActionsWidget = (props: P) => {
                   );
 
                   // navigate("/dashboard/transactions")
-                }}>Delete App</Button> : <Button size="sm" className="m-1" disabled>Delete App</Button>
+                }}>Delete App</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>Delete App</Button>
             }
 
             {
@@ -478,7 +506,9 @@ export const ActionsWidget = (props: P) => {
                 }}
               >
                 Optout from ASA
-              </Button> : <Button size="sm" className="m-1" disabled>Optout from ASA</Button>
+              </Button> : 
+              null
+              // <Button variant="white" size="sm" className="m-1" disabled>Optout from ASA</Button>
             }
 
             {
@@ -496,7 +526,9 @@ export const ActionsWidget = (props: P) => {
                     settings.selectedAlgorandNetwork,
                     atcSigner
                   );
-                }}>Withdraw Balance</Button> : <Button size="sm" className="m-1" disabled>Withdraw Balance</Button>
+                }}>Withdraw L1</Button> : 
+                null
+              // <Button variant="white" size="sm" className="m-1" disabled>Withdraw L1</Button>
             }
           </>
         )}

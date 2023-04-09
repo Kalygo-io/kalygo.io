@@ -4,6 +4,7 @@ import { useResize } from "../../../../hooks/useResize";
 import { drawStaticElements } from "./helpers/drawStaticElements";
 import { drawAnimatedElements } from "./helpers/drawAnimatedElements";
 import { clearAnimatedElements } from "./helpers/clearAnimatedElements";
+import { drawTimelineEvent } from "./helpers/staticElements/drawTimelineEvent";
 
 interface P {
   events: any;
@@ -11,10 +12,6 @@ interface P {
 
 export const D3TimelineWidget = (props: P) => {
   let { events } = props;
-
-  // console.log("events", events);
-  // events = [...events.slice(0, 3), ...events.slice(4)];
-  // console.log("events", events);
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const size = useResize(rootRef);
@@ -40,6 +37,15 @@ export const D3TimelineWidget = (props: P) => {
       drawStaticElements(rootRef.current!, size, events);
       // prettier-ignore
       Date.now() < events[events.length - 1].ts && drawAnimatedElements(rootRef.current!, size, events, Date.now());
+
+      events[events.length - 1].ts <= Date.now() &&
+        size &&
+        drawTimelineEvent(
+          rootRef.current!,
+          size,
+          events,
+          events[events.length - 1].ts
+        );
     }
   }, [size]);
 

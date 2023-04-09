@@ -69,7 +69,7 @@ export function UpdateContractForm(props: P) {
   const inputElInspExtDate = useRef<Datetime>(null);
   const inputElMoveDate = useRef<Datetime>(null);
   const inputElCloseDate = useRef<Datetime>(null);
-  const inputElFreeFundsDate = useRef<Datetime>(null);
+  const inputElCloseExtDate = useRef<Datetime>(null);
 
   const dtInputs = [
     inputElInspStartDate,
@@ -77,7 +77,7 @@ export function UpdateContractForm(props: P) {
     inputElInspExtDate,
     inputElMoveDate,
     inputElCloseDate,
-    inputElFreeFundsDate,
+    inputElCloseExtDate,
   ];
 
   const {
@@ -101,7 +101,7 @@ export function UpdateContractForm(props: P) {
       inspectPeriodExtension: "",
       movingDate: "",
       closingDate: "",
-      freeFundsDate: "",
+      closingDateExtension: "",
     },
   });
 
@@ -322,8 +322,8 @@ export function UpdateContractForm(props: P) {
                   closingDate: moment(
                     globalState["glbl_closing_date"] * 1000
                   ).toString(),
-                  freeFundsDate: moment(
-                    globalState["glbl_free_funds_date"] * 1000
+                  closingDateExtension: moment(
+                    globalState["glbl_closing_extension_date"] * 1000
                   ).toString(),
                 });
               } else {
@@ -370,7 +370,7 @@ export function UpdateContractForm(props: P) {
                   closingDate: moment(
                     Number(buyerProposedRevision[9]) * 1000
                   ).toString(),
-                  freeFundsDate: moment(
+                  closingDateExtension: moment(
                     Number(buyerProposedRevision[10]) * 1000
                   ).toString(),
                 });
@@ -418,7 +418,7 @@ export function UpdateContractForm(props: P) {
                   closingDate: moment(
                     Number(sellerProposedRevision[9]) * 1000
                   ).toString(),
-                  freeFundsDate: moment(
+                  closingDateExtension: moment(
                     Number(sellerProposedRevision[10]) * 1000
                   ).toString(),
                 });
@@ -683,9 +683,6 @@ export function UpdateContractForm(props: P) {
                   />
                 </Form.Group>
               </Col>
-            </Row>
-
-            <Row>
               <Col md={6} className="mb-3">
                 <Form.Group id="closing-date">
                   <Form.Label>Closing Date</Form.Label>
@@ -719,15 +716,18 @@ export function UpdateContractForm(props: P) {
                   />
                 </Form.Group>
               </Col>
+            </Row>
+
+            <Row>
               <Col md={6} className="mb-3">
                 <Form.Group id="closing-date">
-                  <Form.Label>Free Funds Date</Form.Label>
+                  <Form.Label>Closing Date Extension</Form.Label>
                   <Datetime
-                    className="freeFundsDate"
+                    className="closingDateExtension"
                     timeFormat={true}
-                    ref={inputElFreeFundsDate}
+                    ref={inputElCloseExtDate}
                     onChange={(e: any) => {
-                      setValue("freeFundsDate", e.toString());
+                      setValue("closingDateExtension", e.toString());
                     }}
                     renderInput={(props, openCalendar, closeCalendar) => (
                       <InputGroup>
@@ -735,16 +735,16 @@ export function UpdateContractForm(props: P) {
                           <FontAwesomeIcon icon={faCalendarAlt} />
                         </InputGroup.Text>
                         <Form.Control
-                          {...register("freeFundsDate", {
+                          {...register("closingDateExtension", {
                             required: true,
                           })}
                           type="text"
                           inputMode="none"
-                          value={getValues("freeFundsDate")}
+                          value={getValues("closingDateExtension")}
                           placeholder="mm/dd/yyyy"
                           onFocus={(e: any) => {
                             openCalendar();
-                            closeOtherCalendars("freeFundsDate");
+                            closeOtherCalendars("closingDateExtension");
                           }}
                         />
                       </InputGroup>

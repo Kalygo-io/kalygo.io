@@ -108,7 +108,7 @@ export const EscrowWidget = (props: P) => {
           />
 
           <CustomRow
-            theKey={"MBR (1.8446 ALGO)"}
+            theKey={"L1"} /* MBR is? (1.8446 ALGO) */
             value={
               balance < 0
                 ? "Ø"

@@ -17,12 +17,12 @@ export const drawTimeline = (
 
   const PADDING = width / 10;
   const scale = scaleLinear()
+    .range([0 + PADDING, width - PADDING])
     .domain([
       timelineEvents[0].ts,
       timelineEvents[timelineEvents.length - 1].ts,
     ])
-    .range([0 + PADDING, width - PADDING]);
-
+    .nice();
   const axis = (axisBottom(scale) as any).ticks().tickFormat((d: any) => {
     console.log("d", d);
     const date = new Date(d);

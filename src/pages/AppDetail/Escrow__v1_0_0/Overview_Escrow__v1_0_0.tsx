@@ -82,53 +82,53 @@ function Overview_Escrow__v1_0_0() {
   let { id } = useParams();
 
   useEffect(() => {
-    // const interval = setInterval(async () => {
-    //   try {
-    //     // STEP 1
-    //     const appResponse = await AlgorandClient.getIndexer(
-    //       settings.selectedAlgorandNetwork
-    //     )
-    //       .lookupApplications(Number.parseInt(id!))
-    //       .do();
-    //     setApp({
-    //       val: parseGlobalState(
-    //         appResponse?.application?.params &&
-    //           appResponse.application.params["global-state"]
-    //       ),
-    //       loading: false,
-    //       error: null,
-    //     });
-    //     // STEP 2
-    //     const appAddress = await algosdk.getApplicationAddress(
-    //       Number.parseInt(id!)
-    //     );
-    //     const accountResponse = await AlgorandClient.getAlgod(
-    //       settings.selectedAlgorandNetwork
-    //     )
-    //       .accountInformation(appAddress)
-    //       .do();
-    //     setAccount({
-    //       val: accountResponse,
-    //       loading: false,
-    //       error: null,
-    //     });
-    //     // STEP 3
-    //     fetchTxnHistory(settings.selectedAlgorandNetwork, appAddress);
-    //   } catch (e) {
-    //     console.log("error!!", e);
-    //     setApp({
-    //       val: null,
-    //       loading: false,
-    //       error: e,
-    //     });
-    //     setAccount({
-    //       val: null,
-    //       loading: false,
-    //       error: e,
-    //     });
-    //   }
-    // }, 5000);
-    // return () => clearInterval(interval);
+    const interval = setInterval(async () => {
+      try {
+        // STEP 1
+        const appResponse = await AlgorandClient.getIndexer(
+          settings.selectedAlgorandNetwork
+        )
+          .lookupApplications(Number.parseInt(id!))
+          .do();
+        setApp({
+          val: parseGlobalState(
+            appResponse?.application?.params &&
+              appResponse.application.params["global-state"]
+          ),
+          loading: false,
+          error: null,
+        });
+        // STEP 2
+        const appAddress = await algosdk.getApplicationAddress(
+          Number.parseInt(id!)
+        );
+        const accountResponse = await AlgorandClient.getAlgod(
+          settings.selectedAlgorandNetwork
+        )
+          .accountInformation(appAddress)
+          .do();
+        setAccount({
+          val: accountResponse,
+          loading: false,
+          error: null,
+        });
+        // STEP 3
+        fetchTxnHistory(settings.selectedAlgorandNetwork, appAddress);
+      } catch (e) {
+        console.log("error!!", e);
+        setApp({
+          val: null,
+          loading: false,
+          error: e,
+        });
+        setAccount({
+          val: null,
+          loading: false,
+          error: e,
+        });
+      }
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -241,6 +241,13 @@ function Overview_Escrow__v1_0_0() {
       </div>
 
       <Row>
+        <Col xs={12} className="mb-4">
+          <Row>
+            <Col xs={12} className="mb-4">
+              <D3TimelineWidget events={get(timelineEvents, "timeline", [])} />
+            </Col>
+          </Row>
+        </Col>
         <Col xs={12} xl={4}>
           {/* <OperatorConfig /> */}
           <ActionsWidget
@@ -286,10 +293,10 @@ function Overview_Escrow__v1_0_0() {
               Arbiter: get(asset.val, "assets.0.params.clawback", "Not Found"),
             }}
             appAddress={get(account.val, "address")}
-            boxKey={"Buyer"}
+            boxKey={""}
             appId={Number.parseInt(id!)}
           ></RoleBoxWidget>
-          <RoleBoxWidget
+          {/* <RoleBoxWidget
             rolesWithBoxes={{
               Buyer: get(app.val, "glbl_buyer", "Not Found"),
               Seller: get(app.val, "glbl_seller", "Not Found"),
@@ -298,7 +305,7 @@ function Overview_Escrow__v1_0_0() {
             appAddress={get(account.val, "address")}
             boxKey={"Seller"}
             appId={Number.parseInt(id!)}
-          ></RoleBoxWidget>
+          ></RoleBoxWidget> */}
           <UpdateContractWidget appId={Number.parseInt(id!)} />
         </Col>
         <Col xs={12} xl={8} className="mb-4">
@@ -334,7 +341,7 @@ function Overview_Escrow__v1_0_0() {
               />
             </Col>
             <Col xs={12} className="mb-4">
-              <TimelineWidget events={get(timelineEvents, "timeline", [])} />
+              {/* <TimelineWidget events={get(timelineEvents, "timeline", [])} /> */}
               {/* <D3TimelineWidget events={get(timelineEvents, "timeline", [])} /> */}
             </Col>
             <Col xs={12} className="mb-4">
