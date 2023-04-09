@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import { select } from "d3-selection";
 import { useResize } from "../../../../hooks/useResize";
 import { drawStaticElements } from "./helpers/drawStaticElements";
+import { drawAnimatedElements } from "./helpers/drawAnimatedElements";
+import { clearAnimatedElements } from "./helpers/clearAnimatedElements";
 
 interface P {
   events: {
@@ -48,7 +50,7 @@ export const D3Timeline = (props: P) => {
 
   const animate = (time: any) => {
     // console.log("animate");
-    const FRAME_RATE = 1000 / 4; // in milliseconds ie : 2 is the amount of frames/sec
+    const FRAME_RATE = 1000 / 24; // in milliseconds ie : 2 is the amount of frames/sec
     const now = Date.now();
     if (animationRef.current.previousTime !== undefined) {
       const deltaTime = time - animationRef.current.previousTime!;
@@ -58,7 +60,8 @@ export const D3Timeline = (props: P) => {
         // now < events[events.length - 1].ts &&
         size
       ) {
-        console.log("DRAW");
+        clearAnimatedElements(rootRef.current!);
+        drawAnimatedElements(rootRef.current!, size, events, now);
         animationRef.current.elapsedFrame = 0;
       }
     }

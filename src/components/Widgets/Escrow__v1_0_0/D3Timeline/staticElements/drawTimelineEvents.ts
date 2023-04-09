@@ -33,9 +33,7 @@ export const drawTimelineEvents = (
       return 0;
     })
     .attr("cx", function (d) {
-      //   console.log(d);
-      console.log("---", scale(d.ts));
-
+      //   console.log("---", scale(d.ts));
       return scale(d.ts);
     })
     .attr("transform", `translate(${0}, ${height * (2 / 5)})`)
