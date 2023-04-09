@@ -26,7 +26,8 @@ export const D3Timeline = (props: P) => {
         .attr("width", size.width)
         .attr("height", size.height);
 
-      drawStaticElements(rootRef.current!, size, events);
+      const now = Date.now();
+      drawStaticElements(rootRef.current!, size, events, now);
     }
   }, [size]);
 

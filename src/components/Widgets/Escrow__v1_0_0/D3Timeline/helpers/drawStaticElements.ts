@@ -1,6 +1,7 @@
 import { select } from "d3-selection";
 import { drawTimeline } from "../staticElements/drawTimeline";
 import { drawTimelineEvents } from "../staticElements/drawTimelineEvents";
+import { drawTimelineEvent } from "../staticElements/drawTimelineEvent";
 
 export const drawStaticElements = (
   rootElement: HTMLDivElement,
@@ -9,7 +10,8 @@ export const drawStaticElements = (
     color: string;
     ts: number;
     title: string;
-  }[]
+  }[],
+  currentTime: number
 ) => {
   const { width, height } = windowSize;
 
@@ -23,4 +25,12 @@ export const drawStaticElements = (
 
   drawTimeline(rootElement, windowSize, timelineEvents);
   drawTimelineEvents(rootElement, windowSize, timelineEvents);
+
+  if (currentTime < timelineEvents[timelineEvents.length - 1].ts) {
+    // prettier-ignore
+    drawTimelineEvent(rootElement, windowSize, timelineEvents, currentTime, "blue");
+  } else {
+    // prettier-ignore
+    drawTimelineEvent(rootElement, windowSize, timelineEvents, timelineEvents[timelineEvents.length - 1].ts, "red");
+  }
 };
