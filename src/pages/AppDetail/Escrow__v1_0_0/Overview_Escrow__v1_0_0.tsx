@@ -252,10 +252,10 @@ function Overview_Escrow__v1_0_0() {
               Arbiter: get(asset.val, "assets.0.params.clawback", "Not Found"),
             }}
             appAddress={get(account.val, "address")}
-            boxKey={""}
+            boxKey={"Buyer"}
             appId={Number.parseInt(id!)}
           ></RoleBoxWidget>
-          {/* <RoleBoxWidget
+          <RoleBoxWidget
             rolesWithBoxes={{
               Buyer: get(app.val, "glbl_buyer", "Not Found"),
               Seller: get(app.val, "glbl_seller", "Not Found"),
@@ -264,7 +264,7 @@ function Overview_Escrow__v1_0_0() {
             appAddress={get(account.val, "address")}
             boxKey={"Seller"}
             appId={Number.parseInt(id!)}
-          ></RoleBoxWidget> */}
+          ></RoleBoxWidget>
           <UpdateContractWidget appId={Number.parseInt(id!)} />
         </Col>
         <Col xs={12} xl={8} className="mb-4">
