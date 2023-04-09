@@ -1,5 +1,6 @@
 import { select } from "d3-selection";
 import { drawTimeline } from "../staticElements/drawTimeline";
+import { drawTimelineEvents } from "../staticElements/drawTimelineEvents";
 
 export const drawStaticElements = (
   rootElement: HTMLDivElement,
@@ -21,4 +22,5 @@ export const drawStaticElements = (
   // .attr("fill", "#f5f8fb");
 
   drawTimeline(rootElement, windowSize, timelineEvents);
+  drawTimelineEvents(rootElement, windowSize, timelineEvents);
 };
