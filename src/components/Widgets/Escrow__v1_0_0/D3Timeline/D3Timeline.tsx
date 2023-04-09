@@ -1,5 +1,11 @@
-import React from "react";
+import { useRef } from "react";
 
 export const D3Timeline = () => {
-  return <div>D3Timeline</div>;
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  return (
+    <div ref={rootRef} id="d3-timeline-widget">
+      D3Timeline
+    </div>
+  );
 };
