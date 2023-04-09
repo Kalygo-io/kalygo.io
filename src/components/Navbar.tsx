@@ -68,8 +68,6 @@ export const NavbarComponent = (props: P) => {
           .accountInformation(settings.selectedAlgorandAccount)
           .do();
 
-        console.log("***", accountInfo["amount"]);
-
         setAccntBalance({
           val: accountInfo["amount"],
           loading: false,

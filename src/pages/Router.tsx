@@ -19,16 +19,16 @@ import AppDetail from "./AppDetail";
 
 import ContractOptions from "./ContractOptions";
 import FungibleTokenContract from "./contracts/FungibleTokenContract";
-import Overview_CashBuy__v1_0_0 from "./AppDetail/CashBuy__v1_0_0/Overview_CashBuy__v1_0_0";
+import Overview_Escrow__v1_0_0 from "./AppDetail/Escrow__v1_0_0/Overview_Escrow__v1_0_0";
 import OverviewAsset from "./AppDetail/AssetDetail/OverviewAsset";
 
 import { ASASearch } from "./ASASearch";
 
 import { Support } from "./documentation/Support";
 import { Test } from "./documentation/Test";
-import { Box } from "./AppDetail/CashBuy__v1_0_0/Box";
+import { Box } from "./AppDetail/Escrow__v1_0_0/Box";
 import { Governance } from "./Governance";
-import { UpdateContract } from "./AppDetail/CashBuy__v1_0_0/UpdateContract";
+import { UpdateContract } from "./AppDetail/Escrow__v1_0_0/UpdateContract";
 
 import { RouteWithLoader } from "./layouts/RouteWithLoader";
 import { RouteWithSidebar } from "./layouts/RouteWithSidebar";
@@ -49,12 +49,12 @@ const Router = () => (
         <Route path={"box/:app_id/:box/:role_address"} element={<Box />} />
         <Route path={"app/"} element={<AppDetail />}>
           <Route
-            path={"cashBuy__v1_0_0/:id/update"}
+            path={"escrow__v1_0_0/:id/update"}
             element={<UpdateContract />}
           />
           <Route
-            path={"cashBuy__v1_0_0/:id/"}
-            element={<Overview_CashBuy__v1_0_0 />}
+            path={"escrow__v1_0_0/:id/"}
+            element={<Overview_Escrow__v1_0_0 />}
           />
 
           <Route path={"asa/:id"} element={<OverviewAsset />} />

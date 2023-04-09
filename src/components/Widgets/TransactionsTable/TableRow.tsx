@@ -196,9 +196,9 @@ export const TableRow = (props: TR) => {
                       ? Buffer.from(note, "base64").toString()
                       : "";
                     switch (decodedNote) {
-                      case supportedContracts.cashBuy__v1_0_0:
+                      case supportedContracts.escrow__v1_0_0:
                         navigate(
-                          `/dashboard/app/cashBuy__v1_0_0/${
+                          `/dashboard/app/escrow__v1_0_0/${
                             applicationTransaction!["application-id"] ||
                             createdApplicationIndex
                           }`

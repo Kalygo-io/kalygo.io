@@ -1,8 +1,6 @@
 import algosdk, {
-  AtomicTransactionComposer,
-  ABIArgument,
   makeAssetTransferTxnWithSuggestedParamsFromObject,
-  makeApplicationOptInTxn,
+  AtomicTransactionComposer,
 } from "algosdk";
 import { AlgorandClient } from "../../services/algorand_client";
 import { Buffer } from "buffer";
@@ -11,37 +9,40 @@ import { showErrorToast } from "../../utility/errorToast";
 import { showSuccessToast } from "../../utility/successToast";
 import { supportedContracts } from "../../data/supportedContracts";
 
-import ABI from "../../contractExports/contracts/escrow/application.json";
-
-export async function optinToASA(
+export async function secondEscrowAmount(
   sender: string,
+  contractAddress: string,
   fungibleTokenId: number,
   network: string,
+  escrow2Amount: number,
   signer: any
 ) {
   try {
-    console.log("Opt-in ASA");
+    console.log("2nd Escrow Amount");
+
     let sp = await AlgorandClient.getAlgod(network).getTransactionParams().do();
     // Create a transaction
     const txn = makeAssetTransferTxnWithSuggestedParamsFromObject({
       assetIndex: fungibleTokenId,
       from: sender,
-      to: sender,
+      to: contractAddress,
       suggestedParams: sp,
-      amount: 0,
-      note: new Uint8Array(Buffer.from("")),
+      amount: escrow2Amount,
+      note: new Uint8Array(Buffer.from(supportedContracts.escrow__v1_0_0)),
     });
     const tws = {
       txn: txn,
       signer: signer,
     };
+
     let atc = new AtomicTransactionComposer();
     atc.addTransaction(tws);
     const tx_id = await atc.submit(AlgorandClient.getAlgod(network));
     console.log("submit_response", tx_id);
-    showSuccessToast(`Sent ASA opt-in request to network`);
+
+    showSuccessToast("Sent 2nd escrow token payment request to network");
   } catch (e) {
-    showErrorToast("Error occurred when sending ASA opt-in request");
+    showErrorToast("Error occurred when sending 2nd escrow token payment");
     console.error(e);
   }
 }
