@@ -50,51 +50,51 @@ function Overview_Escrow__v1_0_0() {
   let { id } = useParams();
 
   useEffect(() => {
-    const interval = setInterval(async () => {
-      try {
-        // STEP 1
-        const appResponse = await AlgorandClient.getIndexer(
-          settings.selectedAlgorandNetwork
-        )
-          .lookupApplications(Number.parseInt(id!))
-          .do();
-        setApp({
-          val: parseGlobalState(
-            appResponse?.application?.params &&
-              appResponse.application.params["global-state"]
-          ),
-          loading: false,
-          error: null,
-        });
-        // STEP 2
-        const appAddress = await algosdk.getApplicationAddress(
-          Number.parseInt(id!)
-        );
-        const accountResponse = await AlgorandClient.getAlgod(
-          settings.selectedAlgorandNetwork
-        )
-          .accountInformation(appAddress)
-          .do();
-        setAccount({
-          val: accountResponse,
-          loading: false,
-          error: null,
-        });
-      } catch (e) {
-        console.error(e);
-        setApp({
-          val: null,
-          loading: false,
-          error: e,
-        });
-        setAccount({
-          val: null,
-          loading: false,
-          error: e,
-        });
-      }
-    }, 5000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(async () => {
+    //   try {
+    //     // STEP 1
+    //     const appResponse = await AlgorandClient.getIndexer(
+    //       settings.selectedAlgorandNetwork
+    //     )
+    //       .lookupApplications(Number.parseInt(id!))
+    //       .do();
+    //     setApp({
+    //       val: parseGlobalState(
+    //         appResponse?.application?.params &&
+    //           appResponse.application.params["global-state"]
+    //       ),
+    //       loading: false,
+    //       error: null,
+    //     });
+    //     // STEP 2
+    //     const appAddress = await algosdk.getApplicationAddress(
+    //       Number.parseInt(id!)
+    //     );
+    //     const accountResponse = await AlgorandClient.getAlgod(
+    //       settings.selectedAlgorandNetwork
+    //     )
+    //       .accountInformation(appAddress)
+    //       .do();
+    //     setAccount({
+    //       val: accountResponse,
+    //       loading: false,
+    //       error: null,
+    //     });
+    //   } catch (e) {
+    //     console.error(e);
+    //     setApp({
+    //       val: null,
+    //       loading: false,
+    //       error: e,
+    //     });
+    //     setAccount({
+    //       val: null,
+    //       loading: false,
+    //       error: e,
+    //     });
+    //   }
+    // }, 5000);
+    // return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {

@@ -1,14 +1,6 @@
 import get from "lodash/get";
 
 export function prepareTimelineEventsArray(app: object) {
-  // const now = {
-  //   title: "Now",
-  //   ts: new Date().getTime(),
-  //   color: "#60dafb",
-  // };
-
-  console.log("app", app);
-
   const inspectPeriodStart = {
     title: "Inspection Begins",
     ts: new Date(get(app, "val.glbl_inspect_start_date", 0) * 1000).getTime(),
@@ -66,7 +58,6 @@ export function prepareTimelineEventsArray(app: object) {
 
   return {
     timeline: timelineEvents,
-    // now: now.ts,
     inspectPeriodStart: inspectPeriodStart.ts,
     inspectPeriodEnd: inspectPeriodEnd.ts,
     inspectExtension: inspectExtension.ts,
