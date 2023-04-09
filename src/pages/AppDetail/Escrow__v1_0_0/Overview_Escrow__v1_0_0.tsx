@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useEffect } from "react";
 
 import get from "lodash/get";
 
-import { useForm } from "react-hook-form";
-import { Col, Row, Button, Dropdown, Modal } from "react-bootstrap";
-import { Buffer } from "buffer";
+import { Col, Row } from "react-bootstrap";
 
 import { RootState } from "../../../store/store";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { OperatorConfig } from "../../../components/Widgets/Generic/OperatorConfig";
+import { useAppSelector } from "../../../store/hooks";
 import { AlgorandClient } from "../../../services/algorand_client";
 import { useParams } from "react-router-dom";
 import { parseGlobalState } from "../../customSelectors/appl/parseGlobalState";
@@ -25,34 +21,6 @@ import algosdk from "algosdk";
 import { ActionsWidget } from "../../../components/Widgets/Escrow__v1_0_0/ActionsWidget";
 import { prepareTimelineEventsArray } from "./helpers/prepareTimelineEventsArray";
 import { RoleBoxWidget } from "../../../components/Widgets/Escrow__v1_0_0/RoleBoxWidget";
-import { arrayBufferToString } from "./helpers/arrayBufferToString";
-
-async function fetchTxnHistory(network: string, app_address: string) {
-  try {
-    // console.log("fetch");
-
-    let txnHistoryForContract = await AlgorandClient.getIndexer(
-      // settings.selectedAlgorandNetwork
-      network
-    )
-      .searchForTransactions()
-      .address(
-        // id!
-        app_address
-      )
-      .limit(25)
-      // .nextToken("1wYAAAAAAAAAAAAA")
-      // .txType("appl")
-      .do();
-
-    console.log("=> Txn History =>", txnHistoryForContract);
-
-    // setValue("note", arrayBufferToString(boxValue.value).trimEnd());
-  } catch (e) {
-    console.log("* e *", e);
-    // setValue("note", "");
-  }
-}
 
 function Overview_Escrow__v1_0_0() {
   const [app, setApp] = useState<any>({
@@ -112,10 +80,8 @@ function Overview_Escrow__v1_0_0() {
           loading: false,
           error: null,
         });
-        // STEP 3
-        fetchTxnHistory(settings.selectedAlgorandNetwork, appAddress);
       } catch (e) {
-        console.log("error!!", e);
+        console.error(e);
         setApp({
           val: null,
           loading: false,
@@ -212,7 +178,6 @@ function Overview_Escrow__v1_0_0() {
   // console.log("asset.val", asset.val);
   // console.log("account.val", account.val);
   // console.log("boxes.val", boxes.val);
-  // debugger;
 
   const escrowTokenName = asset?.val?.assets[0]?.params?.name;
   const escrowTokenDecimals = asset?.val?.assets[0]?.params?.decimals;
@@ -226,10 +191,6 @@ function Overview_Escrow__v1_0_0() {
       break;
     }
   }
-
-  // console.log("app --->>>", app);
-  // console.log("account --->>>", account);
-  // console.log("asset --->>>", asset);
 
   return app.error ? (
     <h1>ERROR</h1>
@@ -249,9 +210,7 @@ function Overview_Escrow__v1_0_0() {
           </Row>
         </Col>
         <Col xs={12} xl={4}>
-          {/* <OperatorConfig /> */}
           <ActionsWidget
-            // now={timelineEvents.now}
             now={new Date().getTime()}
             inspectPeriodStart={timelineEvents.inspectPeriodStart}
             inspectPeriodEnd={timelineEvents.inspectPeriodEnd}
@@ -312,7 +271,6 @@ function Overview_Escrow__v1_0_0() {
           <Row>
             <Col xs={12} lg={6} className="mb-4">
               <EscrowWidget
-                // now={timelineEvents.now}
                 now={new Date().getTime()}
                 inspectPeriodEnd={timelineEvents.inspectPeriodEnd}
                 closingDate={timelineEvents.closingDate}
