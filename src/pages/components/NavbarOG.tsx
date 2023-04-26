@@ -12,21 +12,26 @@ import {
   faLinkedin,
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
+import { useAppSelector } from "../../store/hooks";
 
 export function NavbarOGComponent() {
+  const settings = useAppSelector((state) => state.settings);
+
   return (
-    <Navbar variant="dark" expand="lg" bg="dark" className="sticky-top">
+    <Navbar variant="white" expand="lg" bg="white" className="sticky-top">
       <Container className="position-relative justify-content-between px-3">
         <Navbar.Brand
           as={HashLink}
           to="/"
           className="me-lg-3 d-flex align-items-center"
         >
-          <span className="ms-2 brand-text d-none d-lg-inline">Kalygo</span>
+          <span className="ms-2 brand-text d-none d-lg-inline">
+            {settings.brandName}
+          </span>
         </Navbar.Brand>
 
         <div className="d-flex align-items-center">
-          <Navbar.Collapse id="navbar-default-primary">
+          {/* <Navbar.Collapse id="navbar-default-primary">
             <Nav className="navbar-nav-hover align-items-lg-center">
               <Nav.Link href="https://www.instagram.com/kalygo.io">
                 <FontAwesomeIcon
@@ -59,7 +64,7 @@ export function NavbarOGComponent() {
                 />
               </Nav.Link>
             </Nav>
-          </Navbar.Collapse>
+          </Navbar.Collapse> */}
         </div>
       </Container>
     </Navbar>

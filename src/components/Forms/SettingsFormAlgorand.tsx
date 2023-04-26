@@ -37,6 +37,7 @@ export const SettingsFormAlgorand = (props: P) => {
       selectedAlgorandNetwork: settings.selectedAlgorandNetwork,
       selectedAlgorandAccount: settings.selectedAlgorandAccount,
       selectedAlgorandWallet: settings.selectedAlgorandWallet,
+      brandName: settings.brandName,
     },
   });
 
@@ -383,8 +384,24 @@ export const SettingsFormAlgorand = (props: P) => {
             </Col>
           </Row>
 
+          <Row>
+            <Col sm={12} className="mb-3">
+              <Form.Group id="buyer">
+                <Form.Label>Buyer</Form.Label>
+                <Form.Control
+                  {...register("brandName", {
+                    required: true,
+                  })}
+                  type="text"
+                  placeholder="Your Brand Name"
+                  onFocus={() => {}}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+
           <div className="mt-3">
-            <Button variant="primary" type="submit">
+            <Button variant="secondary" type="submit">
               Save
             </Button>
           </div>

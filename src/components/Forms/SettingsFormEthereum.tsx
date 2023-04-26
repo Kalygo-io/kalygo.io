@@ -113,16 +113,18 @@ export const SettingsFormEthereum = (props: P) => {
                   {settings.supportedBlockchains.map((i: any, idx: number) => {
                     return (
                       <option
-                        key={i}
+                        key={i.name}
                         disabled={
-                          ["Algorand", "Ethereum"].includes(i) ? false : true
+                          ["Algorand", "Ethereum"].includes(i.name)
+                            ? false
+                            : true
                         }
                         style={{
                           textOverflow: "ellipsis",
                         }}
-                        value={i}
+                        value={i.name}
                       >
-                        {i}
+                        {i.name}
                       </option>
                     );
                   })}
@@ -272,7 +274,7 @@ export const SettingsFormEthereum = (props: P) => {
           </Row>
 
           <div className="mt-3">
-            <Button variant="primary" type="submit">
+            <Button variant="secondary" type="submit">
               Save
             </Button>
           </div>

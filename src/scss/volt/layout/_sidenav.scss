@@ -27,13 +27,14 @@
 		&.active {
 			& > .nav-link {
 				color: $light;
-				background-color: #2e3650;
+				background-color: $quaternary;
 				border: $border-width solid lighten( $dark, 20% );
 			}
 		}
 		.nav-link {
-			color: $light;
+			color: $primary;
 			border: $border-width solid $dark;
+			background-color: $secondary;
 			&:hover {
 				color: $light;
 				background-color: #2e3650;
@@ -250,7 +251,7 @@
 	&:focus {
 		outline: none;
 		box-shadow: none;
-		background: $gray-400;
+		background: $primary;
 	}
 
 }

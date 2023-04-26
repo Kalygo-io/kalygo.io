@@ -3,6 +3,7 @@ import SimpleBar from "simplebar-react";
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAppSelector } from "../store/hooks";
 import {
   faRectangleList,
   faCog,
@@ -37,6 +38,7 @@ const Sidebar = (props = {}) => {
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
+  const settings = useAppSelector((state) => state.settings);
   const showClass = show ? "show" : "";
 
   const onCollapse = () => setShow(!show);
@@ -80,7 +82,7 @@ const Sidebar = (props = {}) => {
       badgeColor = "primary",
     } = props;
     const classNames = badgeText
-      ? "d-flex justify-content-start align-items-center justify-content-between"
+      ? "d-flex justify-content-start align-items-center justify-content-between bg-secondary"
       : "";
     const navItemClassName = link === pathname ? "active" : "";
     const linkProps = external ? { href: link } : { as: Link, to: link };
@@ -137,6 +139,7 @@ const Sidebar = (props = {}) => {
         </Navbar.Brand>
         <Navbar.Toggle
           as={Button}
+          className="bg-secondary"
           aria-controls="main-navbar"
           onClick={onCollapse}
         >
@@ -150,7 +153,7 @@ const Sidebar = (props = {}) => {
           <div className="sidebar-inner px-4 pt-3">
             <div className="user-card d-flex d-md-none align-items-center justify-content-end justify-content-md-center pb-3">
               <Nav.Link
-                className="collapse-close d-md-none"
+                className="bg-secondary collapse-close d-md-none"
                 onClick={onCollapse}
               >
                 <FontAwesomeIcon size="xl" icon={faTimes} />
@@ -158,7 +161,7 @@ const Sidebar = (props = {}) => {
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
               <NavItem
-                title="KALYGO"
+                title={settings.brandName}
                 link={RoutesData.Presentation.path}
                 image={Hive}
               />
@@ -178,7 +181,7 @@ const Sidebar = (props = {}) => {
                 icon={faCircleHalfStroke}
                 link={RoutesData.ContractOptions.path}
               />
-              <CollapsableNavItem
+              {/* <CollapsableNavItem
                 eventKey="dashboard/tokens/"
                 title="Tokens"
                 icon={faCoins}
@@ -187,11 +190,11 @@ const Sidebar = (props = {}) => {
                   title="ASAs"
                   link={RoutesData.TokenOptions_ASAs.path}
                 />
-                {/* <NavItem
+                <NavItem
                   title="NFTs"
                   link={RoutesData.TokenOptions_NFTs.path}
-                /> */}
-              </CollapsableNavItem>
+                />
+              </CollapsableNavItem> */}
               <NavItem
                 title="Settings"
                 icon={faCog}

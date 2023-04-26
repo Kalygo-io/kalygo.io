@@ -47,13 +47,13 @@ export function Support() {
                   <li>
                     Ethereum{" "}
                     <Card.Link href="https://metamask.io/" target="_blank">
-                      Coming Soon...
+                      MetaMask
                     </Card.Link>
                   </li>
                   <li>
                     Polygon{" "}
                     <Card.Link href="https://metamask.io/" target="_blank">
-                      Coming Soon...
+                      MetaMask
                     </Card.Link>
                   </li>
                   {/* <li>

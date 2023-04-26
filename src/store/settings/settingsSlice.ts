@@ -33,6 +33,7 @@ interface SettingsState {
   selectedAlgorandAccount: string;
   selectedBlockchain: string;
   selectedAlgorandWallet: string;
+  brandName: string;
 }
 
 interface SettingsStateForSpread {
@@ -47,14 +48,15 @@ interface SettingsStateForSpread {
   selectedAlgorandWallet?: string;
   accountsAlgorand?: any[];
   accountsEthereum?: any[];
-
+  brandName?: string;
   isPeraSessionConnected?: boolean;
 }
 
 // Define the initial state using that type
 const initialState: SettingsState = {
-  selectedEthereumNetwork: "Goerli",
+  selectedEthereumNetwork: "Sepolia",
   selectedAlgorandNetwork: "TestNet",
+  brandName: "MAJR",
   // selectedAlgorandNetwork: "localhost",
   supportedAlgorandNetworksAlgoSigner: ["MainNet", "TestNet", "localhost"],
   supportedAlgorandNetworksPera: ["MainNet", "TestNet"],
@@ -71,7 +73,7 @@ const initialState: SettingsState = {
   supportedEthereumNetworks: ["Mainnet", "Sepolia", "Goerli", "localhost"],
   supportedBlockchains: [
     { name: "Algorand", enabled: true },
-    { name: "Ethereum", enabled: false },
+    { name: "Ethereum", enabled: true },
     { name: "Polygon", enabled: false },
     { name: "Cardano", enabled: false },
     { name: "Avalanche", enabled: false },
@@ -92,8 +94,8 @@ const initialState: SettingsState = {
   // selectedAlgorandAccount:
   //   "MTUSAPRF4IN37AYD5OO2UUXFTDBU53IFYICMTTXA4BCH66MU7MWP5IBDFI",
   selectedEthereumAccount: "",
-  // selectedBlockchain: "Ethereum",
-  selectedBlockchain: "Algorand",
+  selectedBlockchain: "Ethereum",
+  // selectedBlockchain: "Algorand",
   // selectedAccount: "QHGMAMCTEHZ2RQV2DRXSPAKIIT3REVK46CHNDJSW6WNXJLSJ7BB76NHDGY",
   // selectedAccount: "",
   isPeraSessionConnected: false,

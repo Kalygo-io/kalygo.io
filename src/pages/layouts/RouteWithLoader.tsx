@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 
 import { Col, Row, Container, Navbar, Nav } from "react-bootstrap";
-
+import { useAppSelector } from "../../store/hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitter,
@@ -18,6 +18,7 @@ import { NavbarOGComponent } from "../components/NavbarOG";
 
 export const RouteWithLoader = (props: any) => {
   const [loaded, setLoaded] = useState(false);
+  const settings = useAppSelector((state) => state.settings);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,9 +31,9 @@ export const RouteWithLoader = (props: any) => {
       <NavbarOGComponent />
       <Preloader show={loaded ? false : true} />
       <Outlet />
-      <footer className="footer py-4 bg-dark text-white">
+      <footer className="footer py-4 bg-white text-black">
         <Container>
-          <Row className="align-items-center justify-content-center text-center">
+          {/* <Row className="align-items-center justify-content-center text-center">
             <Col xs={12} sm={4}>
               <ul className="d-flex flex-row justify-content-evenly py-2">
                 <li>
@@ -77,7 +78,7 @@ export const RouteWithLoader = (props: any) => {
                 </li>
               </ul>
             </Col>
-          </Row>
+          </Row> */}
           {/* <hr className="bg-gray my-4" /> */}
           {/* <Row>
               <Col md={12}>
@@ -90,7 +91,7 @@ export const RouteWithLoader = (props: any) => {
             <Col>
               <div className="d-flex flex-column text-center justify-content-center align-items-center py-2">
                 <span className="">
-                  © Kalygo{" "}
+                  © {settings.brandName}{" "}
                   <span className="current-year">
                     {new Date().getFullYear()}
                   </span>
@@ -100,7 +101,7 @@ export const RouteWithLoader = (props: any) => {
             </Col>
           </Row>
           <Row>
-            <Col xs={12}>
+            {/* <Col xs={12}>
               <div className="d-flex flex-row justify-content-evenly py-2">
                 <span
                   style={{
@@ -113,8 +114,8 @@ export const RouteWithLoader = (props: any) => {
                   Governance
                 </span>
               </div>
-            </Col>
-            <Col xs={12}>
+            </Col> */}
+            {/* <Col xs={12}>
               <div className="d-flex flex-row justify-content-evenly py-2">
                 <span
                   style={{
@@ -127,7 +128,7 @@ export const RouteWithLoader = (props: any) => {
                   Deck
                 </span>
               </div>
-            </Col>
+            </Col> */}
           </Row>
         </Container>
       </footer>

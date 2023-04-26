@@ -68,11 +68,17 @@ $colors: (
 // scss-docs-end colors-map
 
 // Color scheme
-$default:       #262B40;
-$primary:       #262B40;
-$secondary:     #61DAFB;
+// $default:       #262B40;
+// $primary:       #262B40;
+// $secondary:     #61DAFB;
+// $tertiary:      #1B998B;
+// $quaternary:    #C96480;
+
+$default:       white;
+$primary:       white;
+$secondary:     red;
 $tertiary:      #1B998B;
-$quaternary:    #C96480;
+$quaternary:    black;
 
 // Series names and colors. This can be extended or customized as desired. Just add more series and colors.
 $ct-series-names: (a, b, c, d, e, f, g) !default;

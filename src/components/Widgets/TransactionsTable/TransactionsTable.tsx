@@ -73,7 +73,13 @@ export const TransactionsTable = () => {
   });
 
   useEffect(() => {
-    fetchTxns("", settings, setAccountTxns);
+    switch (settings.selectedBlockchain) {
+      case "Algorand":
+        fetchTxns("", settings, setAccountTxns);
+        break;
+      case "Ethereum":
+        break;
+    }
   }, []);
 
   const totalTransactions = accountTxns?.val?.transactions?.length || 0;

@@ -93,13 +93,19 @@ let EthereumContracts = [
   {
     title: "ERC-721",
     desc: "NFT Collection",
-    pathTo: RoutesData.NewFinanceDealContract.path,
+    pathTo: "",
     disabled: true,
   },
   {
-    title: "DAO",
-    desc: "Coming soon...",
-    pathTo: RoutesData.NewFinanceDealContract.path,
+    title: "Vote",
+    desc: "Review proposals publicly",
+    pathTo: "",
+    disabled: true,
+  },
+  {
+    title: "Escrow",
+    desc: "A safe holding area for large sums in transit",
+    pathTo: "",
     disabled: true,
   },
 ];
@@ -138,7 +144,7 @@ export default function ContractOptions() {
                   <Card.Text>{i.desc}</Card.Text>
                   <Button
                     disabled={i.disabled}
-                    variant="primary"
+                    variant="secondary"
                     onClick={() => {
                       i.pathTo && navigate(i.pathTo);
                     }}

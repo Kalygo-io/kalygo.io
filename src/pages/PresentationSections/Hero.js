@@ -1,11 +1,13 @@
 import React, { useRef } from "react";
 import { useInView } from "framer-motion";
 import { Button, Col, Container, Row } from "react-bootstrap";
+import { useAppSelector } from "../../store/hooks";
 import { Link } from "react-router-dom";
 import { RoutesData } from "../../routes";
 
 export function Hero() {
   const ref = useRef(null);
+  const settings = useAppSelector((state) => state.settings);
   const isInView = useInView(ref, { once: true });
 
   return (
@@ -29,7 +31,7 @@ export function Hero() {
               <span className="fab fa-react"></span>
             </div>
             <h1 className="fw-bolder text-secondary display-1 display-1-md mb-0 ls-6">
-              KALYGO
+              {settings.brandName}
             </h1>
             <h3>Contracts for the Masses</h3>
             <div className="d-flex align-items-center justify-content-center py-2">
@@ -38,7 +40,7 @@ export function Hero() {
                 size="lg"
                 as={Link}
                 to={RoutesData.DashboardOverview.path}
-                className="text-dark me-3"
+                className="text-white me-3"
               >
                 Enter App
                 {/* <FontAwesomeIcon

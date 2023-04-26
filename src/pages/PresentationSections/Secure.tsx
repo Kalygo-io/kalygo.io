@@ -1,9 +1,11 @@
 import React, { useRef } from "react";
 import { useInView } from "framer-motion";
 import { Col, Container, Row } from "react-bootstrap";
+import { useAppSelector } from "../../store/hooks";
 
 export function Secure() {
   const ref = useRef(null);
+  const settings = useAppSelector((state) => state.settings);
   const isInView = useInView(ref, { once: true });
 
   return (
@@ -22,8 +24,8 @@ export function Secure() {
             <h1>Secure</h1>
             <p className="mb-2 lead fw-bold">Audited and Community Vetted</p>
             <p className="mb-4">
-              Kalygo prioritizes rigorously vetted contracts and excellent
-              community experience
+              {settings.brandName} prioritizes rigorously vetted contracts and
+              excellent community experience
             </p>
           </Col>
         </Row>
