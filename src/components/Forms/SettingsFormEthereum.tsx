@@ -36,6 +36,7 @@ export const SettingsFormEthereum = (props: P) => {
       selectedEthereumNetwork: settings.selectedEthereumNetwork,
       selectedAlgorandAccount: settings.selectedAlgorandAccount,
       selectedEthereumAccount: settings.selectedEthereumAccount,
+      brandName: settings.brandName,
     },
   });
 
@@ -271,6 +272,22 @@ export const SettingsFormEthereum = (props: P) => {
                 </Form.Select>
               </Form.Group>
             </Col> */}
+          </Row>
+
+          <Row>
+            <Col sm={12} className="mb-3">
+              <Form.Group id="brandName">
+                <Form.Label>Brand Name</Form.Label>
+                <Form.Control
+                  {...register("brandName", {
+                    required: true,
+                  })}
+                  type="text"
+                  placeholder="Your Brand Name"
+                  onFocus={() => {}}
+                />
+              </Form.Group>
+            </Col>
           </Row>
 
           <div className="mt-3">

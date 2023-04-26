@@ -386,8 +386,8 @@ export const SettingsFormAlgorand = (props: P) => {
 
           <Row>
             <Col sm={12} className="mb-3">
-              <Form.Group id="buyer">
-                <Form.Label>Buyer</Form.Label>
+              <Form.Group id="brandName">
+                <Form.Label>Brand Name</Form.Label>
                 <Form.Control
                   {...register("brandName", {
                     required: true,
