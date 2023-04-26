@@ -1,12 +1,8 @@
-<img src="public/project_banner_photo.jpg" width="332" height="332"/>
+LIVE SITE: https://majr.io
 
-LIVE SITE: https://kalygo.io
+# Majr.io
 
-# Kalygo.io
-
-This is the front end for the kalygo.io website. Kalygo facilitates stablecoin escrow on multiple blockchains.
-
-Contract code here: https://github.com/thaddavis/kalygo-contracts-with-beaker
+This is the front end for the majr.io website. Majr facilitates low-code smart contract development
 
 ## Additional technical information
 
