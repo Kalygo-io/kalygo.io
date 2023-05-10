@@ -108,6 +108,12 @@ let EthereumContracts = [
     pathTo: "",
     disabled: true,
   },
+  {
+    title: "DAO",
+    desc: "A smart contract composed of the ERC-721, Vote, and Escrow contracts",
+    pathTo: "",
+    disabled: true,
+  },
 ];
 
 export default function ContractOptions() {
