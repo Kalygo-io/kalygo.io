@@ -1,5 +1,5 @@
 .animated-bg {
-    animation: slide 3s ease-in-out infinite alternate;
+    animation: slide 5s ease-in-out infinite alternate;
     background-image: linear-gradient(-60deg, #60dafb 50%, white 50%);
     bottom: 0;
     left: -50%;
@@ -12,11 +12,11 @@
 
 .animated-bg2 {
     animation-direction: alternate-reverse;
-    animation-duration: 4s;
+    animation-duration: 6s;
 }
 
 .animated-bg3 {
-    animation-duration: 5s;
+    animation-duration: 7s;
 }
 
 
