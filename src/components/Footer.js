@@ -59,7 +59,7 @@ const Footer = (props) => {
       <footer className="footer section py-4">
         <Row>
           <Col xs={12} lg={6} className="mb-4 mb-lg-0">
-            <p className="mb-0 text-center text-xl-left">
+            <p className="mb-0 text-center text-xl-left text-accent">
               Copyright © {`${currentYear} `}
               {/* <Card.Link href="https://themesberg.com" target="_blank" className="text-blue text-decoration-none fw-normal">
                 Themesberg

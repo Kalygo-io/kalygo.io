@@ -9,7 +9,7 @@ export function Fast() {
   return (
     <section className="section section-sm bg-primary" id="fast" ref={ref}>
       <Container>
-        <Row className="justify-content-center text-center text-white">
+        <Row className="justify-content-center text-center text-accent">
           <Col
             xs={12}
             style={{
@@ -18,7 +18,7 @@ export function Fast() {
               transition: "all 0.8s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
             }}
           >
-            <h1 className="fw-light mb-2">Fast</h1>
+            <h1 className="mb-2 text-accent">Fast</h1>
             <p className="mb-2">
               <span className="fw-bold">Less stress, more time for you</span>
             </p>

@@ -78,17 +78,9 @@ export const RouteWithLoader = (props: any) => {
               </ul>
             </Col>
           </Row>
-          {/* <hr className="bg-gray my-4" /> */}
-          {/* <Row>
-              <Col md={12}>
-                <div className="d-flex text-center justify-content-center align-items-center">
-                  <p>Kalygo is an open source platform</p>
-                </div>
-              </Col>
-            </Row> */}
           <Row>
             <Col>
-              <div className="d-flex flex-column text-center justify-content-center align-items-center py-2">
+              <div className="d-flex flex-column text-center justify-content-center align-items-center py-2 text-accent">
                 <span className="">
                   © Kalygo{" "}
                   <span className="current-year">
@@ -101,7 +93,7 @@ export const RouteWithLoader = (props: any) => {
           </Row>
           <Row>
             <Col xs={12}>
-              <div className="d-flex flex-row justify-content-evenly py-2">
+              <div className="d-flex flex-row justify-content-evenly py-2 text-accent">
                 <span
                   style={{
                     cursor: "pointer",
@@ -115,7 +107,7 @@ export const RouteWithLoader = (props: any) => {
               </div>
             </Col>
             <Col xs={12}>
-              <div className="d-flex flex-row justify-content-evenly py-2">
+              <div className="d-flex flex-row justify-content-evenly py-2 text-accent">
                 <span
                   style={{
                     cursor: "pointer",
@@ -126,6 +118,17 @@ export const RouteWithLoader = (props: any) => {
                 >
                   Deck
                 </span>
+              </div>
+            </Col>
+            <Col xs={12}>
+              <div className="d-flex flex-row justify-content-evenly py-2 text-accent text-center">
+                <i>
+                  Disclaimer: Blockchain services carry risks, and past
+                  performance is not indicative of future results. Please do
+                  your own research and consult with a blockchain or legal
+                  advisor before making any decisions that may affect your
+                  assets.
+                </i>
               </div>
             </Col>
           </Row>
