@@ -121,7 +121,7 @@ export const RouteWithLoader = (props: any) => {
               </div>
             </Col>
             <Col xs={12}>
-              <div className="d-flex flex-row justify-content-evenly py-2 text-accent text-center">
+              <div className="d-flex flex-row justify-content-evenly py-2 text-center">
                 <i>
                   Disclaimer: Blockchain services carry risks, and past
                   performance is not indicative of future results. Please do
