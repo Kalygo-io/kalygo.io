@@ -31,7 +31,7 @@ export function Hero() {
             <h1 className="fw-bolder text-secondary display-1 display-1-md mb-0 ls-6">
               KALYGO
             </h1>
-            <h3 style={{ color: "#ecb32c" }}>Contracts for the Masses</h3>
+            <h3 style={{ color: "#ecb32c" }}>Contracts for Everyone</h3>
             <div className="d-flex align-items-center justify-content-center py-2">
               <Button
                 variant="secondary"
