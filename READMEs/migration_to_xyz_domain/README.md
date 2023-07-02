@@ -1,0 +1,11 @@
+- Purchase kalygo.xyz
+- Create S3 Bucket
+- Enable Static Site Hosting and Public permissions on files in S3 Bucket
+- Create Cloudfront Distribution
+    - `Default root object` - `index.html`
+    - Add DNS A record to kalygo.xyz that point to the Cloudfront Distro
+    - update `./.git/hooks/post-merge`
+
+- Create ACM
+    - kalygo.xyz, www.kalygo.xyz
+    - Add Records to Route53
